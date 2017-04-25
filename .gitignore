@@ -1,9 +1,0 @@
-*.iml
-.gradle
-/Trawell/local.properties
-/Trawell/.idea/workspace.xml
-/Trawell/.idea/libraries
-.DS_Store
-/Trawell/build
-/Trawell/captures
-/Trawell.externalNativeBuild
