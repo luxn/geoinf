@@ -9,3 +9,5 @@
 /Trawell.externalNativeBuild
 
 /gtfs/.spyproject
+
+*.sqlite
