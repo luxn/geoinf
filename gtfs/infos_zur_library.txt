@@ -1,3 +1,6 @@
 gtfslib
 https://github.com/afimb/gtfslib-python
 https://github.com/afimb/gtfslib-python/wiki
+
+https://github.com/google/transitfeed
+https://github.com/google/transitfeed/wiki
