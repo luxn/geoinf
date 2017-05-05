@@ -1,7 +1,12 @@
 package de.jadehs.trawell.api;
 
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -17,15 +22,19 @@ import java.net.URLConnection;
 
 public class Weather {
 
+
+    double temp;
+    String location;
+
     /**
      *
      * @param town
      */
-    public static void getWeather(String town) {
+    public static void getWeather(String town) throws IOException {
         String url = "api.openweathermap.org/data/2.5/weather?q=" + town;
         // delete later..
         url = "http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1";
-        InputStream is = getStreamForUrl(url);
+        InputStream is = getStreamForUrl(new URL(url));
 
         try {
             byte[] buffer = new byte[is.available()];
@@ -41,10 +50,9 @@ public class Weather {
         //JsonReader jsonReader = Json.createReader(new FileInputStream(file));
     }
 
-    private static InputStream getStreamForUrl(String requestedURL) {
+    private static InputStream getStreamForUrl(URL requestedURL) {
         try {
-            URL url = new URL(requestedURL);
-            URLConnection con = url.openConnection();
+            URLConnection con = requestedURL.openConnection();
             return con.getInputStream();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -52,9 +60,53 @@ public class Weather {
         return null;
     }
 
-    public static void main (String[] args) {
+    private static String streamToString(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        return result.toString("UTF-8");
+    }
+
+    public static Weather getWeatherFrom(String location) throws IOException, JSONException {
+
+        final URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + location);
+
+        InputStream inputStream = getStreamForUrl(url);
+
+        JSONObject jsonObject = new JSONObject(streamToString(inputStream));
+
+        /*
+            Annahme
+            Rückgabe JSON sähe so aus
+            {
+                "temp": 285.2,
+                "location": "London",
+                "lat": 48.62,
+                "lon": 0.23
+            }
+
+         */
+
+        double temperaturKelvin = jsonObject.getDouble("temp");
+        String l = jsonObject.getString("location");
+        inputStream.close();
+
+
         Weather w = new Weather();
-        w.getWeather("London");
+        w.temp = temperaturKelvin + 273.15;
+        w.location = l;
+
+        return w;
+
+    }
+    // static main gibt es in Android nicht
+    public static void main (String[] args) throws Exception{
+        Weather w = Weather.getWeatherFrom("London");
+
+        Log.d("WEATHER", w.location + " : " + w.temp +"°C");
         //Log.d("London", "test");
     }
 }
