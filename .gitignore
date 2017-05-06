@@ -11,3 +11,5 @@
 /gtfs/.spyproject
 
 *.sqlite
+.idea
+/Trawell/.idea
