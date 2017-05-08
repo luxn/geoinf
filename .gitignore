@@ -1,7 +1,8 @@
 *.iml
 .gradle
 /Trawell/local.properties
-/Trawell/.idea
+/Trawell/.idea/
+Trawell/.idea/modules.xml
 .DS_Store
 /Trawell/build
 /Trawell/captures
