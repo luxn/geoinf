@@ -26,6 +26,7 @@ public class Weather {
     public double temp;
     public String location;
 
+
     /**
      *
      * @param town
@@ -72,9 +73,15 @@ public class Weather {
 
     public static Weather getWeatherFrom(String location) throws IOException, JSONException {
 
-        final URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + location);
+        /*
+        Weather Api
+        username: trawell
+        password: projgeo6
+        */
+        final String apiKey = "16485cd730499881bbb74c9f3d35b89c";
+        final URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey);
         final URL url2 = new URL("http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1");
-        InputStream inputStream = getStreamForUrl(url2);
+        InputStream inputStream = getStreamForUrl(url);
         JSONObject jsonObject = new JSONObject(streamToString(inputStream));
 
         /*
