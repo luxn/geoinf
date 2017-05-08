@@ -23,8 +23,8 @@ import java.net.URLConnection;
 public class Weather {
 
 
-    double temp;
-    String location;
+    public double temp;
+    public String location;
 
     /**
      *
@@ -73,9 +73,8 @@ public class Weather {
     public static Weather getWeatherFrom(String location) throws IOException, JSONException {
 
         final URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + location);
-
-        InputStream inputStream = getStreamForUrl(url);
-
+        final URL url2 = new URL("http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1");
+        InputStream inputStream = getStreamForUrl(url2);
         JSONObject jsonObject = new JSONObject(streamToString(inputStream));
 
         /*
@@ -94,7 +93,6 @@ public class Weather {
         String l = jsonObject.getString("location");
         inputStream.close();
 
-
         Weather w = new Weather();
         w.temp = temperaturKelvin + 273.15;
         w.location = l;
@@ -103,10 +101,12 @@ public class Weather {
 
     }
     // static main gibt es in Android nicht
+    /*
     public static void main (String[] args) throws Exception{
         Weather w = Weather.getWeatherFrom("London");
 
         Log.d("WEATHER", w.location + " : " + w.temp +"°C");
         //Log.d("London", "test");
     }
+    */
 }

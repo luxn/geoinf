@@ -4,8 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+
+import de.jadehs.trawell.api.Weather;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        /*Weather w = null;
+        try {
+            w = Weather.getWeatherFrom("London");
+            Log.d("WEATHER", w.location + " : " + w.temp +"°C");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+
     }
 
 }
