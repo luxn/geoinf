@@ -18,6 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
 
+
+    //test comment
+
+
+    //blabla
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 

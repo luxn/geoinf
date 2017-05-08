@@ -1,8 +1,8 @@
 *.iml
 .gradle
 /Trawell/local.properties
-/Trawell/.idea/workspace.xml
-/Trawell/.idea/libraries
+/Trawell/.idea/
+Trawell/.idea/modules.xml
 .DS_Store
 /Trawell/build
 /Trawell/captures
@@ -13,3 +13,11 @@
 *.sqlite
 .idea
 /Trawell/.idea
+
+
+# fuer Lisa
+
+/_windows
+/*.xml
+/inspection
+Trawell/.idea/modules.xml
