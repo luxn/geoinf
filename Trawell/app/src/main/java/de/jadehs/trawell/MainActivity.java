@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     //test comment
 
+
+    //blabla
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
