@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        Weather.getWeatherFrom("London", new OnTaskCompletedListener<Weather>() {
+        Weather.getWeatherFrom("Oldenburg", new OnTaskCompletedListener<Weather>() {
             @Override
             public void onSuccess(Weather weather) {
-                Log.d("WEATHER"," ... " + weather.location + " : " + weather.temp + "°C");
+                Log.d("WEATHER"," ... " + weather.location + " : " + weather.temp + "°C" + " : " + weather.iconURL);
             }
 
             @Override

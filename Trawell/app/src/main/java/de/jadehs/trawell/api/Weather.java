@@ -25,6 +25,7 @@ public class Weather {
 
 
     public double temp;
+    public String iconURL;
     public String location;
 
 
@@ -91,12 +92,14 @@ public class Weather {
 
 
                     double temperaturKelvin = jsonObject.getJSONObject("main").getDouble("temp");
+                    String iconID = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
                     String l = jsonObject.getString("name");
                     inputStream.close();
 
                     Weather w = new Weather();
                     w.temp = temperaturKelvin - 273.15;
                     w.location = l;
+                    w.iconURL = "http://openweathermap.org/img/w/"+iconID+".png";
 
                     callback.onSuccess(w);
 
