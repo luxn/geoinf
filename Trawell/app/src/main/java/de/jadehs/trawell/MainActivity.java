@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 
+import de.jadehs.trawell.api.OnTaskCompletedListener;
 import de.jadehs.trawell.api.Weather;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,15 +56,19 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Weather w = null;
-        try {
-            w = Weather.getWeatherFrom("London");
-            Log.d("WEATHER", w.location + " : " + w.temp +"°C");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        Weather.getWeatherFrom("London", new OnTaskCompletedListener<Weather>() {
+            @Override
+            public void onSuccess(Weather weather) {
+                Toast.makeText(getApplicationContext(), " ... " + weather.location + " : " + weather.temp + "°C", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onException(Exception e) {
+                e.printStackTrace();
+            }
+        });
+
 
     }
 
