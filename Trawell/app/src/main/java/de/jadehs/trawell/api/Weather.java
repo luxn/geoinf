@@ -95,7 +95,7 @@ public class Weather {
                     inputStream.close();
 
                     Weather w = new Weather();
-                    w.temp = temperaturKelvin + 273.15;
+                    w.temp = temperaturKelvin - 273.15;
                     w.location = l;
 
                     callback.onSuccess(w);
@@ -156,7 +156,7 @@ public class Weather {
 
          */
             }
-        });
+        }).start();
 
 
     }

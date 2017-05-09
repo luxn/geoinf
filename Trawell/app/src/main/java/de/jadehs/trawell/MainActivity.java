@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         Weather.getWeatherFrom("London", new OnTaskCompletedListener<Weather>() {
             @Override
             public void onSuccess(Weather weather) {
-                Toast.makeText(getApplicationContext(), " ... " + weather.location + " : " + weather.temp + "°C", Toast.LENGTH_LONG).show();
+                Log.d("WEATHER"," ... " + weather.location + " : " + weather.temp + "°C");
             }
 
             @Override
