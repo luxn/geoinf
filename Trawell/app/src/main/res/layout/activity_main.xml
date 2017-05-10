@@ -8,6 +8,21 @@
     android:orientation="vertical"
     tools:context="de.jadehs.trawell.MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="fill_parent"
+        android:layout_height="220dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/daenemark" />
+
+    <ImageView
+        android:id="@+id/imageWeather"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:cropToPadding="false"
+        android:src="@mipmap/ic_launcher_round" />
+
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -19,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/title_home" />
