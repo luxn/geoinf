@@ -58,15 +58,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mTextMessage = (TextView) findViewById(R.id.textTemp);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        Weather.getWeatherFrom("Oldenburg", new OnTaskCompletedListener<Weather>() {
+        Weather.getWeatherFrom("Paris", new OnTaskCompletedListener<Weather>() {
             @Override
             public void onSuccess(Weather weather) {
-                mTextMessage.setText("Weather in " + weather.location + ": " + weather.temp +"°C");
+                mTextMessage.setText("Temperature in " + weather.location + ": " + weather.temp +"°C. Humidity: "+weather.hum+"%");
                 new DownloadImageTask((ImageView) findViewById(R.id.imageWeather))
                     .execute(weather.iconURL);
             }
