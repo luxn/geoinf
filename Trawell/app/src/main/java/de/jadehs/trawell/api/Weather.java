@@ -24,7 +24,8 @@ import java.net.URLConnection;
 public class Weather {
 
 
-    public double temp;
+    public int temp;
+    public int hum;
     public String iconURL;
     public String location;
 
@@ -94,10 +95,12 @@ public class Weather {
                     double temperaturKelvin = jsonObject.getJSONObject("main").getDouble("temp");
                     String iconID = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
                     String l = jsonObject.getString("name");
+                    double humidity = jsonObject.getJSONObject("main").getDouble("humidity");
                     inputStream.close();
 
                     Weather w = new Weather();
-                    w.temp = temperaturKelvin - 273.15;
+                    w.temp = (int) (temperaturKelvin - 273.15);
+                    w.hum = (int) humidity;
                     w.location = l;
                     w.iconURL = "http://openweathermap.org/img/w/"+iconID+".png";
 
