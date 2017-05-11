@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/lib/com.app.chasebank"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll"
-    tools:context="de.jadehs.trawell.MainActivity">
+    tools:context="de.jadehs.trawell.api.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,8 +21,8 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="383dp"
+                android:layout_height="28dp"
                 android:background="@color/colorPrimary"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="    Wählen Sie Ihren Interrail Pass"
@@ -32,82 +33,87 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="3dp" />
+                tools:layout_editor_absoluteY="3dp"
+                tools:layout_editor_absoluteX="0dp" />
 
             <RadioButton
                 android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5 Reisetage innerhalb von 15 Tagen"
-                tools:layout_editor_absoluteX="37dp"
-                android:layout_marginTop="52dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                android:layout_marginTop="30dp"
+                app2:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <Button
-                android:id="@+id/button2"
-                android:layout_width="368dp"
+                android:id="@+id/goBTN"
+                android:layout_width="383dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
                 android:background="@color/colorPrimary"
                 android:text="Weiter"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="462dp" />
+                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteY="467dp" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7 Reisetage innerhalb 1 Monats"
-                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+                app2:layout_constraintTop_toBottomOf="@+id/radioButton" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10 Reisetage innerhalb 1 Monats"
-                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton3"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioButton3" />
+                app2:layout_constraintTop_toBottomOf="@+id/radioButton3" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15 Reisetage innerhalb 1 Monats"
-                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton4"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
+                app2:layout_constraintTop_toBottomOf="@+id/radioButton4" />
 
             <RadioButton
                 android:id="@+id/radioButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="An jedem Tag innerhalb von 15 Tagen"
-                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton5"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
+                app2:layout_constraintTop_toBottomOf="@+id/radioButton5" />
 
             <RadioButton
                 android:id="@+id/radioButton7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="An jedem Tag innerhalb von 22 Tagen"
-                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton6"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioButton6" />
+                app2:layout_constraintTop_toBottomOf="@+id/radioButton6" />
 
             <RadioButton
                 android:id="@+id/radioButton8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="An jedem Tag innerhalb 1 Monats"
-                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteX="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton7"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioButton7" />
+                app2:layout_constraintTop_toBottomOf="@+id/radioButton7" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

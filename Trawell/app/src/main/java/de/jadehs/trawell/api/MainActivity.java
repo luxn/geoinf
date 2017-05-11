@@ -1,4 +1,5 @@
-package de.jadehs.trawell;
+
+package de.jadehs.trawell.api;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,19 +21,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.InputStream;
+import java.util.Set;
 
+import de.jadehs.trawell.R;
 import de.jadehs.trawell.api.OnTaskCompletedListener;
 import de.jadehs.trawell.api.Weather;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    public static Set<Fragment> mFragments;
+    public static FragmentManager fragmentManager;
+
+    public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
+        T fragment = tClass.newInstance();
+        MainActivity.fragmentManager.beginTransaction().replace(
+                R.id.container, fragment).addToBackStack(fragment.getTag()).commit();
+    }
 
 
-    //test comment
-
-
-    //blabla
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Weather weather) {
                 mTextMessage.setText("Temperature in " + weather.location + ": " + weather.temp +"°C. Humidity: "+weather.hum+"%");
                 new DownloadImageTask((ImageView) findViewById(R.id.imageWeather))
-                    .execute(weather.iconURL);
+                        .execute(weather.iconURL);
             }
 
             @Override
@@ -153,3 +162,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+

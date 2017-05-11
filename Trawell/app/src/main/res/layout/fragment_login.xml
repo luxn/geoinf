@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll"
-    tools:context="de.jadehs.trawell.MainActivity">
+    tools:context="de.jadehs.trawell.api.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,39 +33,6 @@
                 app2:layout_constraintRight_toRightOf="parent"
                 app2:layout_constraintHorizontal_bias="1.0"
                 tools:layout_editor_absoluteY="1dp" />
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="66dp"
-                android:background="@color/colorPrimary"
-                android:text="Password vergessen"
-                app2:layout_constraintHorizontal_bias="0.502"
-                app2:layout_constraintLeft_toLeftOf="parent"
-                app2:layout_constraintRight_toRightOf="parent"
-                app2:layout_constraintTop_toBottomOf="@+id/editText2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView9" />
-
-            <Button
-                android:id="@+id/button10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorPrimary"
-                android:text="Konto erstellen"
-                app2:layout_constraintLeft_toLeftOf="parent"
-                app2:layout_constraintRight_toRightOf="parent"
-                app2:layout_constraintTop_toBottomOf="@+id/button7"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button7" />
 
             <EditText
                 android:id="@+id/editText"
@@ -97,16 +64,43 @@
                 app2:layout_constraintLeft_toLeftOf="parent" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/loginBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:text="Anmelden"
-                android:layout_marginTop="81dp"
-                app2:layout_constraintTop_toBottomOf="@+id/button10"
+                app2:layout_constraintLeft_toLeftOf="parent"
+                app2:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="442dp" />
+
+            <Button
+                android:id="@+id/createAccountBTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Konto erstellen"
                 android:layout_marginRight="8dp"
                 app2:layout_constraintRight_toRightOf="parent"
                 android:layout_marginLeft="8dp"
-                app2:layout_constraintLeft_toLeftOf="parent" />
+                app2:layout_constraintLeft_toLeftOf="parent"
+                app2:layout_constraintHorizontal_bias="0.502"
+                android:layout_marginTop="8dp"
+                app2:layout_constraintTop_toBottomOf="@+id/forgotPasswordBTN" />
+
+            <Button
+                android:id="@+id/forgotPasswordBTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Password vergessen"
+                android:layout_marginRight="8dp"
+                app2:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="8dp"
+                app2:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="50dp"
+                app2:layout_constraintTop_toBottomOf="@+id/editText2"
+                app2:layout_constraintHorizontal_bias="0.502" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

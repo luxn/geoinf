@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll"
-    tools:context="de.jadehs.trawell.MainActivity">
+    tools:context="de.jadehs.trawell.api.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editText9" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/goBTN"
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
