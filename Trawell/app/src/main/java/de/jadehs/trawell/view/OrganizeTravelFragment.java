@@ -1,8 +1,7 @@
-package de.jadehs.trawell.api;
+package de.jadehs.trawell.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +9,23 @@ import android.widget.Button;
 
 import de.jadehs.trawell.R;
 
-public class SignUpFragment extends Fragment {
+public class OrganizeTravelFragment extends Fragment {
 
-    Button accountButton;
+    Button ready;
+    Button housing;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Organize your Tour");
 
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        accountButton = (Button) view.findViewById(R.id.createAccountBTN);
+        //ready = (Button) view.findViewById(R.id.readyBTN);
 
-        accountButton.setOnClickListener(new View.OnClickListener() {
+        ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -37,6 +40,7 @@ public class SignUpFragment extends Fragment {
             }
         });
 
+        // housing BTN noch nicht initialisiert
 
         // Inflate the layout for this fragment
         return view;

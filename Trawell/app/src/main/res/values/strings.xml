@@ -3,4 +3,12 @@
     <string name="title_home">Home</string>
     <string name="title_new_tour">New Tour</string>
     <string name="title_my_tours">My Tours</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_informations">Informations</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_new_tour">NewTourActivity</string>
 </resources>

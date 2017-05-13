@@ -1,4 +1,4 @@
-package de.jadehs.trawell.api;
+package de.jadehs.trawell.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import de.jadehs.trawell.R;
 
-public class MyTourFragment extends Fragment {
+public class AccommodationsFragment extends Fragment {
 
-    Button back;
+    Button ready;
+    Button housing;
 
 
 
@@ -20,12 +20,13 @@ public class MyTourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Choose your accommodation");
 
-        View view = inflater.inflate(R.layout.fragment_mytour, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        back = (Button) view.findViewById(R.id.backBTN);
+        //ready = (Button) view.findViewById(R.id.readyBTN);
 
-        back.setOnClickListener(new View.OnClickListener() {
+        ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -40,7 +41,7 @@ public class MyTourFragment extends Fragment {
             }
         });
 
-
+        // housing BTN noch nicht initialisiert
 
         // Inflate the layout for this fragment
         return view;
