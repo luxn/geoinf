@@ -1,0 +1,30 @@
+package de.jadehs.trawell.view;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import de.jadehs.trawell.R;
+
+public class NewTourActivity extends AppCompatActivity {
+
+    public static FragmentManager fragmentManager;
+
+    public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
+        T fragment = tClass.newInstance();
+        NewTourActivity.fragmentManager.beginTransaction().replace(
+                R.id.newTourContainer, fragment).addToBackStack(fragment.getTag()).commit();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_tour);
+
+        NewTourActivity.fragmentManager = getSupportFragmentManager();
+        Fragment newTourFragment = new NewTourFragment();
+        NewTourActivity.fragmentManager.beginTransaction().add(
+                R.id.newTourContainer, newTourFragment).commit();
+    }
+}

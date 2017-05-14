@@ -1,6 +1,8 @@
 
 package de.jadehs.trawell.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.IDNA;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static Set<Fragment> mFragments;
     public static FragmentManager fragmentManager;
-    public TextView weatherText;
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
         T fragment = tClass.newInstance();
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.goTo(HomeFragment.class);
                         return true;
                     case R.id.navigation_newTour:
-                        MainActivity.goTo(NewTourFragment.class);
+                        Intent intent = new Intent(getApplicationContext(), NewTourActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.navigation_myTours:
                         MainActivity.goTo(MyToursFragment.class);
