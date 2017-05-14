@@ -1,34 +1,56 @@
 package de.jadehs.trawell.graph;
 
-import android.icu.util.DateInterval;
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Lux on 09.05.2017.
+ * Created by luxn on 09.05.2017.
  */
 
 public class Route implements Comparable<Route> {
 
-    private Location origin, destination;
+    private Location source, destination;
     private List<Trip> trips;
     private String name;
-    private String provider;
     private double distance;
     private Duration duration;
-    private double calculatedWeight = 1.0;
-
-    public Route(String name, String provider, double distance, Duration duration) {
-        this.name = name;
-        this.provider = provider;
-        this.distance = distance;
-        this.duration = duration;
-
+    private int calculatedWeight = 1;  
+    
+    public Route(String name, Location from, Location to) {
+    	this.name = name;
         this.trips = new ArrayList<>();
+    	this.source = from;
+    	this.destination = to;
+    	
+    	this.distance = getDistanceFromLatLonInKm(
+    			from.getLatitude(), 
+    			from.getLongitude(), 
+    			to.getLatitude(), 
+    			to.getLongitude()
+    		);
+    			
+    	this.duration = new Duration(distance / 220.0 ); // a typical Train will be at 220kmh
+    	recalulateWeight();    	
+    }
+       
+    
+    private double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
+    	  final double r = 6371; // Radius of the earth in km
+    	  double dLat = deg2rad(lat2-lat1);  // deg2rad
+    	  double dLon = deg2rad(lon2-lon1); 
+    	  double a = 
+    	    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    	    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    	    Math.sin(dLon/2) * Math.sin(dLon/2)
+    	    ; 
+    	  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    	  return r * c; // Distance in km    	  
+    }
+
+    private double deg2rad(double deg) {
+    	 return deg * (Math.PI/180);
     }
 
 
@@ -43,21 +65,14 @@ public class Route implements Comparable<Route> {
     public void removeTrip(Trip t) {
         this.trips.remove(t);
     }
-
-    public void setOrigin(Location l) {
-        this.origin = l;
-    }
-
-    public void setDestination(Location l) {
-        this.destination = l;
-    }
+   
 
     public void recalulateWeight() {
-        this.calculatedWeight = duration.getDurationInMinutes() / distance;
+        this.calculatedWeight = (int) ((duration.getDurationInMinutes() / distance) * 10_000);
     }
 
-    public Location getOrigin() {
-        return origin;
+    public Location getSource() {
+        return source;
     }
 
     public Location getDestination() {
@@ -79,14 +94,7 @@ public class Route implements Comparable<Route> {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
+    
 
     public double getDistance() {
         return distance;
@@ -104,16 +112,13 @@ public class Route implements Comparable<Route> {
         this.duration = duration;
     }
 
-    public double getCalculatedWeight() {
+    public int getWeight() {
         return calculatedWeight;
     }
-
-    public void setCalculatedWeight(double calculatedWeight) {
-        this.calculatedWeight = calculatedWeight;
-    }
+   
 
     @Override
-    public int compareTo(@NonNull Route o) {
+    public int compareTo(Route o) {
         return this.name.compareTo(o.name);
     }
 }

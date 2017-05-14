@@ -2,7 +2,7 @@ package de.jadehs.trawell.graph;
 
 
 /**
- * Created by Lux on 09.05.2017.
+ * Created by luxn on 09.05.2017.
  */
 
 public class DayTime {
