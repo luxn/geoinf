@@ -5,10 +5,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.graph.Location;
+import de.jadehs.trawell.graph.TrawellGraph;
 
 public class NewTourActivity extends AppCompatActivity {
 
+    public static TrawellGraph graph = new TrawellGraph();
+    public static ArrayList<Location> locations = new ArrayList<>(graph.getLocations());
     public static FragmentManager fragmentManager;
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {

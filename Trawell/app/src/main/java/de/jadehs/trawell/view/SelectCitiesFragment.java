@@ -1,5 +1,7 @@
 package de.jadehs.trawell.view;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,10 +26,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.graph.Location;
+import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.graph.TripLoader;
+
+import static de.jadehs.trawell.view.NewTourActivity.locations;
 
 public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -105,19 +115,16 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
         googleMap = googleM;
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.setOnMarkerClickListener(this);
-        LatLng london = new LatLng(51.508530, -0.076132);
-        googleMap.addMarker(new MarkerOptions().position(london).title("London"));
-        LatLng oldenburg = new LatLng(53.14118, 8.21467);
-        googleMap.addMarker(new MarkerOptions().position(oldenburg).title("Oldenburg"));
-        LatLng paris = new LatLng(48.864716, 2.349014);
-        googleMap.addMarker(new MarkerOptions().position(paris).title("Paris"));
-        LatLng barcelona = new LatLng(41.390205, 2.154007);
-        googleMap.addMarker(new MarkerOptions().position(barcelona).title("Barcelona"));
-        LatLng vienna = new LatLng(48.202965, 16.369017);
-        googleMap.addMarker(new MarkerOptions().position(vienna).title("Vienna"));
-        LatLng rome = new LatLng(41.905777, 12.462204);
-        googleMap.addMarker(new MarkerOptions().position(rome).title("Rome"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(oldenburg));
+
+        for(int i = 0; i < locations.size(); i++){
+            Log.d("location", "" + locations.get(i));
+            String title = locations.get(i).toString();
+            double lat = locations.get(i).getLatitude();
+            double lng = locations.get(i).getLongitude();
+            LatLng position = new LatLng(lat,lng);
+            googleMap.addMarker(new MarkerOptions().position(position).title(title));
+        }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(51.508530, -0.076132)));
     }
 
     @Override
