@@ -2,10 +2,9 @@
 package de.jadehs.trawell.view;
 
 import android.content.Context;
-<<<<<<< HEAD
+
 import android.content.Intent;
-=======
->>>>>>> d4ca1ecef5933f497c6fce859f93ca389056445b
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.IDNA;
@@ -39,11 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static Set<Fragment> mFragments;
     public static FragmentManager fragmentManager;
-<<<<<<< HEAD
-=======
+
     public static Context context;
     public TextView weatherText;
->>>>>>> d4ca1ecef5933f497c6fce859f93ca389056445b
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
         T fragment = tClass.newInstance();
