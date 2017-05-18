@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        weatherText.setText(weather.location + "\nTemprature: " + weather.temp +"°C\nHumidity: "+weather.hum+"%");
+                        weatherText.setText(weather.location + "\nTemperature: " + weather.temp +"°C\nHumidity: "+weather.hum+"%");
                         new DownloadImageTask((ImageView) view.findViewById(R.id.weatherImageView))
                                 .execute(weather.iconURL);
                     }
