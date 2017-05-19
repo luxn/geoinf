@@ -24,12 +24,15 @@ import java.util.Locale;
 
 import de.jadehs.trawell.R;
 
+import static de.jadehs.trawell.view.NewTourActivity.locations;
+
 public class NewTourFragment extends Fragment {
 
     Button nextBTN, homeBTN;
     EditText startET, endET, durationET;
     AutoCompleteTextView startCityTV, finalCityTV;
     Calendar myCalendar = Calendar.getInstance();
+    String[] cities2 = new String[locations.size()];
     String[] cities = {
             "Brüssel",
             "Antwerpen",
@@ -82,7 +85,9 @@ public class NewTourFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_new_tour, container, false);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice, cities);
+        for (int i = 0; i < locations.size(); i++) {
+            cities2[i] = locations.get(i).toString();
+        }
 
         durationET = (EditText) view.findViewById(R.id.durationEditText);
         durationET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -97,6 +102,8 @@ public class NewTourFragment extends Fragment {
                 }
             }
         });
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice, cities2);
 
         startCityTV = (AutoCompleteTextView) view.findViewById(R.id.startCityTextView);
         startCityTV.setThreshold(1);
