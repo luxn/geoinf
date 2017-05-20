@@ -63,7 +63,7 @@ public class OrganizeTravelFragment extends Fragment {
         }
 
         citiesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.grid_item, R.id.image, false);
+        ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.image, false);
         Log.d("Test", ""+mItemArray);
         Log.d("Test2", ""+R.layout.fragment_organize_travel);
         Log.d("Test3", ""+R.id.item_layout);
