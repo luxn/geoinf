@@ -33,9 +33,15 @@ public class TripLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		graph.setLocations(locations);
-		graph.setRoutes(routes);
+
+
+		for (Location l : TripLoader.locations) {
+			graph.addLocation(l);
+		}
+		for (Route r : TripLoader.routes) {
+			graph.addRoute(r);
+		}
+
 	}
 
 	private static void loadLocations() throws IOException {
