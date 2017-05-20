@@ -1,5 +1,7 @@
 package de.jadehs.trawell.graph;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,10 +17,15 @@ public class TrawellGraph {
     private List<Location> locations;
     private List<Route> routes;
 
+    private Map<String, Location> locationMap;
+    private Map<String, Route> routeMap;
+
 
     public TrawellGraph() {
         locations = new ArrayList<>();
         routes = new ArrayList<>();
+        locationMap = new HashMap<>();
+        routeMap = new HashMap<>();
         TripLoader.loadGraph(this);
     }
 
@@ -27,22 +34,15 @@ public class TrawellGraph {
         algorithm.execute(from);
         return algorithm.getPath(to);
     }
-    
-    public void setLocations(List<Location> locations) {
-    	this.locations = locations;
-    }
-    
-    public void setRoutes(List<Route> routes) {
-    	this.routes = routes;
+
+    void addLocation(Location l) {
+        locations.add(l);
+        locationMap.put(l.toString(), l);
     }
 
-
-    public void addLocation(Location v) {   
-        locations.add(v);
-    }
-
-    public void addRoute(Route e){       
-        routes.add(e);
+    void addRoute(Route r){
+        routes.add(r);
+        routeMap.put(r.toString(), r);
     }
     
     public List<Location> getLocations() {
@@ -52,8 +52,20 @@ public class TrawellGraph {
     	return routes;
     }
 
-    public void trawellGraphTODO() {
-                
+    public Map<String, Location> getLocationAsMap() { return locationMap; }
+    public Map<String, Route> getRouteAsMap() { return routeMap; }
+
+    @Nullable
+    public Location getLocationByName(String name) {
+        return locationMap.get(name);
+    }
+
+    @Nullable
+    public Route getRouteByName(String name) {
+        return routeMap.get(name);
+    }
+
+
         
         
 
@@ -74,5 +86,4 @@ public class TrawellGraph {
 //        graph.addRoute(hamToFra);
 //        graph.addRoute(fraToHam);
 
-    }
 }
