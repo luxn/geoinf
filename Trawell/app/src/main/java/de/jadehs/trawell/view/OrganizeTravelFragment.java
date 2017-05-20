@@ -2,7 +2,9 @@ package de.jadehs.trawell.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,9 @@ import de.jadehs.trawell.R;
 
 public class OrganizeTravelFragment extends Fragment {
 
-    DragListView citiesListView;
-    ArrayList<String> cities;
+    private ArrayList<Pair<Long, String>> mItemArray;
+    private DragListView citiesListView;
+    private ArrayList<String> cities;
     ArrayAdapter<String> adapter;
 
     @Override
@@ -48,16 +51,25 @@ public class OrganizeTravelFragment extends Fragment {
                 }
             }
         });
-
-        citiesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.image, false);
-        citiesListView.setAdapter(listAdapter);
-        citiesListView.setCanDragHorizontally(false);
         cities = new ArrayList<>();
         cities.add("Rom");
         cities.add("Prag");
         cities.add("Düsseldorf");
         cities.add("Oldenburg");
+
+        mItemArray = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            mItemArray.add(new Pair<>((long) i, "Item " + i));
+        }
+
+        citiesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.grid_item, R.id.image, false);
+        Log.d("Test", ""+mItemArray);
+        Log.d("Test2", ""+R.layout.fragment_organize_travel);
+        Log.d("Test3", ""+R.id.item_layout);
+        citiesListView.setAdapter(listAdapter, true);
+        citiesListView.setCanDragHorizontally(false);
+
 
 
         //ready = (Button) view.findViewById(R.id.readyBTN);

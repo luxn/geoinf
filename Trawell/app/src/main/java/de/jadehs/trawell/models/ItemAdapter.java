@@ -17,6 +17,7 @@
 package de.jadehs.trawell.models;
 
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     private int mGrabHandleId;
     private boolean mDragOnLongPress;
 
-    ItemAdapter(ArrayList<Pair<Long, String>> list, int layoutId, int grabHandleId, boolean dragOnLongPress) {
+    public ItemAdapter(ArrayList<Pair<Long, String>> list, int layoutId, int grabHandleId, boolean dragOnLongPress) {
         mLayoutId = layoutId;
         mGrabHandleId = grabHandleId;
         mDragOnLongPress = dragOnLongPress;
@@ -62,11 +63,12 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
         return mItemList.get(position).first;
     }
 
-    class ViewHolder extends DragItemAdapter.ViewHolder {
-        TextView mText;
+    public class ViewHolder extends DragItemAdapter.ViewHolder {
+        public TextView mText;
 
-        ViewHolder(final View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView, mGrabHandleId, mDragOnLongPress);
+            Log.d("hier", ""+itemView);
             mText = (TextView) itemView.findViewById(R.id.text);
         }
 
