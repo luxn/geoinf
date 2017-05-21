@@ -36,39 +36,40 @@ public class OrganizeTravelFragment extends Fragment {
         citiesListView.setDragListListener(new DragListView.DragListListener() {
             @Override
             public void onItemDragStarted(int position) {
-                Toast.makeText(getActivity(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onItemDragging(int itemPosition, float x, float y) {
-
             }
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
                 if (fromPosition != toPosition) {
-                    Toast.makeText(getActivity(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        cities = new ArrayList<>();
-        cities.add("Rom");
-        cities.add("Prag");
-        cities.add("Düsseldorf");
-        cities.add("Oldenburg");
 
         mItemArray = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            mItemArray.add(new Pair<>((long) i, "Item " + i));
-        }
+        mItemArray.add(new Pair<>((long) 0, "Oldenburg"));
+        mItemArray.add(new Pair<>((long) 1, "Prag"));
+        mItemArray.add(new Pair<>((long) 2, "Budapest"));
+        mItemArray.add(new Pair<>((long) 3, "Rom"));
+        mItemArray.add(new Pair<>((long) 4, "Mailand"));
+        mItemArray.add(new Pair<>((long) 5, "Madrid"));
+        mItemArray.add(new Pair<>((long) 6, "Lissabon"));
+        mItemArray.add(new Pair<>((long) 7, "Paris"));
+        mItemArray.add(new Pair<>((long) 8, "Oldenburg"));
+
 
         citiesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.image, false);
-        Log.d("Test", ""+mItemArray);
-        Log.d("Test2", ""+R.layout.fragment_organize_travel);
-        Log.d("Test3", ""+R.id.item_layout);
         citiesListView.setAdapter(listAdapter, true);
         citiesListView.setCanDragHorizontally(false);
+        // Start and final location cannot be changed
+        citiesListView.setCanNotDragAboveTopItem(true);
+        citiesListView.setCanNotDragBelowBottomItem(true);
 
 
 
