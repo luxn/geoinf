@@ -1,9 +1,6 @@
 package de.jadehs.trawell.view;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -26,16 +19,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.graph.Location;
-import de.jadehs.trawell.graph.TrawellGraph;
-import de.jadehs.trawell.graph.TripLoader;
 
 import static de.jadehs.trawell.view.NewTourActivity.locations;
 
@@ -83,7 +69,7 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 try {
-                    NewTourActivity.goTo(NewTourFragment.class);
+                    NewTourActivity.goTo(SpecifyTravelFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InstantiationException e) {

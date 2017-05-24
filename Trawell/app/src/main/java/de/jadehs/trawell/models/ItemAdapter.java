@@ -17,18 +17,17 @@
 package de.jadehs.trawell.models;
 
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.woxthebox.draglistview.DragItemAdapter;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.view.OrganizeTravelFragment;
 
 public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter.ViewHolder> {
 
@@ -42,6 +41,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
         mDragOnLongPress = dragOnLongPress;
         setHasStableIds(true);
         setItemList(list);
+
     }
 
     @Override
@@ -73,7 +73,8 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
 
         @Override
         public void onItemClicked(View view) {
-            //Toast.makeText(view.getContext(), "Item clicked", Toast.LENGTH_SHORT).show();
+            OrganizeTravelFragment.changeDurationForItem(getAdapterPosition());
+            view.setBackgroundColor(0x00FF00);
         }
 
         @Override

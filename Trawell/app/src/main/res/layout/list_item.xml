@@ -15,6 +15,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:scrollbars="vertical"
     app:leftViewId="@+id/item_left"
     app:rightViewId="@+id/item_right"
     app:swipeViewId="@+id/item_layout">
@@ -55,7 +56,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/up_down_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

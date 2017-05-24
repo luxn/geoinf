@@ -29,8 +29,8 @@ public class NewTourActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_tour);
 
         NewTourActivity.fragmentManager = getSupportFragmentManager();
-        Fragment newTourFragment = new NewTourFragment();
+        Fragment specifyTravelfragment = new SpecifyTravelFragment();
         NewTourActivity.fragmentManager.beginTransaction().add(
-                R.id.newTourContainer, newTourFragment).commit();
+                R.id.newTourContainer, specifyTravelfragment).commit();
     }
 }

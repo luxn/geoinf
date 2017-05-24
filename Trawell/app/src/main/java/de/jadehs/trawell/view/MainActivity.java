@@ -59,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.goTo(HomeFragment.class);
                         return true;
                     case R.id.navigation_newTour:
-                        Intent intent = new Intent(getApplicationContext(), NewTourActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(getApplicationContext(), NewTourActivity.class);
+                        //startActivity(intent);
+                        MainActivity.goTo(NewTourFragment.class);
                         return true;
                     case R.id.navigation_myTours:
                         MainActivity.goTo(MyToursFragment.class);
