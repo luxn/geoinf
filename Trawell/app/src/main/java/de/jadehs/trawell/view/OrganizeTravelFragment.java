@@ -1,6 +1,7 @@
 package de.jadehs.trawell.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -10,72 +11,58 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.ItemAdapter;
 
-import com.google.android.gms.vision.text.Text;
 import com.woxthebox.draglistview.DragListView;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
 
+import static de.jadehs.trawell.models.BaseModel.myTours;
+import static de.jadehs.trawell.view.NewTourActivity.cities;
+import static de.jadehs.trawell.view.NewTourActivity.graph;
+import static de.jadehs.trawell.view.NewTourActivity.tour;
+
 public class OrganizeTravelFragment extends Fragment {
 
     private static ArrayList<Pair<Long, String>> mItemArray;
     private DragListView citiesListView;
     private static ItemAdapter listAdapter;
-    private TextView cityTextView;
     private static AlertDialog.Builder builder;
     private static LinearLayout ll;
+
+    Button save;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        super.onSaveInstanceState(savedInstanceState);
         getActivity().setTitle("Organize your Tour");
 
+        tour.printTour();
         View view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
 
         ll = (LinearLayout) view.findViewById(R.id.item_layout);
 
         citiesListView = (DragListView) view.findViewById(R.id.citiesListView);
-        citiesListView.setDragListListener(new DragListView.DragListListener() {
-            @Override
-            public void onItemDragStarted(int position) {
-                //Toast.makeText(getActivity(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity(), ""+mItemArray[""], Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemDragging(int itemPosition, float x, float y) {
-            }
-
-            @Override
-            public void onItemDragEnded(int fromPosition, int toPosition) {
-                if (fromPosition != toPosition) {
-                    //Toast.makeText(getActivity(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         mItemArray = new ArrayList<>();
-        mItemArray.add(new Pair<>((long) 0, "Oldenburg - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 1, "Prag - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 2, "Budapest - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 3, "Rom - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 4, "Mailand - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 5, "Madrid - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 6, "Lissabon - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 7, "Paris - 2 day(s)"));
-        mItemArray.add(new Pair<>((long) 8, "Oldenburg - 2 day(s)"));
+        for(int i = 0; i < tour.getCities().size(); i++){
+            String city = tour.getCities().get(i).getLocation().toString();
+            mItemArray.add(new Pair<>((long) i, city ));
+        }
 
         citiesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.up_down_image, false);
+        listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.item_layout, false);
         citiesListView.setAdapter(listAdapter, true);
         citiesListView.setCanDragHorizontally(false);
+        citiesListView.setScrollingEnabled(false);
         // Start and final location cannot be changed
         citiesListView.setCanNotDragAboveTopItem(true);
         citiesListView.setCanNotDragBelowBottomItem(true);
@@ -102,6 +89,17 @@ public class OrganizeTravelFragment extends Fragment {
         // Inflate the layout for this fragment
 
         builder = new AlertDialog.Builder(this.getContext());;
+
+        save = (Button) view.findViewById(R.id.saveBTN);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tour.printTour();
+                myTours.add(tour);
+                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

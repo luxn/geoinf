@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,8 +22,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.models.Tour;
 
-import static de.jadehs.trawell.view.NewTourActivity.locations;
+import static de.jadehs.trawell.view.NewTourActivity.graph;
+import static de.jadehs.trawell.view.NewTourActivity.tour;
 
 public class SpecifyTravelFragment extends Fragment {
 
@@ -30,61 +33,18 @@ public class SpecifyTravelFragment extends Fragment {
     EditText startET, endET, durationET;
     AutoCompleteTextView startCityTV, finalCityTV;
     Calendar myCalendar = Calendar.getInstance();
-    String[] cities2 = new String[locations.size()];
-    String[] cities = {
-            "Brüssel",
-            "Antwerpen",
-            "Sarajevo",
-            "Sofia",
-            "Kopenhagen",
-            "Berlin",
-            "München",
-            "Köln",
-            "Hamburg",
-            "Helsinki",
-            "Paris",
-            "Lille",
-            "Marseille",
-            "Lyon",
-            "Bordeaux",
-            "Athen",
-            "London",
-            "Edinburgh",
-            "Manchester",
-            "Newcastle",
-            "Zagreb (Agram)",
-            "Luxemburg",
-            "Skopje",
-            "Podgorica",
-            "Oslo",
-            "Wien",
-            "Salzburg",
-            "Lissabon",
-            "Porto",
-            "Bukarest",
-            "Stockholm",
-            "Bern",
-            "Basel",
-            "Zürich",
-            "Belgrad",
-            "Bratislava (Pressburg)",
-            "Ljubljana (Laibach)",
-            "Madrid",
-            "Barcelona",
-            "Sevilla",
-            "Ankara",
-            "Budapest"
-    };
+    String[] cities = new String[graph.getLocations().size()];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
         getActivity().setTitle("Specify your travel");
 
         View view = inflater.inflate(R.layout.fragment_specify_travel, container, false);
 
-        for (int i = 0; i < locations.size(); i++) {
-            cities2[i] = locations.get(i).toString();
+        for (int i = 0; i < graph.getLocations().size(); i++) {
+            cities[i] = graph.getLocations().get(i).toString();
         }
 
         durationET = (EditText) view.findViewById(R.id.durationEditText);
@@ -101,7 +61,7 @@ public class SpecifyTravelFragment extends Fragment {
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice, cities2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice, cities);
 
         startCityTV = (AutoCompleteTextView) view.findViewById(R.id.startCityTextView);
         startCityTV.setThreshold(1);
@@ -167,27 +127,31 @@ public class SpecifyTravelFragment extends Fragment {
                         !startCityTV.getText().toString().equals("") &&
                         !finalCityTV.getText().toString().equals("")) */
                     try {
+                        DateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+
+                        tour = new Tour(startCityTV.getText().toString(),
+                                finalCityTV.getText().toString(),
+                                formatter.parse(startET.getText().toString()),
+                                formatter.parse(endET.getText().toString()),
+                                Integer.parseInt(durationET.getText().toString()));
                         NewTourActivity.goTo(SelectCitiesFragment.class);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (java.lang.InstantiationException e) {
                         e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
 
             }
         });
-
-        homeBTN = (Button) view.findViewById(R.id.homeBTN);
-        homeBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         // Inflate the layout for this fragment
         return view;
+    }
+
+
+    public void onBackPressed(){
+
     }
 
     private void autoInsert(EditText editText) {
@@ -207,7 +171,6 @@ public class SpecifyTravelFragment extends Fragment {
 
 
     private void updateLabel(EditText editText) {
-
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
         editText.setText(sdf.format(myCalendar.getTime()));

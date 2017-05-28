@@ -33,6 +33,7 @@ import java.util.Set;
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.api.OnTaskCompletedListener;
 import de.jadehs.trawell.api.Weather;
+import de.jadehs.trawell.graph.TrawellGraph;
 
 public class MainActivity extends AppCompatActivity {
 
