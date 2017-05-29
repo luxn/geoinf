@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.graph.Location;
 import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.models.Tour;
 
 public class NewTourActivity extends AppCompatActivity {
 
+    public static Tour tour;
     public static TrawellGraph graph = new TrawellGraph();
-    public static ArrayList<Location> locations = new ArrayList<>(graph.getLocations());
     public static FragmentManager fragmentManager;
+    public static ArrayList<City> cities = new ArrayList<>();
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
         T fragment = tClass.newInstance();
@@ -28,9 +31,11 @@ public class NewTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tour);
 
+        tour = new Tour();
+
         NewTourActivity.fragmentManager = getSupportFragmentManager();
-        Fragment newTourFragment = new NewTourFragment();
+        Fragment specifyTravelfragment = new SpecifyTravelFragment();
         NewTourActivity.fragmentManager.beginTransaction().add(
-                R.id.newTourContainer, newTourFragment).commit();
+                R.id.newTourContainer, specifyTravelfragment).commit();
     }
 }

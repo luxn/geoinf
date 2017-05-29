@@ -33,6 +33,7 @@ import java.util.Set;
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.api.OnTaskCompletedListener;
 import de.jadehs.trawell.api.Weather;
+import de.jadehs.trawell.graph.TrawellGraph;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.goTo(HomeFragment.class);
                         return true;
                     case R.id.navigation_newTour:
-                        Intent intent = new Intent(getApplicationContext(), NewTourActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(getApplicationContext(), NewTourActivity.class);
+                        //startActivity(intent);
+                        MainActivity.goTo(NewTourFragment.class);
                         return true;
                     case R.id.navigation_myTours:
                         MainActivity.goTo(MyToursFragment.class);

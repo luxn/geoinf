@@ -2,6 +2,7 @@ package de.jadehs.trawell.graph;
 
 import android.support.annotation.Nullable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 
 public class TrawellGraph {
-    private List<Location> locations;
+    private ArrayList<Location> locations;
     private List<Route> routes;
 
     private Map<String, Location> locationMap;
@@ -45,7 +46,7 @@ public class TrawellGraph {
         routeMap.put(r.toString(), r);
     }
     
-    public List<Location> getLocations() {
+    public ArrayList<Location> getLocations() {
     	return locations;
     }
     public List<Route> getRoutes() {
