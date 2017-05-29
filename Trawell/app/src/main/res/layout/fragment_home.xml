@@ -36,7 +36,7 @@ tools:context="de.jadehs.trawell.view.HomeFragment">
 
         <TextView
             android:id="@+id/weatherTextView"
-            android:layout_width="0dp"
+            android:layout_width="368dp"
             android:layout_height="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
@@ -49,6 +49,8 @@ tools:context="de.jadehs.trawell.view.HomeFragment">
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/weatherImageView"
-            app:layout_constraintTop_toBottomOf="@+id/diaImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/diaImageView"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

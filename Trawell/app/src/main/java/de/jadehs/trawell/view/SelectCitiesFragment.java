@@ -113,6 +113,7 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleM) {
         googleMap = googleM;
+
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.setOnMarkerClickListener(this);
 
