@@ -3,11 +3,9 @@ package de.jadehs.trawell.api;
 
 import android.util.Log;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-//import se.walkercrou.places.exception.GooglePlacesException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -17,13 +15,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import de.jadehs.trawell.graph.Place;
 
-import static de.jadehs.trawell.view.NewTourActivity.locations;
+import static de.jadehs.trawell.view.NewTourActivity.cities;
+
+//import se.walkercrou.places.exception.GooglePlacesException;
 /**
  * Created by Lisa Haltermann on 24.05.2017.
  */
@@ -106,8 +104,9 @@ public class GooglePlaces {
                     JSONArray jsonArrayItems = jsonObject.getJSONArray("results");
                     for (int i = 0; i < jsonArrayItems.length(); i++) {
 
-                        double lat = locations.get(i).getLatitude();
-                        double lng = locations.get(i).getLongitude();
+                        //double lat = LOCATION.get(i).getLatitude();
+                        double lat = cities.get(i).getLocation().getLatitude();
+                        double lng = cities.get(i).getLocation().getLongitude();
 
                         JSONObject jsonObj = jsonArrayItems.getJSONObject(i);
                         String lat3 = jsonObj.getJSONObject("geometry").getJSONObject("location").getString("lat");
