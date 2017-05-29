@@ -10,15 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -28,11 +23,9 @@ import java.util.List;
 
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.api.GooglePlaces;
-import de.jadehs.trawell.api.OnTaskCompletedListener;
-import de.jadehs.trawell.api.Weather;
 import de.jadehs.trawell.graph.Place;
 
-import static de.jadehs.trawell.view.NewTourActivity.locations;
+import static de.jadehs.trawell.view.NewTourActivity.cities;
 // Schlüssel der API AIzaSyA1jEeZR3rlEoUzVPYrcPsofCLGXETFwgo
 
 // z.B https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.800870,-96.830803&radius=400&type=lodging&key=AIzaSyA1jEeZR3rlEoUzVPYrcPsofCLGXETFwgo
@@ -43,10 +36,10 @@ public class AccommodationsFragment extends Fragment implements OnMapReadyCallba
     Button ready;
     MapView mapView;
     GoogleMap googleMap;
-
+    ArrayList city;
 
     ListView citiesListView;
-    ArrayList<String> cities;
+
     ArrayAdapter<String> adapter;
 
 
@@ -59,8 +52,8 @@ public class AccommodationsFragment extends Fragment implements OnMapReadyCallba
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         citiesListView = (ListView) view.findViewById(R.id.citiesListView);
-        cities = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,cities);
+        city = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,city);
         citiesListView.setAdapter(adapter);
         ready = (Button) view.findViewById(R.id.ReadyBTN);
 
@@ -97,11 +90,11 @@ public class AccommodationsFragment extends Fragment implements OnMapReadyCallba
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.setOnMarkerClickListener(this);
 
-        for(int i = 0; i < locations.size(); i++){
-            Log.d("location", "" + locations.get(i));
-            String title = locations.get(i).toString();
-            double lat = locations.get(i).getLatitude();
-            double lng = locations.get(i).getLongitude();
+        for(int i = 0; i < cities.size(); i++){
+            Log.d("location", "" + cities.get(i));
+            String title = cities.get(i).toString();
+            double lat = cities.get(i).getLocation().getLatitude();
+            double lng = cities.get(i).getLocation().getLongitude();
             LatLng position = new LatLng(lat,lng);
             googleMap.addMarker(new MarkerOptions().position(position).title(title));
         }
