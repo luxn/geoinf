@@ -12,16 +12,18 @@ public class Location {
     private String name;
     private String country;
     private Coordinate position;
+    private String googleId;
 
-    public Location(String name, String country, Coordinate position) {
+    public Location(String name, String country, Coordinate position, String googleId) {
         this.name = name;
         this.country = country;
         this.position = position;
         this.routes = new ArrayList<>();
+        this.googleId = googleId;
     }
     
-    public Location(String name, String country, double lat, double lon) {
-        this(name, country, new Coordinate(lat, lon));       
+    public Location(String name, String country, double lat, double lon, String googleId) {
+        this(name, country, new Coordinate(lat, lon), googleId);
     }
     
     public void addRoute(Route r) {
@@ -38,6 +40,10 @@ public class Location {
     
     public double getLongitude() {
     	return position.getLongitude();
+    }
+
+    public String getGoogleId() {
+        return googleId;
     }
 
     @Override
