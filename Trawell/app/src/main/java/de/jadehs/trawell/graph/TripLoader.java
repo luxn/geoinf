@@ -1,8 +1,5 @@
 package de.jadehs.trawell.graph;
 
-import android.renderscript.ScriptGroup;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -49,7 +46,7 @@ public class TripLoader {
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
-			TripLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3])));
+			TripLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
 		}
 		scanner.close();		
 
