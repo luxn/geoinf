@@ -7,14 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.database.DBTour;
 import de.jadehs.trawell.models.ItemAdapter;
 
 import com.woxthebox.draglistview.DragListView;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
 import de.jadehs.trawell.R;
 
 import static de.jadehs.trawell.models.BaseModel.myTours;
-import static de.jadehs.trawell.view.NewTourActivity.cities;
-import static de.jadehs.trawell.view.NewTourActivity.graph;
 import static de.jadehs.trawell.view.NewTourActivity.tour;
 
 public class OrganizeTravelFragment extends Fragment {
@@ -43,7 +40,7 @@ public class OrganizeTravelFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onSaveInstanceState(savedInstanceState);
-        getActivity().setTitle("Organize your Tour");
+        getActivity().setTitle("Organize your DBTour");
 
         tour.printTour();
         View view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
@@ -96,6 +93,9 @@ public class OrganizeTravelFragment extends Fragment {
             public void onClick(View v) {
                 tour.printTour();
                 myTours.add(tour);
+                // Save this tour in database
+                DBTour dbtour = new DBTour(tour.getStartCity(), tour.getFinalCity(), tour.getStart(), tour.getEnd(), tour.getDuration(), tour.getCities());
+                dbtour.save();
                 Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }

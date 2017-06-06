@@ -56,7 +56,7 @@ public class SpecifyTravelFragment extends Fragment {
                         autoInsert(durationET);
                     }
                 } else {
-                    Toast.makeText(SpecifyTravelFragment.this.getContext(), "lost focus", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SpecifyTravelFragment.this.getContext(), "lost focus", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -165,7 +165,7 @@ public class SpecifyTravelFragment extends Fragment {
         } catch (ParseException e) {
         }
         int diffInDays = (int) ((endDate.getTime() - startDate.getTime())
-                / (1000 * 60 * 60 * 24));
+                / (1000 * 60 * 60 * 24)) + 1;
         editText.setText(Integer.toString(diffInDays));
     }
 
