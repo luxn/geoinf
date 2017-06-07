@@ -16,19 +16,47 @@ public class DBTour extends SugarRecord<DBTour> {
     private String startCity, finalCity;
     private Date start, end;
     private int duration;
-    private ArrayList<City> cities;
+//    private ArrayList<City> cities;
 
     public DBTour(){
     }
 
-    public DBTour(String startCity, String finalCity, Date start, Date end, int duration, ArrayList<City> cities){
+    public DBTour(String startCity, String finalCity, Date start, Date end, int duration){
         this.startCity = startCity;
         this.finalCity = finalCity;
         this.start = start;
         this.end = end;
         this.duration = duration;
-        this.cities = cities;
     }
+
+    public String getStartCity() {
+        return startCity;
+    }
+
+    public String getFinalCity() {
+        return finalCity;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+//    public DBTour(String startCity, String finalCity, Date start, Date end, int duration, ArrayList<City> cities){
+//        this.startCity = startCity;
+//        this.finalCity = finalCity;
+//        this.start = start;
+//        this.end = end;
+//        this.duration = duration;
+//        this.cities = cities;
+//    }
 }
 
 

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,9 +93,9 @@ public class OrganizeTravelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 tour.printTour();
-                myTours.add(tour);
+//                myTours.add(tour);
                 // Save this tour in database
-                DBTour dbtour = new DBTour(tour.getStartCity(), tour.getFinalCity(), tour.getStart(), tour.getEnd(), tour.getDuration(), tour.getCities());
+                DBTour dbtour = new DBTour(tour.getStartCity(), tour.getFinalCity(), tour.getStart(), tour.getEnd(), tour.getDuration());
                 dbtour.save();
                 Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(intent);
