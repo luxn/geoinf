@@ -32,7 +32,7 @@
         <meta-data android:name="DATABASE" android:value="myTours.db" />
         <meta-data android:name="VERSION" android:value="2" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="de.jadehs.trawell.database" />
 
     </application>
 
