@@ -95,7 +95,7 @@ public class OrganizeTravelFragment extends Fragment {
                 tour.printTour();
 //                myTours.add(tour);
                 // Save this tour in database
-                DBTour dbtour = new DBTour(tour.getStartCity(), tour.getFinalCity(), tour.getStart(), tour.getEnd(), tour.getDuration());
+                DBTour dbtour = new DBTour(tour);
                 dbtour.save();
                 Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(intent);

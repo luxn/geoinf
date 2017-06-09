@@ -10,5 +10,15 @@ public class DBCity extends SugarRecord<DBCity> {
     String name;
     DBTour dbtour;
 
+    public DBCity() {
+    }
 
+    public DBCity(String name, DBTour dbtour) {
+        this.name = name;
+        this.dbtour = dbtour;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

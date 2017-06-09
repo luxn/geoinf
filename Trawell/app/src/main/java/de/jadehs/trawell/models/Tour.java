@@ -1,5 +1,7 @@
 package de.jadehs.trawell.models;
 
+import android.support.v7.util.SortedList;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,8 +19,8 @@ public class Tour {
     private ArrayList<City> cities;
 
     public Tour(){
-
     }
+
     public Tour(String startCity, String finalCity, Date start, Date end, int duration){
         cities = new ArrayList<>();
         this.startCity = startCity;
@@ -27,6 +29,7 @@ public class Tour {
         this.end = end;
         this.duration = duration;
     }
+
     public void addCity(City city){
         cities.add(city);
     }
