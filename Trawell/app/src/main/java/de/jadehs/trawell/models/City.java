@@ -29,4 +29,7 @@ public class City {
         this.duration = duration;
     }
 
+    public void setAccommodation(String hotelname){this.accommodation = hotelname;}
+    public String getAccommodation() {return accommodation;}
+
 }

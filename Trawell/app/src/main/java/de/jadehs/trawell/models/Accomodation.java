@@ -1,6 +1,6 @@
 package de.jadehs.trawell.models;
 
-import de.jadehs.trawell.graph.Location;
+import android.location.Location;
 
 /**
  * Created by Lisa Haltermann on 06.06.2017.
@@ -13,19 +13,19 @@ public class Accomodation {
     private String name;
     private String adresse;
 
-    public Accomodation(Location location, String name, int bewertung, String adresse){
-        this.location = location;
+    public Accomodation(String name, int bewertung, String adresse){
+      //  this.location = location;
         this.name = name;
         this.bewertung = bewertung;
         this.adresse = adresse;
     }
 
-    public Location getLocation() {
+ /*   public Location getLocation() {
         return location;
     }
     public void setLocation(Location location){
         this.location = location;
-    }
+    } */
 
     public String getName(){
         return name;
