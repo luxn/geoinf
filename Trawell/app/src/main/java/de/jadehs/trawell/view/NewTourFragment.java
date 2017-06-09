@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.models.Tour;
 
 public class NewTourFragment extends Fragment {
 

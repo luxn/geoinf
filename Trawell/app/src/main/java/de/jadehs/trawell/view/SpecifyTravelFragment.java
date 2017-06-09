@@ -1,7 +1,6 @@
 package de.jadehs.trawell.view;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,7 +20,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.models.Tour;
 
 import static de.jadehs.trawell.view.NewTourActivity.graph;
 import static de.jadehs.trawell.view.NewTourActivity.tour;
@@ -121,19 +118,16 @@ public class SpecifyTravelFragment extends Fragment {
         nextBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* use later... if (!startET.getText().toString().equals("") &&
-                        !endET.getText().toString().equals("") &&
-                        !durationET.getText().toString().equals("") &&
-                        !startCityTV.getText().toString().equals("") &&
-                        !finalCityTV.getText().toString().equals("")) */
                     try {
+                        // Date Format
                         DateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-
-                        tour = new Tour(startCityTV.getText().toString(),
-                                finalCityTV.getText().toString(),
-                                formatter.parse(startET.getText().toString()),
-                                formatter.parse(endET.getText().toString()),
-                                Integer.parseInt(durationET.getText().toString()));
+                        //Specify the temporary tour
+                        tour.setStartCity(startCityTV.getText().toString());
+                        tour.setFinalCity(finalCityTV.getText().toString());
+                        tour.setStart(formatter.parse(startET.getText().toString()));
+                        tour.setEnd(formatter.parse(endET.getText().toString()));
+                        tour.setDuration(Integer.parseInt(durationET.getText().toString()));
+                        // next Step --> select cities
                         NewTourActivity.goTo(SelectCitiesFragment.class);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();

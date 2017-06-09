@@ -19,34 +19,32 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.graph.Location;
-import de.jadehs.trawell.models.City;
 
+import static de.jadehs.trawell.view.NewTourActivity.cities;
 import static de.jadehs.trawell.view.NewTourActivity.graph;
 import static de.jadehs.trawell.view.NewTourActivity.tour;
 
 public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    MapView mapView;
-    GoogleMap googleMap;
-    Button nextBTN, previousBTN;
+    private MapView mapView;
+    private GoogleMap googleMap;
+    private Button nextBTN, previousBTN;
 
-    ListView citiesListView;
-    ArrayAdapter<String> adapter;
-    public static ArrayList<String> cities;
+    private ListView citiesListView;
+    private ArrayAdapter<String> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-
-        cities = new ArrayList<>();
         getActivity().setTitle("Select the cities you want to visit");
+
+        // temporary list of selected cities (just for the View)
+        cities = new ArrayList<>();
+
         View view = inflater.inflate(R.layout.fragment_select_cities, container, false);
 
         citiesListView = (ListView) view.findViewById(R.id.citiesListView);
@@ -59,20 +57,19 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 try {
-                    int rest = tour.getDuration() % cities.size();
-                    int duration = tour.getDuration() / cities.size();
 
 //                    Location startCity = graph.getLocationByName(tour.getStartCity());
 //                    Location finalCity = graph.getLocationByName(tour.getFinalCity());
 //                    List<Location> citiesDijstra = graph.dijkstra(startCity, finalCity);
 
-                    for(int i = 0; i < cities.size();i++){
-                        if(rest > 0 ) {
-                            tour.addCity(new City(graph.getLocationByName(cities.get(i)), duration + 1));
-                            rest--;
-                        } else
-                            tour.addCity(new City(graph.getLocationByName(cities.get(i)),duration));
-                    }
+//                    for(int i = 0; i < cities.size();i++){
+//                        if(rest > 0 ) {
+//                            tour.addCity(new City(graph.getLocationByName(cities.get(i)), duration + 1));
+//                            rest--;
+//                        } else
+//                            tour.addCity(new City(graph.getLocationByName(cities.get(i)),duration));
+//                    }
+                    // Next step --> organize the travel
                     NewTourActivity.goTo(OrganizeTravelFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();

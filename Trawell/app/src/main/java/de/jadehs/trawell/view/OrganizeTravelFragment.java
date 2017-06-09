@@ -7,23 +7,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import de.jadehs.trawell.database.DBTour;
-import de.jadehs.trawell.models.ItemAdapter;
-
 import com.woxthebox.draglistview.DragListView;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.database.DBCity;
+import de.jadehs.trawell.models.ItemAdapter;
 
-import static de.jadehs.trawell.models.BaseModel.myTours;
+import static de.jadehs.trawell.view.NewTourActivity.cities;
+import static de.jadehs.trawell.view.NewTourActivity.newTourId;
 import static de.jadehs.trawell.view.NewTourActivity.tour;
 
 public class OrganizeTravelFragment extends Fragment {
@@ -34,16 +33,15 @@ public class OrganizeTravelFragment extends Fragment {
     private static AlertDialog.Builder builder;
     private static LinearLayout ll;
 
-    Button save;
+    private Button save, chooseAccoBTN;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onSaveInstanceState(savedInstanceState);
-        getActivity().setTitle("Organize your DBTour");
+        getActivity().setTitle("Organize your tour");
 
-        tour.printTour();
         View view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
 
         ll = (LinearLayout) view.findViewById(R.id.item_layout);
@@ -51,8 +49,8 @@ public class OrganizeTravelFragment extends Fragment {
         citiesListView = (DragListView) view.findViewById(R.id.citiesListView);
 
         mItemArray = new ArrayList<>();
-        for(int i = 0; i < tour.getCities().size(); i++){
-            String city = tour.getCities().get(i).getLocation().toString();
+        for(int i = 0; i < cities.size(); i++){
+            String city = cities.get(i);
             mItemArray.add(new Pair<>((long) i, city ));
         }
 
@@ -86,19 +84,46 @@ public class OrganizeTravelFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
-        builder = new AlertDialog.Builder(this.getContext());;
+        builder = new AlertDialog.Builder(this.getContext());
 
         save = (Button) view.findViewById(R.id.saveBTN);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tour.printTour();
-//                myTours.add(tour);
-                // Save this tour in database
-                DBTour dbtour = new DBTour(tour);
-                dbtour.save();
+//                int rest = tour.getDuration() % cities.size();
+//                int duration = tour.getDuration() / cities.size();
+                // Save the temporary tour in the database
+                tour.save();
+                newTourId = tour.getId().intValue();
+                // Save the selected cities in the database
+                for(int i = 0; i < cities.size(); i++) {
+                    DBCity city = new DBCity(cities.get(i), tour.getId());
+                    city.save();
+                }
                 Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        chooseAccoBTN = (Button) view.findViewById(R.id.chooseAccoBTN2);
+        chooseAccoBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the temporary tour in the database
+                tour.save();
+                newTourId = tour.getId().intValue();
+                // Save the selected cities in the database
+                for(int i = 0; i < cities.size(); i++) {
+                    DBCity city = new DBCity(cities.get(i), tour.getId());
+                    city.save();
+                }
+                try {
+                    NewTourActivity.goTo(AccommodationsFragment.class);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

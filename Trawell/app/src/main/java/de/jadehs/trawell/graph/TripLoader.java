@@ -28,7 +28,7 @@ public class TripLoader {
 		try {
 			loadLocations();
 			loadRoutes();
-			loadTrips();
+//			loadTrips();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

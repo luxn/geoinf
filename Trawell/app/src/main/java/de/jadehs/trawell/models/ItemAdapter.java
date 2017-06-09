@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.view.OrganizeTravelFragment;
 
+import static de.jadehs.trawell.view.NewTourActivity.cities;
 import static de.jadehs.trawell.view.NewTourActivity.tour;
 
 public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter.ViewHolder> {
@@ -63,7 +64,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
         super.onBindViewHolder(holder, position);
         String text = mItemList.get(position).second;
         id = getItemId(position);
-        String duration = String.valueOf(tour.getCities().get(id.intValue()).getDuration());
+        String duration = "0";
         holder.mText.setText(text);
         holder.mDuration.setText(duration);
         holder.downButton.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +75,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
                 if(duration > 0)
                     duration--;
                 holder.mDuration.setText(String.valueOf(duration));
-                tour.getCities().get(id.intValue()).setDuration(duration);
+//                tour.getCities().get(id.intValue()).setDuration(duration);
             }
         });
         holder.upButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +86,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
                 if(duration < 15)
                     duration++;
                 holder.mDuration.setText(String.valueOf(duration));
-                tour.getCities().get(id.intValue()).setDuration(duration);
+//                tour.getCities().get(id.intValue()).setDuration(duration);
             }
         });
         holder.itemView.setTag(mItemList.get(position));
