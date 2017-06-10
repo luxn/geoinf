@@ -1,10 +1,14 @@
 package de.jadehs.trawell.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,11 +29,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.api.GooglePlaces;
+import de.jadehs.trawell.database.DBAccommodation;
 import de.jadehs.trawell.database.DBCity;
 import de.jadehs.trawell.graph.Location;
 import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.models.TourArrayAdapter;
 
 public class ChooseAccommodationActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -38,8 +47,13 @@ public class ChooseAccommodationActivity extends AppCompatActivity implements Go
     private int radius = 5000;
     private String type = "lodging";
     private StringBuilder sb;
-    private ArrayList<String> places;
     private GoogleApiClient mGoogleApiClient;
+
+    private ArrayList<String> places;
+    private static ArrayList<DBAccommodation> accommodations;
+
+    private ListView accoListView;
+    private TourArrayAdapter<DBAccommodation> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +75,6 @@ public class ChooseAccommodationActivity extends AppCompatActivity implements Go
         sb.append("&type="+type);
         sb.append("&keyword=cruise");
         sb.append("&key="+getString(R.string.API_KEY));
-        Log.d("key", ""+ getString(R.string.API_KEY));
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -70,63 +83,31 @@ public class ChooseAccommodationActivity extends AppCompatActivity implements Go
                 .enableAutoManage(this, this)
                 .build();
 
+        GooglePlaces googleP = new GooglePlaces();
+        googleP.execute(mGoogleApiClient,sb);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        Log.d("size",""+accommodations.size());
 
-        URL url = null;
-
-        try {
-            url = new URL(sb.toString());
-            InputStream inStream = url.openStream();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inStream,"UTF-8"));
-            StringBuilder jsonResult = new StringBuilder();
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonResult.append(line);
-            }
-
-            JSONObject jsonObj = new JSONObject(jsonResult.toString());
-            JSONArray jsonArray = jsonObj.getJSONArray("results");
-
-            places = new ArrayList<String>();
-
-            for(int i = 0; i < jsonArray.length(); i++){
-                String place_id = jsonArray.getJSONObject(i).getString("place_id");
-                places.add(place_id);
-            }
-
-            for(int i = 0; i < places.size(); i++){
-                String placeId = places.get(i);
-                Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId).setResultCallback(
-                        new ResultCallback<PlaceBuffer>() {
-                            @Override
-                            public void onResult(@NonNull PlaceBuffer places) {
-                                if(places.getStatus().isSuccess() && places.getCount() > 0){
-                                    final Place myPlace = places.get(0);
-                                    // Hier muss eine Liste erzeugt werden die einem ArrayAdapter übergeben wird
-                                    // der den ListView verwaltet und die Unterkünfte anzeigt!
-                                    Log.d("place", ""+myPlace.getName());
-                                    Log.d("rating", ""+myPlace.getRating());
-                                    Log.d("adress", ""+myPlace.getAddress());
-                                }
-                            }
-                        }
-                );
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        for(int i = 0; i < accommodations.size(); i++){
+            Log.d("name",""+accommodations.get(i).getName());
+            Log.d("adresse",""+accommodations.get(i).getAdresse());
+            Log.d("rating",""+accommodations.get(i).getBewertung());
         }
-            }
-        }).start();
+
+//        accoListView = (ListView) this.findViewById(R.id.accoListView);
+//        accoListView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        adapter = new TourArrayAdapter<>(this,R.layout.tour_item,(ArrayList) accommodations, DBAccommodation.class);
+//        accoListView.setAdapter(adapter);
+
+    }
+
+    public static void addAccommodation(DBAccommodation acco){
+        accommodations.add(acco);
     }
 
     @Override

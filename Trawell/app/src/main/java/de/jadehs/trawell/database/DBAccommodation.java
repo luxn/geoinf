@@ -11,14 +11,14 @@ import com.orm.SugarRecord;
 public class DBAccommodation extends SugarRecord<DBAccommodation> {
 
     private Long cityId;
-    private int bewertung;
+    private String bewertung;
     private String name;
     private String adresse;
 
     public DBAccommodation(){
 
     }
-    public DBAccommodation(Long id, String name, int bewertung, String adresse){
+    public DBAccommodation(Long id, String name, String bewertung, String adresse){
         this.cityId = id;
         this.name = name;
         this.bewertung = bewertung;
@@ -38,10 +38,10 @@ public class DBAccommodation extends SugarRecord<DBAccommodation> {
         this.name = name;
     }
 
-    public int getBewertung(){
+    public String getBewertung(){
         return bewertung;
     }
-    public void setBewertung(int bewertung){
+    public void setBewertung(String bewertung){
         this.bewertung = bewertung;
     }
 

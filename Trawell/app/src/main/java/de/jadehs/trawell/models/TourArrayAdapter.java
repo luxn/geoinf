@@ -91,10 +91,11 @@ public class TourArrayAdapter<T> extends ArrayAdapter<T> {
             if (acco != null) {
                 TextView text = (TextView) view.findViewById(R.id.tourItem);
                 if (text != null) {
-                    text.setText("Das Hotel "+acco.getName()+
-                            " hat die Adresse "+ acco.getAdresse()+
-                            " und ist mit "+ acco.getBewertung()+
-                            " bewertet");
+                    text.setText(acco.getName());
+//                    text.setText("Das Hotel "+acco.getName()+
+//                            " hat die Adresse "+ acco.getAdresse()+
+//                            " und ist mit "+ acco.getBewertung()+
+//                            " bewertet");
                 }
             }
         }
