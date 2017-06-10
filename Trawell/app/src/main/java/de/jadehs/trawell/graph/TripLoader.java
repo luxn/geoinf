@@ -55,9 +55,7 @@ public class TripLoader {
 	private static void loadLocations() throws IOException {
 		Scanner scanner = TripLoader.openResourceCSV(R.raw.locations);
 		scanner.next(); // erste zeile �berspringen
-		Log.d("scan", "next");
 		while (scanner.hasNext()) {
-			Log.d("scan", "next");
 			String[] row = scanner.next().trim().split(",");
 			TripLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
 		}
