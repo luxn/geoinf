@@ -1,5 +1,6 @@
 package de.jadehs.trawell.graph;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.Map;
  */
 
 public class TrawellGraph {
+
+
     private ArrayList<Location> locations;
     private List<Route> routes;
 
@@ -22,18 +25,18 @@ public class TrawellGraph {
     private static TrawellGraph graph;
 
 
-    private TrawellGraph() {
+    private TrawellGraph(Context ctx) {
         locations = new ArrayList<>();
         routes = new ArrayList<>();
         locationMap = new HashMap<>();
         routeMap = new HashMap<>();
-        GraphLoader.loadGraph(this);
+        GraphLoader.loadGraph(this, ctx);
     }
 
     //lazy loading, single instance
-    public static TrawellGraph get() {
+    public static TrawellGraph get(Context ctx) {
         if (TrawellGraph.graph == null) {
-            return new TrawellGraph();
+            return new TrawellGraph(ctx);
         }
         return TrawellGraph.graph;
     }

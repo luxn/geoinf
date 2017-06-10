@@ -18,7 +18,7 @@ import com.woxthebox.draglistview.DragListView;
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.database.DBCity;
+import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.miscellaneous.ItemAdapter;
 import de.jadehs.trawell.view.home.MainActivity;
 
@@ -98,7 +98,7 @@ public class OrganizeTravelFragment extends Fragment {
                 newTourId = tour.getId().intValue();
                 // Save the selected cities in the database
                 for(int i = 0; i < cities.size(); i++) {
-                    DBCity city = new DBCity(cities.get(i), tour.getId());
+                    City city = new City(cities.get(i), tour.getId());
                     city.save();
                 }
                 Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
@@ -115,7 +115,7 @@ public class OrganizeTravelFragment extends Fragment {
                 newTourId = tour.getId().intValue();
                 // Save the selected cities in the database
                 for(int i = 0; i < cities.size(); i++) {
-                    DBCity city = new DBCity(cities.get(i), tour.getId());
+                    City city = new City(cities.get(i), tour.getId());
                     city.save();
                 }
                 try {

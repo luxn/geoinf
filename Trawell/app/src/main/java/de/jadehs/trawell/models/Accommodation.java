@@ -1,6 +1,4 @@
-package de.jadehs.trawell.database;
-
-import android.location.Location;
+package de.jadehs.trawell.models;
 
 import com.orm.SugarRecord;
 
@@ -8,17 +6,19 @@ import com.orm.SugarRecord;
  * Created by Christopher on 09.06.2017.
  */
 
-public class DBAccommodation extends SugarRecord<DBAccommodation> {
+public class Accommodation extends SugarRecord {
 
     private Long cityId;
     private String bewertung;
     private String name;
     private String adresse;
 
-    public DBAccommodation(){
+    public Accommodation(){
 
     }
-    public DBAccommodation(Long id, String name, String bewertung, String adresse){
+
+
+    public Accommodation(Long id, String name, String bewertung, String adresse){
         this.cityId = id;
         this.name = name;
         this.bewertung = bewertung;

@@ -26,7 +26,7 @@ public class TourActivity extends AppCompatActivity {
 //        Log.d("exTourId-Activity", ""+exTourId);
 
         TourActivity.fragmentManager = getSupportFragmentManager();
-        Fragment myFragment = new TourFragment();
+        Fragment myFragment = new TourDetailFragment();
         TourActivity.fragmentManager.beginTransaction().add(
                 R.id.tourActivityContainer, myFragment).commit();
 

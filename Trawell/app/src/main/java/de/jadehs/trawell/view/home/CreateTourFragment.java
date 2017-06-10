@@ -14,7 +14,7 @@ import android.widget.TextView;
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.view.create.NewTourActivity;
 
-public class NewTourFragment extends Fragment {
+public class CreateTourFragment extends Fragment {
 
     TextView textView;
     Button newTourButton;

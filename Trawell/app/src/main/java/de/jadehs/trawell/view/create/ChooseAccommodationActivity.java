@@ -11,51 +11,41 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.api.GooglePlaces;
-import de.jadehs.trawell.database.DBAccommodation;
-import de.jadehs.trawell.database.DBCity;
+import de.jadehs.trawell.api.AccommodationsService;
+import de.jadehs.trawell.api.OnTaskCompletedListener;
+import de.jadehs.trawell.models.Accommodation;
+import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.graph.Location;
 import de.jadehs.trawell.graph.TrawellGraph;
 import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
 
-public class ChooseAccommodationActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class ChooseAccommodationActivity extends AppCompatActivity implements OnTaskCompletedListener<List<Accommodation>>, GoogleApiClient.OnConnectionFailedListener {
 
     private static int cityId;
     private TrawellGraph graph;
-    private int radius = 5000;
-    private String type = "lodging";
-    private StringBuilder sb;
     private GoogleApiClient mGoogleApiClient;
 
-    private ArrayList<String> places;
-    private static ArrayList<DBAccommodation> accommodations;
 
     private ListView accoListView;
-    private TourArrayAdapter<DBAccommodation> adapter;
+    private TourArrayAdapter<Accommodation> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_accommodation);
-        graph = new TrawellGraph();
+        graph = TrawellGraph.get(getApplicationContext());
 
         Intent intent = getIntent();
         cityId = intent.getIntExtra("cityId", -1);
 
-        DBCity city = DBCity.findById(DBCity.class, new Long(cityId));
+        City city = City.findById(City.class, new Long(cityId));
         this.setTitle("Choose your Lodgings for " + city.getName());
 
         Location location = graph.getLocationByName(city.getName());
 
-        sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        sb.append("location="+location.getLatitude()+","+location.getLongitude());
-        sb.append("&radius="+radius);
-        sb.append("&type="+type);
-        sb.append("&keyword=cruise");
-        sb.append("&key="+getString(R.string.API_KEY));
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -64,16 +54,10 @@ public class ChooseAccommodationActivity extends AppCompatActivity implements Go
                 .enableAutoManage(this, this)
                 .build();
 
-        GooglePlaces googleP = new GooglePlaces();
-        googleP.execute(mGoogleApiClient,sb);
 
-        Log.d("size",""+accommodations.size());
+        AccommodationsService.getAccomodationsFor(location, mGoogleApiClient, this);
 
-        for(int i = 0; i < accommodations.size(); i++){
-            Log.d("name",""+accommodations.get(i).getName());
-            Log.d("adresse",""+accommodations.get(i).getAdresse());
-            Log.d("rating",""+accommodations.get(i).getBewertung());
-        }
+
 
 //        accoListView = (ListView) this.findViewById(R.id.accoListView);
 //        accoListView.setOnClickListener(new View.OnClickListener() {
@@ -82,17 +66,31 @@ public class ChooseAccommodationActivity extends AppCompatActivity implements Go
 //
 //            }
 //        });
-//        adapter = new TourArrayAdapter<>(this,R.layout.tour_item,(ArrayList) accommodations, DBAccommodation.class);
+//        adapter = new TourArrayAdapter<>(this,R.layout.tour_item,(ArrayList) accommodations, Accommodation.class);
 //        accoListView.setAdapter(adapter);
 
     }
 
-    public static void addAccommodation(DBAccommodation acco){
-        accommodations.add(acco);
+
+
+    @Override
+    public void onSuccess(List<Accommodation> list) {
+        Log.d("LODGING","size "+list.size());
+
+        for(int i = 0; i < list.size(); i++){
+            Log.d("LODGING","name "+list.get(i).getName());
+            Log.d("LODGING","adresse "+list.get(i).getAdresse());
+            Log.d("LODGING","rating "+list.get(i).getBewertung());
+        }
+    }
+
+    @Override
+    public void onException(Exception e) {
+        e.printStackTrace();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.e("trawell", connectionResult.getErrorMessage());
     }
 }

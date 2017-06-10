@@ -1,5 +1,6 @@
 package de.jadehs.trawell.graph;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -23,14 +24,15 @@ public class GraphLoader {
 	static List<Route> routes;
 	static List<Trip> trips;
 
-	public static void loadGraph(TrawellGraph graph) {
+	public static void loadGraph(TrawellGraph graph, Context ctx) {
 		GraphLoader.locations = new ArrayList<>();
 		GraphLoader.routes = new ArrayList<>();
+		GraphLoader.trips = new ArrayList<>();
 
 		try {
-			loadLocations();
-			loadRoutes();
-//			loadTrips();
+			loadLocations(ctx);
+			loadRoutes(ctx);
+			//loadTrips(ctx);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -41,19 +43,19 @@ public class GraphLoader {
 		}
 		for (Route r : GraphLoader.routes) {
 
-//			for (Trip t : GraphLoader.trips) {
-//				if (t.getRoute().getName().equals(r.getName())) {
-//					r.addTrip(t);
-//				}
-//			}
+			for (Trip t : GraphLoader.trips) {
+				if (t.getRoute().getName().equals(r.getName())) {
+					r.addTrip(t);
+				}
+			}
 
 			graph.addRoute(r);
 		}
 
 	}
 
-	private static void loadLocations() throws IOException {
-		Scanner scanner = GraphLoader.openResourceCSV(R.raw.locations);
+	private static void loadLocations(Context ctx) throws IOException {
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.locations, ctx);
 		scanner.next(); // erste zeile �berspringen
 		Log.d("scan", "next");
 		while (scanner.hasNext()) {
@@ -65,8 +67,8 @@ public class GraphLoader {
 
 	}
 
-	private static void loadRoutes() throws IOException {
-		Scanner scanner = GraphLoader.openResourceCSV(R.raw.routes);
+	private static void loadRoutes(Context ctx) throws IOException {
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.routes, ctx);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
@@ -89,8 +91,8 @@ public class GraphLoader {
 		
 	}
 
-	private static void loadTrips() {
-		Scanner scanner = GraphLoader.openResourceCSV(R.raw.trips);
+	private static void loadTrips(Context ctx) {
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.trips, ctx);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
@@ -128,8 +130,8 @@ public class GraphLoader {
 		return null;
 	}
 
-	private static Scanner openResourceCSV(int name) {
-		InputStream inputStream = MainActivity.context.getResources().openRawResource(name);
+	private static Scanner openResourceCSV(int name, Context ctx) {
+		InputStream inputStream = ctx.getResources().openRawResource(name);
 		Scanner scanner = new Scanner(inputStream);
 		scanner.useDelimiter("\n");
 		return scanner;

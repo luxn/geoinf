@@ -8,13 +8,15 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.orm.SugarDb;
 
 import java.util.Set;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.view.create.MyToursFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.goTo(HomeFragment.class);
                         return true;
                     case R.id.navigation_newTour:
-                        MainActivity.goTo(NewTourFragment.class);
+                        MainActivity.goTo(CreateTourFragment.class);
                         return true;
                     case R.id.navigation_myTours:
-                        MainActivity.goTo(MyToursFragment.class);
+                        MainActivity.goTo(TourOverviewFragment.class);
                         return true;
                     case R.id.navigation_informations:
                         MainActivity.goTo(InformationFragment.class);
@@ -63,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SugarDb sugarDb = new SugarDb(getApplicationContext());
+        Log.d("SUGARDB", sugarDb.getDatabaseName());
+        Log.d("SUGARDB", sugarDb.toString());
+        Log.d("SUGARDB", sugarDb.getDB().getPath());
+
 
 //        SugarApp.getSugarContext().deleteDatabase("myTours.db");
         MainActivity.context = getApplicationContext();

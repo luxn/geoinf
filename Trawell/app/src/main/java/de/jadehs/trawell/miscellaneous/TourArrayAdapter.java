@@ -11,9 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.database.DBAccommodation;
-import de.jadehs.trawell.database.DBCity;
-import de.jadehs.trawell.database.DBTour;
+import de.jadehs.trawell.models.Accommodation;
+import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.models.Tour;
 
 /**
  * Created by Christopher on 07.06.2017.
@@ -22,7 +22,7 @@ import de.jadehs.trawell.database.DBTour;
 public class TourArrayAdapter<T> extends ArrayAdapter<T> {
 
     private Class<T> type;
-//    public TourArrayAdapter(Context context, int textViewResourceId, ArrayList<DBTour> myTours){
+//    public TourArrayAdapter(Context context, int textViewResourceId, ArrayList<Tour> myTours){
 //        super(context, textViewResourceId, myTours);
 //    }
 //
@@ -36,7 +36,7 @@ public class TourArrayAdapter<T> extends ArrayAdapter<T> {
 //            view = vi.inflate(R.layout.tour_item, null);
 //        }
 //
-//        DBTour tour = getItem(position);
+//        Tour tour = getItem(position);
 //
 //        if(tour != null){
 //            TextView text = (TextView) view.findViewById(R.id.tourItem);
@@ -62,8 +62,8 @@ public class TourArrayAdapter<T> extends ArrayAdapter<T> {
             view = vi.inflate(R.layout.tour_item, null);
         }
 
-        if(type.equals(DBTour.class)) {
-            DBTour tour = (DBTour) getItem(position);
+        if(type.equals(Tour.class)) {
+            Tour tour = (Tour) getItem(position);
 
             if (tour != null) {
                 TextView text = (TextView) view.findViewById(R.id.tourItem);
@@ -71,8 +71,8 @@ public class TourArrayAdapter<T> extends ArrayAdapter<T> {
                     text.setText(tour.getStartCity() + " - " + tour.getFinalCity());
                 }
             }
-        } else if(type.equals(DBCity.class)){
-            DBCity city = (DBCity) getItem(position);
+        } else if(type.equals(City.class)){
+            City city = (City) getItem(position);
 
             if (city != null) {
                 TextView text = (TextView) view.findViewById(R.id.tourItem);
@@ -80,8 +80,8 @@ public class TourArrayAdapter<T> extends ArrayAdapter<T> {
                     text.setText(city.getName());
                 }
             }
-        } else if(type.equals(DBAccommodation.class)){
-            DBAccommodation acco = (DBAccommodation) getItem(position);
+        } else if(type.equals(Accommodation.class)){
+            Accommodation acco = (Accommodation) getItem(position);
 
             if (acco != null) {
                 TextView text = (TextView) view.findViewById(R.id.tourItem);
