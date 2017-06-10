@@ -1,4 +1,4 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.home;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.view.create.NewTourActivity;
 
 public class NewTourFragment extends Fragment {
 

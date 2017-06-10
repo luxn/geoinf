@@ -1,4 +1,4 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.create;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -22,9 +22,8 @@ import java.util.Locale;
 
 import de.jadehs.trawell.R;
 
-import static de.jadehs.trawell.view.NewTourActivity.cities;
-import static de.jadehs.trawell.view.NewTourActivity.graph;
-import static de.jadehs.trawell.view.NewTourActivity.tour;
+import static de.jadehs.trawell.view.create.NewTourActivity.graph;
+import static de.jadehs.trawell.view.create.NewTourActivity.tour;
 
 public class SpecifyTravelFragment extends Fragment {
 

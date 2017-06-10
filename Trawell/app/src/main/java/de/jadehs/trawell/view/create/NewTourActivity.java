@@ -1,10 +1,9 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.create;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.util.ArrayList;
 

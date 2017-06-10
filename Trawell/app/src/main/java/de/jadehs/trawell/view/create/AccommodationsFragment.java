@@ -1,12 +1,9 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.create;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
@@ -25,13 +21,13 @@ import de.jadehs.trawell.R;
 //import de.jadehs.trawell.api.GooglePlaces;
 import de.jadehs.trawell.database.DBCity;
 import de.jadehs.trawell.database.DBTour;
-import de.jadehs.trawell.models.ItemAdapter;
-import de.jadehs.trawell.models.TourArrayAdapter;
+import de.jadehs.trawell.miscellaneous.ItemAdapter;
+import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.view.tours.TourActivity;
 
-import static de.jadehs.trawell.view.NewTourActivity.graph;
-import static de.jadehs.trawell.view.NewTourActivity.newTourId;
-import static de.jadehs.trawell.view.TourActivity.exTourId;
-//import static de.jadehs.trawell.view.TourActivity.tourId;
+import static de.jadehs.trawell.view.create.NewTourActivity.newTourId;
+import static de.jadehs.trawell.view.tours.TourActivity.exTourId;
+//import static de.jadehs.trawell.view.tours.TourActivity.tourId;
 // Schlüssel der API AIzaSyA1jEeZR3rlEoUzVPYrcPsofCLGXETFwgo
 
 // z.B https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.800870,-96.830803&radius=400&type=lodging&key=AIzaSyA1jEeZR3rlEoUzVPYrcPsofCLGXETFwgo

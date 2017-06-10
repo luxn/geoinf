@@ -1,4 +1,4 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.home;
 
 import android.content.Intent;
 import android.net.Uri;

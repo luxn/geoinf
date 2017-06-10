@@ -1,5 +1,5 @@
 
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.Set;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.view.create.MyToursFragment;
 
 public class MainActivity extends AppCompatActivity {
 

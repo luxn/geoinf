@@ -1,4 +1,4 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.home;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

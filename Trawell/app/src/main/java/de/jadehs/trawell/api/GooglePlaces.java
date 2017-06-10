@@ -2,11 +2,8 @@ package de.jadehs.trawell.api;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,9 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import de.jadehs.trawell.database.DBAccommodation;
-import de.jadehs.trawell.view.ChooseAccommodationActivity;
 
-import static de.jadehs.trawell.view.ChooseAccommodationActivity.addAccommodation;
+import static de.jadehs.trawell.view.create.ChooseAccommodationActivity.addAccommodation;
 
 //import se.walkercrou.places.exception.GooglePlacesException;
 /**

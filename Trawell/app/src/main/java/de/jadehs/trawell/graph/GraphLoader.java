@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.view.MainActivity;
+import de.jadehs.trawell.view.home.MainActivity;
 
 
 /**
@@ -17,15 +17,15 @@ import de.jadehs.trawell.view.MainActivity;
  * @author luxn
  *
  */
-public class TripLoader {
+public class GraphLoader {
 	
 	static List<Location> locations;
 	static List<Route> routes;
 	static List<Trip> trips;
 
 	public static void loadGraph(TrawellGraph graph) {
-		TripLoader.locations = new ArrayList<>();
-		TripLoader.routes = new ArrayList<>();
+		GraphLoader.locations = new ArrayList<>();
+		GraphLoader.routes = new ArrayList<>();
 
 		try {
 			loadLocations();
@@ -36,12 +36,12 @@ public class TripLoader {
 		}
 
 
-		for (Location l : TripLoader.locations) {
+		for (Location l : GraphLoader.locations) {
 			graph.addLocation(l);
 		}
-		for (Route r : TripLoader.routes) {
+		for (Route r : GraphLoader.routes) {
 
-//			for (Trip t : TripLoader.trips) {
+//			for (Trip t : GraphLoader.trips) {
 //				if (t.getRoute().getName().equals(r.getName())) {
 //					r.addTrip(t);
 //				}
@@ -53,20 +53,20 @@ public class TripLoader {
 	}
 
 	private static void loadLocations() throws IOException {
-		Scanner scanner = TripLoader.openResourceCSV(R.raw.locations);
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.locations);
 		scanner.next(); // erste zeile �berspringen
 		Log.d("scan", "next");
 		while (scanner.hasNext()) {
 			Log.d("scan", "next");
 			String[] row = scanner.next().trim().split(",");
-			TripLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
+			GraphLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
 		}
 		scanner.close();		
 
 	}
 
 	private static void loadRoutes() throws IOException {
-		Scanner scanner = TripLoader.openResourceCSV(R.raw.routes);
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.routes);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
@@ -79,18 +79,18 @@ public class TripLoader {
 			}
 			Route originRoute = new Route(row[0]+ "-" + row[1],origin, destination);
 			origin.addRoute(originRoute);			
-			TripLoader.routes.add(originRoute);
+			GraphLoader.routes.add(originRoute);
 			
 			Route destinationRoute = new Route(row[1]+ "-" + row[0], destination, origin);
 			destination.addRoute(destinationRoute);
-			TripLoader.routes.add(destinationRoute);
+			GraphLoader.routes.add(destinationRoute);
 		}
 		scanner.close();
 		
 	}
 
 	private static void loadTrips() {
-		Scanner scanner = TripLoader.openResourceCSV(R.raw.trips);
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.trips);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
@@ -103,7 +103,7 @@ public class TripLoader {
 					new DayTime(row[5])
 			);
 
-			TripLoader.trips.add(t);
+			GraphLoader.trips.add(t);
 
 
 		}
@@ -111,7 +111,7 @@ public class TripLoader {
 	}
 	
 	private static Location findLocationByName(String name) {
-		for (Location l : TripLoader.locations) {
+		for (Location l : GraphLoader.locations) {
 			if (l.toString().equals(name)) {
 				return l;
 			}
@@ -120,7 +120,7 @@ public class TripLoader {
 	}
 	
 	private static Route findRouteByName(String name) {
-		for (Route r : TripLoader.routes) {
+		for (Route r : GraphLoader.routes) {
 			if (r.toString().equals(name)) {
 				return r;
 			}

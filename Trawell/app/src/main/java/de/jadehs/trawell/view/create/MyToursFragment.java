@@ -1,9 +1,8 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.create;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.database.DBCity;
 import de.jadehs.trawell.database.DBTour;
-import de.jadehs.trawell.models.TourArrayAdapter;
+import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.view.tours.TourActivity;
 
 public class MyToursFragment extends Fragment {
 
