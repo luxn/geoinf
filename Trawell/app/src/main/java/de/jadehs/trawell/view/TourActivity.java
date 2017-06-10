@@ -27,9 +27,9 @@ public class TourActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tour);
 
         Intent intent = getIntent();
-        exTourId = intent.getIntExtra("itemPosition", -1);
+        exTourId = intent.getIntExtra("tourId", -1);
 
-        Log.d("exTourId-Activity", ""+exTourId);
+//        Log.d("exTourId-Activity", ""+exTourId);
 
         TourActivity.fragmentManager = getSupportFragmentManager();
         Fragment myFragment = new TourFragment();

@@ -1,6 +1,9 @@
 package de.jadehs.trawell.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.util.Log;
@@ -25,6 +28,7 @@ import de.jadehs.trawell.database.DBTour;
 import de.jadehs.trawell.models.ItemAdapter;
 import de.jadehs.trawell.models.TourArrayAdapter;
 
+import static de.jadehs.trawell.view.NewTourActivity.graph;
 import static de.jadehs.trawell.view.NewTourActivity.newTourId;
 import static de.jadehs.trawell.view.TourActivity.exTourId;
 //import static de.jadehs.trawell.view.TourActivity.tourId;
@@ -37,11 +41,10 @@ public class AccommodationsFragment extends Fragment  {
     private int tourId;
     private ListView listView;
     private TourArrayAdapter listViewAdapter;
+    private List<DBCity> cities;
 
     Button ready;
     MapView mapView;
-    GoogleMap googleMap;
-    ArrayList city;
     ArrayAdapter<String> adapter;
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static ArrayList<Pair<Long, String>> mItemArray;
@@ -51,7 +54,7 @@ public class AccommodationsFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Choose your accommodation");
+        getActivity().setTitle("Choose lodgings for your destinations");
 
         View view = inflater.inflate(R.layout.fragment_accommodations, container, false);
 
@@ -65,8 +68,7 @@ public class AccommodationsFragment extends Fragment  {
         }
 
         DBTour tour = DBTour.findById(DBTour.class, new Long(tourId));
-        List<DBCity> city;
-        city = DBTour.find(DBCity.class, "TOUR_ID =" + tour.getId());
+        cities = DBTour.find(DBCity.class, "TOUR_ID =" + tour.getId());
 
         // List View einladen
         listView = (ListView) view.findViewById(R.id.accoListView);
@@ -74,10 +76,24 @@ public class AccommodationsFragment extends Fragment  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                DBCity city = cities.get(position);
+                Intent intent = new Intent(getActivity().getApplicationContext(), ChooseAccommodationActivity.class);
+                intent.putExtra("cityId", city.getId().intValue());
+                startActivity(intent);
+//                try {
+//                    if(getActivity().getClass().equals(TourActivity.class)){
+//                        TourActivity.goTo(ChooseAccommodationFragment.class);
+//                    } else if (getActivity().getClass().equals(NewTourActivity.class)){
+//                        NewTourActivity.goTo(ChooseAccommodationFragment.class);
+//                    }
+//                } catch (IllegalAccessException e) {
+//                    e.printStackTrace();
+//                } catch (java.lang.InstantiationException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
-        listViewAdapter = new TourArrayAdapter(getContext(), R.layout.tour_item,(ArrayList) city, DBCity.class);
+        listViewAdapter = new TourArrayAdapter(getContext(), R.layout.tour_item,(ArrayList) cities, DBCity.class);
         listView.setAdapter(listViewAdapter);
 //        listViewAdapter = new ArrayAdapter<DBCity>();
 

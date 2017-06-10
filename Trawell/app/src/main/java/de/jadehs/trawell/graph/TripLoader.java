@@ -1,5 +1,7 @@
 package de.jadehs.trawell.graph;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -39,11 +41,11 @@ public class TripLoader {
 		}
 		for (Route r : TripLoader.routes) {
 
-			for (Trip t : TripLoader.trips) {
-				if (t.getRoute().getName().equals(r.getName())) {
-					r.addTrip(t);
-				}
-			}
+//			for (Trip t : TripLoader.trips) {
+//				if (t.getRoute().getName().equals(r.getName())) {
+//					r.addTrip(t);
+//				}
+//			}
 
 			graph.addRoute(r);
 		}
@@ -53,7 +55,9 @@ public class TripLoader {
 	private static void loadLocations() throws IOException {
 		Scanner scanner = TripLoader.openResourceCSV(R.raw.locations);
 		scanner.next(); // erste zeile �berspringen
+		Log.d("scan", "next");
 		while (scanner.hasNext()) {
+			Log.d("scan", "next");
 			String[] row = scanner.next().trim().split(",");
 			TripLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
 		}

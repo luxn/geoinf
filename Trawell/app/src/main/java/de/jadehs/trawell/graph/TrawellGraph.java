@@ -27,7 +27,7 @@ public class TrawellGraph {
         routes = new ArrayList<>();
         locationMap = new HashMap<>();
         routeMap = new HashMap<>();
-//        TripLoader.loadGraph(this);
+        TripLoader.loadGraph(this);
     }
 
     public List<Location> dijkstra(Location from, Location to) {
