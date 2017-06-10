@@ -36,7 +36,7 @@ public class ArrayAdapterString extends ArrayAdapter<Accomodation> {
         if(ac != null){
             TextView text = (TextView) view.findViewById(R.id.tourItem);
             if(text != null){
-                text.setText("Das Hotel "+ac.getName()+" hat die Adresse "+ ac.getAdresse()+" und ist mit "+ ac.getBewertung()+" bewertet");
+                text.setText("Hotel "+ac.getName()+" \n hat die Adresse "+ ac.getAdresse()+" und ist mit "+ ac.getBewertung()+" bewertet");
             }
         }
         return view;

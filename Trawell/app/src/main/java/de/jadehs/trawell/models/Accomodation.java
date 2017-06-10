@@ -9,11 +9,11 @@ import android.location.Location;
 public class Accomodation {
 
     private Location location;
-    private int bewertung;
+    private double bewertung;
     private String name;
     private String adresse;
 
-    public Accomodation(String name, int bewertung, String adresse){
+    public Accomodation(String name, double bewertung, String adresse){
       //  this.location = location;
         this.name = name;
         this.bewertung = bewertung;
@@ -34,7 +34,7 @@ public class Accomodation {
         this.name = name;
     }
 
-    public int getBewertung(){
+    public double getBewertung(){
         return bewertung;
     }
     public void setBewertung(int bewertung){

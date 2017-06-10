@@ -36,11 +36,11 @@ public class GooglePlaces {
     public String name;
     public String iconURL;
     public String location;
-
+    public static List<Accomodation> list;
 
     // Breite ist lat, Lände ist lon
     public static List<Accomodation> getLodgingFrom(final double lonEingabe, final double latEinagbe, final int radiusEingabe) {
-        final List<Accomodation> list = new ArrayList<Accomodation>();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -60,32 +60,64 @@ public class GooglePlaces {
                     url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lon+"&radius="+radius+"&type=lodging&key="+apiKey);
                     InputStream inputStream = url.openStream();
 
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
-                    String json = reader.readLine();
+                    JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+                    list = new ArrayList<Accomodation>();
+                    list = readJsonStream(inputStream);
 
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONArray jsonArrayItems = jsonObject.getJSONArray("results");
-                    for (int i = 0; i < 10; i++) {
-
-                        JSONObject jsonObj = jsonArrayItems.getJSONObject(i);
-                        double lat3 = jsonObj.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
-                        double lon3 = jsonObj.getJSONObject("geometry").getJSONObject("location").getDouble("lon");
-                        String name = jsonObj.getString("name");
-                        int ranting = jsonObj.getInt("rating");
-
-                        String adress = jsonObj.getString("vicinity");
-                        android.location.Location loc = new android.location.Location(name);
-                        loc.setLongitude(lon3);
-                        loc.setLatitude(lat3);
-                        list.add(new Accomodation(name, ranting,adress));
-                    }
                 } catch (IOException ex) {
-                } catch (JSONException ex) {
                 }
+
+
+
+
+
             }
         }).start();
 
         return list;
+    }
+
+
+    public static List<Accomodation> readJsonStream(InputStream in) throws IOException {
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        try {
+            return readMessagesArray(reader);
+        } finally {
+            //reader.close();
+        }
+    }
+
+    public static List<Accomodation> readMessagesArray(JsonReader reader) throws IOException {
+        List<Accomodation> messages = new ArrayList<Accomodation>();
+
+        reader.beginArray();
+        while (reader.hasNext()) {
+            messages.add(readMessage(reader));
+        }
+        reader.endArray();
+        return messages;
+    }
+
+    public static  Accomodation readMessage(JsonReader reader) throws IOException {
+        String name = null;
+        double bewertung = 0;
+        String adresse = null;
+
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String field = reader.nextName();
+            if (field.equals("name")) {
+                name = reader.nextString();
+            } else if(field.equals("rating")){
+                bewertung = reader.nextDouble();
+            } else if(field.equals("vicinity")){
+                adresse = reader.nextString();
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return new Accomodation(name,bewertung,adresse);
     }
 }
 

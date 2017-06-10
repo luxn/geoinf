@@ -1,33 +1,24 @@
 package de.jadehs.trawell.view;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.api.GooglePlaces;
-import de.jadehs.trawell.graph.Location;
 import de.jadehs.trawell.models.Accomodation;
 import de.jadehs.trawell.models.ArrayAdapterString;
 import de.jadehs.trawell.models.City;
-import de.jadehs.trawell.models.ItemAdapter;
 
 
 import static de.jadehs.trawell.view.AccommodationsFragment.aktuelleLocationID;
@@ -65,7 +56,7 @@ public class accomodationsCity extends Fragment {
         for(int i = 0; i < list.size(); i++){
             String adresse = list.get(i).getAdresse();
             String name = list.get(i).getName();
-            int bewertung = list.get(i).getBewertung();
+            double bewertung = list.get(i).getBewertung();
             mItemArray.add(new Accomodation(name, bewertung, adresse));
         }
 
