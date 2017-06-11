@@ -1,24 +1,23 @@
 package de.jadehs.trawell.view;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.graph.Location;
+import de.jadehs.trawell.database.DBTour;
 import de.jadehs.trawell.graph.TrawellGraph;
-import de.jadehs.trawell.models.City;
-import de.jadehs.trawell.models.Tour;
 
 public class NewTourActivity extends AppCompatActivity {
 
-    public static Tour tour;
+    public static int newTourId;
+    public static DBTour tour;
     public static TrawellGraph graph = new TrawellGraph();
     public static FragmentManager fragmentManager;
-    public static ArrayList<City> cities = new ArrayList<>();
+    public static ArrayList<String> cities = new ArrayList<>();
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
         T fragment = tClass.newInstance();
@@ -31,7 +30,8 @@ public class NewTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tour);
 
-        tour = new Tour();
+        // new instance of a tour (just temporary)
+        tour = new DBTour();
 
         NewTourActivity.fragmentManager = getSupportFragmentManager();
         Fragment specifyTravelfragment = new SpecifyTravelFragment();

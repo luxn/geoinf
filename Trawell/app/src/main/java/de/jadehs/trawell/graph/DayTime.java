@@ -7,6 +7,8 @@ package de.jadehs.trawell.graph;
 
 public class DayTime {
 
+
+
     public enum AmPm {
         AM,
         PM
@@ -16,6 +18,20 @@ public class DayTime {
     private int minutes;
 
     private AmPm amPm;
+
+    public DayTime(String s) {
+        String[] splitted = s.split(":");
+        int[] time = new int[] {Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1])};
+
+        if (time[0] > 11) {
+            this.amPm = AmPm.PM;
+        } else {
+            this.amPm = AmPm.AM;
+        }
+
+        this.hours = time[0];
+        this.minutes = time[1];
+    }
 
     public DayTime(int hours, int minutes) {
         this.hours = hours;

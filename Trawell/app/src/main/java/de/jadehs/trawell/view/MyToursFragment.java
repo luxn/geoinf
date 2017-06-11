@@ -9,20 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.database.DBCity;
 import de.jadehs.trawell.database.DBTour;
-import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.models.TourArrayAdapter;
-import de.jadehs.trawell.view.HomeFragment;
-import de.jadehs.trawell.view.MainActivity;
-
-import static de.jadehs.trawell.models.BaseModel.myTours;
 
 public class MyToursFragment extends Fragment {
 
@@ -43,12 +38,13 @@ public class MyToursFragment extends Fragment {
         myToursLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DBTour tour = myTours.get(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), TourActivity.class);
-                intent.putExtra("itemPosition", position);
+                intent.putExtra("itemPosition", tour.getId().intValue());
                 startActivity(intent);
             }
         });
-        adapter = new TourArrayAdapter(getContext(), R.layout.tour_item, (ArrayList<DBTour>) myTours);
+        adapter = new TourArrayAdapter(getContext(), R.layout.tour_item, (ArrayList) myTours, DBTour.class);
         myToursLV.setAdapter(adapter);
         // Inflate the layout for this fragment
         return view;

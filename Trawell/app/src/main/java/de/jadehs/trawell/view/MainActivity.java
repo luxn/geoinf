@@ -2,38 +2,18 @@
 package de.jadehs.trawell.view;
 
 import android.content.Context;
-
-import android.content.Intent;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.icu.text.IDNA;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
 import java.util.Set;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.api.OnTaskCompletedListener;
-import de.jadehs.trawell.api.Weather;
-import de.jadehs.trawell.graph.TrawellGraph;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.goTo(HomeFragment.class);
                         return true;
                     case R.id.navigation_newTour:
-                        //Intent intent = new Intent(getApplicationContext(), NewTourActivity.class);
-                        //startActivity(intent);
                         MainActivity.goTo(NewTourFragment.class);
                         return true;
                     case R.id.navigation_myTours:
@@ -84,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        SugarApp.getSugarContext().deleteDatabase("myTours.db");
         MainActivity.context = getApplicationContext();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

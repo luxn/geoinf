@@ -19,6 +19,7 @@ public class TripLoader {
 	
 	static List<Location> locations;
 	static List<Route> routes;
+	static List<Trip> trips;
 
 	public static void loadGraph(TrawellGraph graph) {
 		TripLoader.locations = new ArrayList<>();
@@ -27,6 +28,7 @@ public class TripLoader {
 		try {
 			loadLocations();
 			loadRoutes();
+//			loadTrips();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -36,6 +38,13 @@ public class TripLoader {
 			graph.addLocation(l);
 		}
 		for (Route r : TripLoader.routes) {
+
+			for (Trip t : TripLoader.trips) {
+				if (t.getRoute().getName().equals(r.getName())) {
+					r.addTrip(t);
+				}
+			}
+
 			graph.addRoute(r);
 		}
 
@@ -77,7 +86,24 @@ public class TripLoader {
 	}
 
 	private static void loadTrips() {
+		Scanner scanner = TripLoader.openResourceCSV(R.raw.trips);
+		scanner.next(); // erste zeile �berspringen
+		while (scanner.hasNext()) {
+			String[] row = scanner.next().trim().split(",");
 
+
+			Trip t = new Trip(
+					row[0],
+					findRouteByName(row[1]),
+					new DayTime(row[4]),
+					new DayTime(row[5])
+			);
+
+			TripLoader.trips.add(t);
+
+
+		}
+		scanner.close();
 	}
 	
 	private static Location findLocationByName(String name) {

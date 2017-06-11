@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--         android:icon="@mipmap/ic_trawell_logo" -->
+    <!-- android:icon="@mipmap/ic_trawell_logo" -->
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -31,7 +31,7 @@
             android:value="myTours.db" />
         <meta-data
             android:name="VERSION"
-            android:value="3" />
+            android:value="1" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -39,7 +39,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="de.jadehs.trawell.database" />
 
-        <activity android:name=".view.TourActivity"></activity>
+        <activity android:name=".view.TourActivity" />
     </application>
 
 </manifest>

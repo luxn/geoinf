@@ -9,6 +9,6 @@ import java.util.ArrayList;
 public abstract class BaseModel {
 
     public Long id;
-    public static ArrayList<Tour> myTours = new ArrayList<>();
+//    public static ArrayList<Tour> myTours = new ArrayList<>();
 
 }
