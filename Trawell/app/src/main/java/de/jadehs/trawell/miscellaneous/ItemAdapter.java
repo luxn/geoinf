@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package de.jadehs.trawell.models;
+package de.jadehs.trawell.miscellaneous;
 
-import android.graphics.Color;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -31,10 +28,6 @@ import com.woxthebox.draglistview.DragItemAdapter;
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.view.OrganizeTravelFragment;
-
-import static de.jadehs.trawell.view.NewTourActivity.cities;
-import static de.jadehs.trawell.view.NewTourActivity.tour;
 
 public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter.ViewHolder> {
 

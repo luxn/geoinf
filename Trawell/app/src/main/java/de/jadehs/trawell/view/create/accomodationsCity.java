@@ -23,7 +23,7 @@
 //
 //import de.jadehs.trawell.R;
 //import de.jadehs.trawell.api.GooglePlaces;
-//import de.jadehs.trawell.database.DBAccommodation;
+//import de.jadehs.trawell.database.Accommodation;
 //import de.jadehs.trawell.graph.Location;
 //import de.jadehs.trawell.models.Accomodation;
 //import de.jadehs.trawell.models.ArrayAdapterString;
@@ -57,7 +57,7 @@
 //        double lat = tour.getCities().get(id).getLocation().getLatitude();
 //
 //        // Lässt sich alle Hotels im umkreis von 4000m geben
-//        List<DBAccommodation> list ;
+//        List<Accommodation> list ;
 //        list =GooglePlaces.getLodgingFrom(lon,lat,4000);
 //
 //        // Schreibt alle Hotels in die Liste

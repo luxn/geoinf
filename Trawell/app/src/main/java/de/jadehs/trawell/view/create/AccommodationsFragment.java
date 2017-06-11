@@ -1,12 +1,9 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.create;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
@@ -23,15 +19,15 @@ import java.util.List;
 
 import de.jadehs.trawell.R;
 //import de.jadehs.trawell.api.GooglePlaces;
-import de.jadehs.trawell.database.DBCity;
-import de.jadehs.trawell.database.DBTour;
-import de.jadehs.trawell.models.ItemAdapter;
-import de.jadehs.trawell.models.TourArrayAdapter;
+import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.models.Tour;
+import de.jadehs.trawell.miscellaneous.ItemAdapter;
+import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.view.tours.TourActivity;
 
-import static de.jadehs.trawell.view.NewTourActivity.graph;
-import static de.jadehs.trawell.view.NewTourActivity.newTourId;
-import static de.jadehs.trawell.view.TourActivity.exTourId;
-//import static de.jadehs.trawell.view.TourActivity.tourId;
+import static de.jadehs.trawell.view.create.NewTourActivity.newTourId;
+import static de.jadehs.trawell.view.tours.TourActivity.exTourId;
+//import static de.jadehs.trawell.view.tours.TourActivity.tourId;
 // Schlüssel der API AIzaSyA1jEeZR3rlEoUzVPYrcPsofCLGXETFwgo
 
 // z.B https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.800870,-96.830803&radius=400&type=lodging&key=AIzaSyA1jEeZR3rlEoUzVPYrcPsofCLGXETFwgo
@@ -41,7 +37,7 @@ public class AccommodationsFragment extends Fragment  {
     private int tourId;
     private ListView listView;
     private TourArrayAdapter listViewAdapter;
-    private List<DBCity> cities;
+    private List<City> cities;
 
     Button ready;
     MapView mapView;
@@ -67,8 +63,8 @@ public class AccommodationsFragment extends Fragment  {
 //            Log.d("newTourId", ""+tourId);
         }
 
-        DBTour tour = DBTour.findById(DBTour.class, new Long(tourId));
-        cities = DBTour.find(DBCity.class, "TOUR_ID =" + tour.getId());
+        Tour tour = Tour.findById(Tour.class, new Long(tourId));
+        cities = Tour.find(City.class, "TOUR_ID =" + tour.getId());
 
         // List View einladen
         listView = (ListView) view.findViewById(R.id.accoListView);
@@ -76,7 +72,7 @@ public class AccommodationsFragment extends Fragment  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DBCity city = cities.get(position);
+                City city = cities.get(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), ChooseAccommodationActivity.class);
                 intent.putExtra("cityId", city.getId().intValue());
                 startActivity(intent);
@@ -93,9 +89,9 @@ public class AccommodationsFragment extends Fragment  {
 //                }
             }
         });
-        listViewAdapter = new TourArrayAdapter(getContext(), R.layout.tour_item,(ArrayList) cities, DBCity.class);
+        listViewAdapter = new TourArrayAdapter(getContext(), R.layout.tour_item,(ArrayList) cities, City.class);
         listView.setAdapter(listViewAdapter);
-//        listViewAdapter = new ArrayAdapter<DBCity>();
+//        listViewAdapter = new ArrayAdapter<City>();
 
 //        // Listet alle cities auf
 //        mItemArray = new ArrayList<>();
