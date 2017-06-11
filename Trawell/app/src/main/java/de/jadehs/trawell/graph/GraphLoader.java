@@ -57,9 +57,7 @@ public class GraphLoader {
 	private static void loadLocations(Context ctx) throws IOException {
 		Scanner scanner = GraphLoader.openResourceCSV(R.raw.locations, ctx);
 		scanner.next(); // erste zeile �berspringen
-		Log.d("scan", "next");
 		while (scanner.hasNext()) {
-			Log.d("scan", "next");
 			String[] row = scanner.next().trim().split(",");
 			GraphLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
 		}
