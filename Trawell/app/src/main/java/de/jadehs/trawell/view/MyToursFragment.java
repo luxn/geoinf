@@ -40,7 +40,7 @@ public class MyToursFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DBTour tour = myTours.get(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), TourActivity.class);
-                intent.putExtra("itemPosition", tour.getId().intValue());
+                intent.putExtra("tourId", tour.getId().intValue());
                 startActivity(intent);
             }
         });

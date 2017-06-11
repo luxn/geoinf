@@ -1,5 +1,7 @@
 package de.jadehs.trawell.graph;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -39,11 +41,11 @@ public class TripLoader {
 		}
 		for (Route r : TripLoader.routes) {
 
-			for (Trip t : TripLoader.trips) {
-				if (t.getRoute().getName().equals(r.getName())) {
-					r.addTrip(t);
-				}
-			}
+//			for (Trip t : TripLoader.trips) {
+//				if (t.getRoute().getName().equals(r.getName())) {
+//					r.addTrip(t);
+//				}
+//			}
 
 			graph.addRoute(r);
 		}

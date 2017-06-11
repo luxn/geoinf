@@ -3,6 +3,7 @@ package de.jadehs.trawell.view;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.Locale;
 
 import de.jadehs.trawell.R;
 
+import static de.jadehs.trawell.view.NewTourActivity.cities;
 import static de.jadehs.trawell.view.NewTourActivity.graph;
 import static de.jadehs.trawell.view.NewTourActivity.tour;
 
@@ -38,6 +40,7 @@ public class SpecifyTravelFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
         getActivity().setTitle("Specify your travel");
 
+        Log.d("citiesSize", ""+cities.length);
         View view = inflater.inflate(R.layout.fragment_specify_travel, container, false);
 
         for (int i = 0; i < graph.getLocations().size(); i++) {
