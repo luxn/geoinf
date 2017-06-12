@@ -1,6 +1,7 @@
 package de.jadehs.trawell.api;
 
 import android.support.annotation.NonNull;
+import android.util.JsonReader;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -53,7 +54,7 @@ public class AccommodationsService {
                     InputStream inStream = url.openStream();
 
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inStream,"UTF-8"));
-                    //JSON Parsing
+
                     StringBuilder jsonResult = new StringBuilder();
 
                     String line;
@@ -76,6 +77,16 @@ public class AccommodationsService {
                     final List<Accommodation> accommodations = Collections.synchronizedList(new ArrayList<Accommodation>());
 
 
+ /*                   //JSON Parsing
+                    final List<Accommodation>  jsonReader = JSONReader.readJsonStream(inStream);
+                    for(int i=0; i< jsonReader.size(); i++){
+                        synchronized (accommodations) {
+                            accommodations.add(jsonReader.get(i));
+                        }
+                    }  */
+
+
+
                     for (final String id : placeIds) {
                         Thread t = new Thread(new Runnable() {
                             @Override
@@ -87,6 +98,7 @@ public class AccommodationsService {
                                             public void onResult(@NonNull PlaceBuffer places) {
 
                                                 if(places.getStatus().isSuccess() && places.getCount() > 0){
+
                                                     final Place myPlace = places.get(0);
                                                     Accommodation acco = new Accommodation();
                                                     acco.setAdresse(myPlace.getAddress().toString());
