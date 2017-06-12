@@ -1,18 +1,12 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.tours;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.database.DBCity;
-import de.jadehs.trawell.database.DBTour;
 
 public class TourActivity extends AppCompatActivity {
 
@@ -32,7 +26,7 @@ public class TourActivity extends AppCompatActivity {
 //        Log.d("exTourId-Activity", ""+exTourId);
 
         TourActivity.fragmentManager = getSupportFragmentManager();
-        Fragment myFragment = new TourFragment();
+        Fragment myFragment = new TourDetailFragment();
         TourActivity.fragmentManager.beginTransaction().add(
                 R.id.tourActivityContainer, myFragment).commit();
 

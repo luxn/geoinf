@@ -1,4 +1,4 @@
-package de.jadehs.trawell.database;
+package de.jadehs.trawell.models;
 
 import com.orm.SugarRecord;
 
@@ -9,27 +9,27 @@ import java.util.Date;
  */
 
 
-public class DBTour extends SugarRecord<DBTour> {
+public class Tour extends SugarRecord {
 
     private String startCity, finalCity;
     private Date start, end;
     private int duration;
 
-    public DBTour(){
+    public Tour(){
     }
 
-//    public DBTour (Tour tour) {
+//    public Tour (Tour tour) {
 //        this.startCity = tour.getStartCity();
 //        this.finalCity = tour.getFinalCity();
 //        this.start = tour.getStart();
 //        this.end = tour.getEnd();
 //        this.duration = tour.getDuration();
 //        for (int i = 0; i < tour.getCities().size(); i++) {
-//            new DBCity(tour.getCities().get(i).toString(), this);
+//            new City(tour.getCities().get(i).toString(), this);
 //        }
 //    }
 
-    /*public DBTour(String startCity, String finalCity, Date start, Date end, int duration){
+    /*public Tour(String startCity, String finalCity, Date start, Date end, int duration){
         this.startCity = startCity;
         this.finalCity = finalCity;
         this.start = start;
@@ -78,7 +78,7 @@ public class DBTour extends SugarRecord<DBTour> {
 
 //    public ArrayList<String> getCityNames() {
 //        ArrayList<String> cities = new ArrayList<>();
-//        List<DBCity> dbcities = DBCity.find(DBCity.class, "dbtour = "+this, this.getId().toString());
+//        List<City> dbcities = City.find(City.class, "dbtour = "+this, this.getId().toString());
 //        for (int i = 0; i < dbcities.size(); i++) {
 //            cities.add(dbcities.get(i).getName());
 //        }

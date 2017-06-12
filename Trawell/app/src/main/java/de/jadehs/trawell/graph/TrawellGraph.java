@@ -1,11 +1,9 @@
 package de.jadehs.trawell.graph;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +13,8 @@ import java.util.Map;
  */
 
 public class TrawellGraph {
+
+
     private ArrayList<Location> locations;
     private List<Route> routes;
 
@@ -22,12 +22,23 @@ public class TrawellGraph {
     private Map<String, Route> routeMap;
 
 
-    public TrawellGraph() {
+    private static TrawellGraph graph;
+
+
+    private TrawellGraph(Context ctx) {
         locations = new ArrayList<>();
         routes = new ArrayList<>();
         locationMap = new HashMap<>();
         routeMap = new HashMap<>();
-        TripLoader.loadGraph(this);
+        GraphLoader.loadGraph(this, ctx);
+    }
+
+    //lazy loading, single instance
+    public static TrawellGraph get(Context ctx) {
+        if (TrawellGraph.graph == null) {
+            return new TrawellGraph(ctx);
+        }
+        return TrawellGraph.graph;
     }
 
     public List<Location> dijkstra(Location from, Location to) {

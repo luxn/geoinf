@@ -1,5 +1,6 @@
 package de.jadehs.trawell.graph;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.view.MainActivity;
+import de.jadehs.trawell.view.home.MainActivity;
 
 
 /**
@@ -17,54 +18,55 @@ import de.jadehs.trawell.view.MainActivity;
  * @author luxn
  *
  */
-public class TripLoader {
+public class GraphLoader {
 	
 	static List<Location> locations;
 	static List<Route> routes;
 	static List<Trip> trips;
 
-	public static void loadGraph(TrawellGraph graph) {
-		TripLoader.locations = new ArrayList<>();
-		TripLoader.routes = new ArrayList<>();
+	public static void loadGraph(TrawellGraph graph, Context ctx) {
+		GraphLoader.locations = new ArrayList<>();
+		GraphLoader.routes = new ArrayList<>();
+		GraphLoader.trips = new ArrayList<>();
 
 		try {
-			loadLocations();
-			loadRoutes();
-//			loadTrips();
+			loadLocations(ctx);
+			loadRoutes(ctx);
+			//loadTrips(ctx);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 
-		for (Location l : TripLoader.locations) {
+		for (Location l : GraphLoader.locations) {
 			graph.addLocation(l);
 		}
-		for (Route r : TripLoader.routes) {
+		for (Route r : GraphLoader.routes) {
 
-//			for (Trip t : TripLoader.trips) {
-//				if (t.getRoute().getName().equals(r.getName())) {
-//					r.addTrip(t);
-//				}
-//			}
+			for (Trip t : GraphLoader.trips) {
+				if (t.getRoute().getName().equals(r.getName())) {
+					r.addTrip(t);
+				}
+			}
 
 			graph.addRoute(r);
 		}
 
 	}
 
-	private static void loadLocations() throws IOException {
-		Scanner scanner = TripLoader.openResourceCSV(R.raw.locations);
+	private static void loadLocations(Context ctx) throws IOException {
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.locations, ctx);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
-			TripLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
+			GraphLoader.locations.add(new Location(row[0], row[1], Double.parseDouble(row[2]), Double.parseDouble(row[3]), row[4]));
 		}
 		scanner.close();		
 
 	}
 
-	private static void loadRoutes() throws IOException {
-		Scanner scanner = TripLoader.openResourceCSV(R.raw.routes);
+	private static void loadRoutes(Context ctx) throws IOException {
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.routes, ctx);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
@@ -77,18 +79,18 @@ public class TripLoader {
 			}
 			Route originRoute = new Route(row[0]+ "-" + row[1],origin, destination);
 			origin.addRoute(originRoute);			
-			TripLoader.routes.add(originRoute);
+			GraphLoader.routes.add(originRoute);
 			
 			Route destinationRoute = new Route(row[1]+ "-" + row[0], destination, origin);
 			destination.addRoute(destinationRoute);
-			TripLoader.routes.add(destinationRoute);
+			GraphLoader.routes.add(destinationRoute);
 		}
 		scanner.close();
 		
 	}
 
-	private static void loadTrips() {
-		Scanner scanner = TripLoader.openResourceCSV(R.raw.trips);
+	private static void loadTrips(Context ctx) {
+		Scanner scanner = GraphLoader.openResourceCSV(R.raw.trips, ctx);
 		scanner.next(); // erste zeile �berspringen
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
@@ -101,7 +103,7 @@ public class TripLoader {
 					new DayTime(row[5])
 			);
 
-			TripLoader.trips.add(t);
+			GraphLoader.trips.add(t);
 
 
 		}
@@ -109,7 +111,7 @@ public class TripLoader {
 	}
 	
 	private static Location findLocationByName(String name) {
-		for (Location l : TripLoader.locations) {
+		for (Location l : GraphLoader.locations) {
 			if (l.toString().equals(name)) {
 				return l;
 			}
@@ -118,7 +120,7 @@ public class TripLoader {
 	}
 	
 	private static Route findRouteByName(String name) {
-		for (Route r : TripLoader.routes) {
+		for (Route r : GraphLoader.routes) {
 			if (r.toString().equals(name)) {
 				return r;
 			}
@@ -126,8 +128,8 @@ public class TripLoader {
 		return null;
 	}
 
-	private static Scanner openResourceCSV(int name) {
-		InputStream inputStream = MainActivity.context.getResources().openRawResource(name);
+	private static Scanner openResourceCSV(int name, Context ctx) {
+		InputStream inputStream = ctx.getResources().openRawResource(name);
 		Scanner scanner = new Scanner(inputStream);
 		scanner.useDelimiter("\n");
 		return scanner;

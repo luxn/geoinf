@@ -1,7 +1,5 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.tours;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,19 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.database.DBCity;
-import de.jadehs.trawell.database.DBTour;
+import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.models.Tour;
+import de.jadehs.trawell.view.create.AccommodationsFragment;
 
-import static de.jadehs.trawell.view.TourActivity.exTourId;
-
-public class TourFragment extends Fragment {
+public class TourDetailFragment extends Fragment {
 
     private Button chooseAccoBTN;
 
@@ -29,10 +24,10 @@ public class TourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("exTourId-Fragment", ""+exTourId);
-        DBTour tour = DBTour.findById(DBTour.class, new Long(exTourId));
-        List<DBCity> city = new ArrayList<>();
-        city = DBTour.find(DBCity.class, "TOUR_ID =" + tour.getId());
+        Log.d("exTourId-Fragment", ""+ TourActivity.exTourId);
+        Tour tour = Tour.findById(Tour.class, new Long(TourActivity.exTourId));
+        List<City> city = new ArrayList<>();
+        city = Tour.find(City.class, "TOUR_ID =" + tour.getId());
         getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
 
         for(int i = 0; i < city.size();i++){

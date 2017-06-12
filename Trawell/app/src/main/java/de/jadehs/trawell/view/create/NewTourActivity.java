@@ -1,21 +1,20 @@
-package de.jadehs.trawell.view;
+package de.jadehs.trawell.view.create;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.database.DBTour;
+import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.graph.TrawellGraph;
 
 public class NewTourActivity extends AppCompatActivity {
 
     public static int newTourId;
-    public static DBTour tour;
+    public static Tour tour;
     public static TrawellGraph graph;
     public static FragmentManager fragmentManager;
     public static ArrayList<String> cities = new ArrayList<>();
@@ -31,9 +30,9 @@ public class NewTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tour);
 
-        graph = new TrawellGraph();
+        graph = TrawellGraph.get(getApplicationContext());
         // new instance of a tour (just temporary)
-        tour = new DBTour();
+        tour = new Tour();
 
         NewTourActivity.fragmentManager = getSupportFragmentManager();
         Fragment specifyTravelfragment = new SpecifyTravelFragment();
