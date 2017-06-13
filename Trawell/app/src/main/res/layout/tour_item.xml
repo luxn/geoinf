@@ -12,7 +12,11 @@
             android:id="@+id/tourItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
             android:text="TextView"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
     </FrameLayout>

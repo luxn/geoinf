@@ -122,7 +122,6 @@ public class AccommodationsService {
                     for (Thread t : workers) {
                         t.join();
                     }
-
                     callback.onSuccess(accommodations);
 
                 } catch (Exception e) {

@@ -1,5 +1,6 @@
 package de.jadehs.trawell.view.tours;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,6 +16,9 @@ import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.view.create.AccommodationsFragment;
+import de.jadehs.trawell.view.home.MainActivity;
+
+import static de.jadehs.trawell.view.home.MainActivity.tourId;
 
 public class TourDetailFragment extends Fragment {
 
@@ -24,11 +28,13 @@ public class TourDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("exTourId-Fragment", ""+ TourActivity.exTourId);
-        Tour tour = Tour.findById(Tour.class, new Long(TourActivity.exTourId));
+        Tour tour = Tour.findById(Tour.class, tourId);
+
         List<City> city = new ArrayList<>();
-        city = Tour.find(City.class, "TOUR_ID =" + tour.getId());
-        getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
+        city = City.listAll(City.class);
+
+        city = Tour.find(City.class, "TOUR = ?", String.valueOf(tour.getId()));
+//        getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
 
         for(int i = 0; i < city.size();i++){
             Log.d("city",""+city.get(i).getName());
@@ -41,7 +47,7 @@ public class TourDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    TourActivity.goTo(AccommodationsFragment.class);
+                    MainActivity.goTo(AccommodationsFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (java.lang.InstantiationException e) {

@@ -2,28 +2,32 @@ package de.jadehs.trawell.models;
 
 import com.orm.SugarRecord;
 
+import java.util.ArrayList;
+
 /**
  * Created by David on 06.06.2017.
  */
 
 public class City extends SugarRecord {
-    private Long tourId;
     private String name;
     private int duration;
+    private Tour tour;
 
     public City() {
     }
 
-    public City(String name, Long id) {
+    public City(String name, Tour tour, int duration) {
         this.name = name;
-        this.tourId = id;
-    }
-    public Long getTourId() {
-        return tourId;
+        this.tour = tour;
+        this.duration = duration;
     }
 
-    public void setTourId(Long tourId) {
-        this.tourId = tourId;
+    public Tour getTour() {
+        return tour;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 
     public String getName() {

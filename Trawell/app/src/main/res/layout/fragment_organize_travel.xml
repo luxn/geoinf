@@ -12,6 +12,11 @@
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="495dp"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="15dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbarThumbHorizontal="@color/colorAccent"
+            android:scrollbarThumbVertical="@color/colorAccent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +24,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:scrollbarThumbVertical="@color/colorAccent">
 
                 <com.woxthebox.draglistview.DragListView
                     android:id="@+id/citiesListView"

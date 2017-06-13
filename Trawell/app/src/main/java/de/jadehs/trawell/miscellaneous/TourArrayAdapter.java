@@ -22,34 +22,10 @@ import de.jadehs.trawell.models.Tour;
 public class TourArrayAdapter<T> extends ArrayAdapter<T> {
 
     private Class<T> type;
-//    public TourArrayAdapter(Context context, int textViewResourceId, ArrayList<Tour> myTours){
-//        super(context, textViewResourceId, myTours);
-//    }
-//
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        View view = convertView;
-//
-//        if(view == null){
-//            LayoutInflater vi;
-//            vi = LayoutInflater.from(getContext());
-//            view = vi.inflate(R.layout.tour_item, null);
-//        }
-//
-//        Tour tour = getItem(position);
-//
-//        if(tour != null){
-//            TextView text = (TextView) view.findViewById(R.id.tourItem);
-//            if(text != null){
-//                text.setText(tour.getStartCity() + " - " + tour.getFinalCity());
-//            }
-//        }
-//        return view;
-//    }
+
     public TourArrayAdapter(Context context, int textViewResourceId, ArrayList<T> myTours, Class<T> classT){
         super(context, textViewResourceId, myTours);
         type = classT;
-        Log.d("type", ""+type);
     }
 
     @Override

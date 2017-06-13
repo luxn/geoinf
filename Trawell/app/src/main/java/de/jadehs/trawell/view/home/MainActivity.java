@@ -12,14 +12,25 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.orm.SchemaGenerator;
+import com.orm.SugarApp;
+import com.orm.SugarContext;
 import com.orm.SugarDb;
+import com.orm.SugarRecord;
+import com.orm.util.SugarConfig;
+import com.orm.util.SugarCursor;
 
 import java.util.Set;
+
+import javax.xml.validation.Schema;
 
 import de.jadehs.trawell.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Long tourId;
+    public static Long cityId;
     public static Set<Fragment> mFragments;
     public static FragmentManager fragmentManager;
 
@@ -66,10 +77,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SugarDb sugarDb = new SugarDb(getApplicationContext());
-        Log.d("SUGARDB", sugarDb.getDatabaseName());
-        Log.d("SUGARDB", sugarDb.toString());
-        Log.d("SUGARDB", sugarDb.getDB().getPath());
+//        SugarContext.terminate();
+//        SchemaGenerator schemaGenerator = new SchemaGenerator(getApplicationContext());
+//        schemaGenerator.deleteTables(new SugarDb(getApplicationContext()).getDB());
+//        SugarContext.init(getApplicationContext());
+//        schemaGenerator.createDatabase(new SugarDb(getApplicationContext()).getDB());
+
+//        SugarDb sugarDb = new SugarDb(getApplicationContext());
+//        Log.d("SUGARDB", sugarDb.getDatabaseName());
+//        Log.d("SUGARDB", sugarDb.toString());
+//        Log.d("SUGARDB", sugarDb.getDB().getPath());
+
 
 
 //        SugarApp.getSugarContext().deleteDatabase("myTours.db");

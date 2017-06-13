@@ -39,7 +39,6 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="de.jadehs.trawell.models" />
 
-        <activity android:name=".view.tours.TourActivity" />
         <activity android:name=".view.create.ChooseAccommodationActivity" />
     </application>
 

@@ -16,18 +16,25 @@
 
 package de.jadehs.trawell.miscellaneous;
 
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.woxthebox.draglistview.DragItemAdapter;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.view.create.NewTourActivity;
 
 public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter.ViewHolder> {
 
@@ -35,15 +42,42 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     private int mGrabHandleId;
     private boolean mDragOnLongPress;
     private Long id;
+    private Context context;
     private ViewHolder holder;
+    private TrawellGraph graph;
+    private ArrayList<City> cities = NewTourActivity.cities;
 
     public ItemAdapter(ArrayList<Pair<Long, String>> list, int layoutId, int grabHandleId, boolean dragOnLongPress) {
         mLayoutId = layoutId;
         mGrabHandleId = grabHandleId;
         mDragOnLongPress = dragOnLongPress;
+        context = NewTourActivity.context;
+        graph = TrawellGraph.get(context);
         setHasStableIds(true);
         setItemList(list);
+    }
+    public int checkDuration(){
+        int duration = 0;
+        for (City city : cities){
+            duration += city.getDuration();
+        }
+        return duration;
+    }
 
+    public void changeIndices(City clickedCity, int position){
+        City city = cities.get(position);
+        int clickedCityPos = cities.indexOf(clickedCity);
+        cities.set(position, clickedCity);
+        cities.set(clickedCityPos, city);
+    }
+
+    public City getCityByName(ArrayList<City> cities, String name){
+        for (City city : cities){
+            if(city.getName().equals(name)){
+                return city;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -53,12 +87,23 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        String text = mItemList.get(position).second;
-        id = getItemId(position);
-        String duration = "0";
-        holder.mText.setText(text);
+        String cityName = mItemList.get(position).second;
+        final City city = getCityByName(cities, cityName);
+
+        // finalCity and startCity have no duration
+        if(position == 0 || position == cities.size()-1)
+            holder.durationLay.setVisibility(View.INVISIBLE);
+
+        // change position
+        changeIndices(city, position);
+        //DEBUG
+//        Log.d("cityId",""+city.getName()+" "+cities.indexOf(city));
+
+        // get current duration
+        String duration = String.valueOf(cities.get(position).getDuration());
+        holder.mText.setText(cityName);
         holder.mDuration.setText(duration);
         holder.downButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +113,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
                 if(duration > 0)
                     duration--;
                 holder.mDuration.setText(String.valueOf(duration));
-//                tour.getCities().get(id.intValue()).setDuration(duration);
+                cities.get(position).setDuration(duration);
             }
         });
         holder.upButton.setOnClickListener(new View.OnClickListener() {
@@ -76,10 +121,13 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
             public void onClick(View v) {
                 String durationString = String.valueOf(holder.mDuration.getText());
                 int duration = Integer.parseInt(durationString);
-                if(duration < 15)
+                Log.d("duration", ""+city.getTour().getDuration());
+                if(duration < 15 && city.getTour().getDuration() > checkDuration())
                     duration++;
+                else
+                    Toast.makeText(context, "You have just " + city.getTour().getDuration() + " days!",Toast.LENGTH_SHORT).show();
                 holder.mDuration.setText(String.valueOf(duration));
-//                tour.getCities().get(id.intValue()).setDuration(duration);
+                cities.get(position).setDuration(duration);
             }
         });
         holder.itemView.setTag(mItemList.get(position));
@@ -94,6 +142,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
         public TextView mText;
         public TextView mDuration;
         public ImageButton upButton, downButton;
+        public ConstraintLayout durationLay;
 
         public ViewHolder(final View itemView) {
             super(itemView, mGrabHandleId, mDragOnLongPress);
@@ -101,12 +150,13 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
             mDuration = (TextView) itemView.findViewById(R.id.durationTV);
             upButton = (ImageButton) itemView.findViewById(R.id.upBTN);
             downButton = (ImageButton) itemView.findViewById(R.id.downBTN);
+            durationLay = (ConstraintLayout) itemView.findViewById(R.id.durationLayout);
+
         }
 
         @Override
         public void onItemClicked(View view) {
 //            OrganizeTravelFragment.changeDurationForItem(getAdapterPosition());
-
         }
 
         @Override

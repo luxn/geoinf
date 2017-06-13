@@ -20,8 +20,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.models.City;
 
 import static de.jadehs.trawell.view.create.NewTourActivity.cities;
 import static de.jadehs.trawell.view.create.NewTourActivity.graph;
@@ -34,22 +37,19 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
     private Button nextBTN, previousBTN;
 
     private ListView citiesListView;
-    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<City> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
+//        super.onSaveInstanceState(savedInstanceState);
         getActivity().setTitle("Select the cities you want to visit");
-
-        // temporary list of selected cities (just for the View)
-        cities = new ArrayList<>();
 
         View view = inflater.inflate(R.layout.fragment_select_cities, container, false);
 
         citiesListView = (ListView) view.findViewById(R.id.citiesListView);
 
-        adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,cities);
+        adapter = new TourArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1, cities, City.class);
         citiesListView.setAdapter(adapter);
 
         nextBTN = (Button) view.findViewById(R.id.selectCitiesNextBTN);
@@ -57,19 +57,6 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 try {
-
-//                    Location startCity = graph.getLocationByName(tour.getStartCity());
-//                    Location finalCity = graph.getLocationByName(tour.getFinalCity());
-//                    List<Location> citiesDijstra = graph.dijkstra(startCity, finalCity);
-
-//                    for(int i = 0; i < cities.size();i++){
-//                        if(rest > 0 ) {
-//                            tour.addCity(new City(graph.getLocationByName(cities.get(i)), duration + 1));
-//                            rest--;
-//                        } else
-//                            tour.addCity(new City(graph.getLocationByName(cities.get(i)),duration));
-//                    }
-                    // Next step --> organize the travel
                     NewTourActivity.goTo(OrganizeTravelFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -85,20 +72,15 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        if (!cities.contains(tour.getStartCity()) || !cities.contains(tour.getFinalCity())){
-            addItems(0,tour.getStartCity());
-            addItems(1,tour.getFinalCity());
+        if (cityContainsList(cities, tour.getFinalCity()) == null
+                || cityContainsList(cities, tour.getStartCity()) == null){
+            City startCity = new City(tour.getStartCity(),tour, 0);
+            City finalCity = new City(tour.getFinalCity(),tour, 0);
+            addItems(0,startCity);
+            addItems(1,finalCity);
         }
         // Inflate the layout for this fragment
         return view;
-    }
-    public void addItems(int i, String name){
-        cities.add(i,name);
-        adapter.notifyDataSetChanged();
-    }
-    public void removeItems(String name){
-        cities.remove(name);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -114,7 +96,8 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
             double lat = graph.getLocations().get(i).getLatitude();
             double lng = graph.getLocations().get(i).getLongitude();
             LatLng position = new LatLng(lat,lng);
-            if (title.equals(tour.getStartCity()) || title.equals(tour.getFinalCity()))
+
+            if (cityContainsList(cities, title) != null)
                 googleMap.addMarker(new MarkerOptions().position(position).
                         title(title).icon(BitmapDescriptorFactory.
                         defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
@@ -156,16 +139,35 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
         mapView.onLowMemory();
     }
 
+    public static City cityContainsList(List<City> list, String name){
+        for (City c : list){
+            if(c.getName().equals(name)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public void addItems(int i, City currentCity){
+        cities.add(i,currentCity);
+        adapter.notifyDataSetChanged();
+    }
+    public void removeItems(City currentCity){
+        cities.remove(currentCity);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public boolean onMarkerClick(Marker marker) {
         String name = marker.getTitle();
-        Log.d("Click on", "" + name);
+        City currentCity;
         if (!name.equals(tour.getStartCity()) && !name.equals(tour.getFinalCity())){
-            if (cities.contains(name)) {
-                removeItems(name);
+            if ((currentCity = cityContainsList(cities, name)) != null) {
+                removeItems(currentCity);
                 marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             } else {
-                addItems(1,name);
+                currentCity = new City(name, tour, 0);
+                addItems(1,currentCity);
                 marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             }
     }
