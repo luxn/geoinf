@@ -26,6 +26,7 @@ import de.jadehs.trawell.view.home.MainActivity;
 import static de.jadehs.trawell.view.create.NewTourActivity.cities;
 import static de.jadehs.trawell.view.create.NewTourActivity.context;
 import static de.jadehs.trawell.view.create.NewTourActivity.tour;
+import static de.jadehs.trawell.view.create.NewTourActivity.view;
 
 public class OrganizeTravelFragment extends Fragment {
 
@@ -41,7 +42,7 @@ public class OrganizeTravelFragment extends Fragment {
                              Bundle savedInstanceState) {
         getActivity().setTitle("Organize your tour");
 
-        View view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
+        view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
 
         context = getContext();
         Log.d("context", " "+context);
@@ -65,8 +66,8 @@ public class OrganizeTravelFragment extends Fragment {
         citiesListView.setCanNotDragAboveTopItem(true);
         citiesListView.setCanNotDragBelowBottomItem(true);
 
-
         save = (Button) view.findViewById(R.id.saveBTN);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +107,19 @@ public class OrganizeTravelFragment extends Fragment {
                 }
             }
         });
+        if(tour.getDuration() > checkDuration()) {
+            chooseAccoBTN.setEnabled(false);
+            save.setEnabled(false);
+        }
 
         return view;
+    }
+
+    public int checkDuration(){
+        int duration = 0;
+        for (City city : cities){
+            duration += city.getDuration();
+        }
+        return duration;
     }
 }

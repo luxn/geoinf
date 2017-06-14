@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     private Context context;
     private ViewHolder holder;
     private TrawellGraph graph;
+    private View contextView;
     private ArrayList<City> cities = NewTourActivity.cities;
 
     public ItemAdapter(ArrayList<Pair<Long, String>> list, int layoutId, int grabHandleId, boolean dragOnLongPress) {
@@ -53,6 +55,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
         mDragOnLongPress = dragOnLongPress;
         context = NewTourActivity.context;
         graph = TrawellGraph.get(context);
+        contextView = NewTourActivity.view;
         setHasStableIds(true);
         setItemList(list);
     }
@@ -89,6 +92,9 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
+        final Button chooseAcco = (Button) contextView.findViewById(R.id.chooseAccoBTN2);
+        final Button save = (Button) contextView.findViewById(R.id.saveBTN);
+
         String cityName = mItemList.get(position).second;
         final City city = getCityByName(cities, cityName);
 
@@ -110,8 +116,11 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
             public void onClick(View v) {
                 String durationString = String.valueOf(holder.mDuration.getText());
                 int duration = Integer.parseInt(durationString);
-                if(duration > 0)
+                if(duration > 0) {
                     duration--;
+                    chooseAcco.setEnabled(false);
+                    save.setEnabled(false);
+                }
                 holder.mDuration.setText(String.valueOf(duration));
                 cities.get(position).setDuration(duration);
             }
@@ -122,10 +131,15 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
                 String durationString = String.valueOf(holder.mDuration.getText());
                 int duration = Integer.parseInt(durationString);
                 Log.d("duration", ""+city.getTour().getDuration());
-                if(duration < 15 && city.getTour().getDuration() > checkDuration())
+                if(duration < 15 && city.getTour().getDuration() > checkDuration()) {
                     duration++;
-                else
-                    Toast.makeText(context, "You have just " + city.getTour().getDuration() + " days!",Toast.LENGTH_SHORT).show();
+                    chooseAcco.setEnabled(false);
+                    save.setEnabled(false);
+                } else {
+                    Toast.makeText(context, "You have just " + city.getTour().getDuration() + " days!", Toast.LENGTH_SHORT).show();
+                    chooseAcco.setEnabled(true);
+                    save.setEnabled(true);
+                }
                 holder.mDuration.setText(String.valueOf(duration));
                 cities.get(position).setDuration(duration);
             }

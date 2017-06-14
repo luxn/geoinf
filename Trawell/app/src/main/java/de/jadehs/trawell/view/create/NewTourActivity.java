@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.orm.util.Collection;
 
@@ -25,6 +26,7 @@ public class NewTourActivity extends AppCompatActivity {
     public static TrawellGraph graph;
     public static FragmentManager fragmentManager;
     public static Context context;
+    public static View view;
     public static ArrayList<City> cities = new ArrayList<>();
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
