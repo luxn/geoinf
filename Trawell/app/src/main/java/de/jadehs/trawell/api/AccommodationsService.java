@@ -1,5 +1,6 @@
 package de.jadehs.trawell.api;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.util.JsonReader;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.util.List;
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.graph.Location;
+import de.jadehs.trawell.view.create.ChooseAccommodationFragment;
 import de.jadehs.trawell.view.home.MainActivity;
 
 /**
@@ -32,7 +34,7 @@ import de.jadehs.trawell.view.home.MainActivity;
 
 public class AccommodationsService {
 
-    public static void getAccomodationsFor(final Location location, final GoogleApiClient apiClient, final OnTaskCompletedListener<List<Accommodation>> callback) {
+    public static void getAccomodationsFor(final Location location, final GoogleApiClient apiClient, final OnTaskCompletedListener<List<Accommodation>> callback, final Activity activity) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -129,6 +131,7 @@ public class AccommodationsService {
                     callback.onSuccess(accommodations);
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                     callback.onException(e);
                 }
             }

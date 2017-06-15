@@ -27,7 +27,8 @@ public class CreateTourFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_tour, container, false);
 
         textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText("You want to travel to Europe's most amazing places by train? Then click the button below and plan your Interrail tour.");
+        textView.setText("You want to travel to Europe's most amazing places by train? Then click the button below and plan your Interrail tour."
+                + "\n" + "...");
 
         newTourButton = (Button) view.findViewById(R.id.newTourButton);
         newTourButton.setOnClickListener(new View.OnClickListener(){

@@ -35,7 +35,10 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
         if(view == null){
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            view = vi.inflate(R.layout.tour_item, null);
+            if (type.equals(Accommodation.class))
+                view = vi.inflate(R.layout.accommodation_item, null);
+            else
+                view = vi.inflate(R.layout.tour_item, null);
         }
 
         if(type.equals(Tour.class)) {
@@ -58,22 +61,19 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
             }
         } else if(type.equals(Accommodation.class)){
             Accommodation acco = (Accommodation) getItem(position);
-            Log.d("acco", ""+acco.getName());
+
             if (acco != null) {
-                Log.d("acco","type");
                 TextView name = (TextView) view.findViewById(R.id.accoNameTV);
                 TextView adress = (TextView) view.findViewById(R.id.accoAdressTV);
                 TextView rating = (TextView) view.findViewById(R.id.accoRatingTV);
                 TextView phoneNumber = (TextView) view.findViewById(R.id.accoPhoneTV);
                 TextView url = (TextView) view.findViewById(R.id.accoUrlTV);
-
                 if (name != null) {
                     name.setText(acco.getName());
                     adress.setText(acco.getAdresse());
                     rating.setText(acco.getBewertung());
                     phoneNumber.setText(acco.getPhoneNumber());
                     url.setText(acco.getUrl());
-                    this.notifyDataSetChanged();
                 }
             }
         }

@@ -51,13 +51,13 @@
         android:id="@id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/list_item_selector"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/text"

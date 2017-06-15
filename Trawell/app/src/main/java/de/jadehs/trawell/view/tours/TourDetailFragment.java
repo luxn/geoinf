@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.view.create.AccommodationsFragment;
@@ -30,15 +31,24 @@ public class TourDetailFragment extends Fragment {
 
         Tour tour = Tour.findById(Tour.class, tourId);
 
-        List<City> city = new ArrayList<>();
-        city = City.listAll(City.class);
+        getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
 
-        city = Tour.find(City.class, "TOUR = ?", String.valueOf(tour.getId()));
-//        getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
+        List<City> city = Tour.find(City.class, "TOUR = ?", String.valueOf(tour.getId()));
 
-        for(int i = 0; i < city.size();i++){
-            Log.d("city",""+city.get(i).getName());
+        List<Accommodation> accommodations = new ArrayList<>();
+
+        for(City c : city){
+            List<Accommodation> acco = Accommodation.find(Accommodation.class, "CITY = ?", String.valueOf(c.getId()));
+            if(acco.isEmpty()) {
+                Log.d("city", "" + c.getName());
+                Log.d("acco", "NoAcco");
+            } else {
+                accommodations.add(acco.get(0));
+                Log.d("city", ""+c.getName());
+                Log.d("acco", ""+acco.get(0).getName());
+            }
         }
+
 
         View view = inflater.inflate(R.layout.fragment_tour, container, false);
 

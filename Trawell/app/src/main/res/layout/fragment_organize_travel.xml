@@ -1,17 +1,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="de.jadehs.trawell.view.create.OrganizeTravelFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
 
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="495dp"
+            android:background="@color/colorBackground"
             android:fadeScrollbars="false"
             android:scrollbarSize="15dp"
             android:scrollbarStyle="insideInset"
@@ -24,6 +27,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorBackground"
                 android:orientation="horizontal"
                 android:scrollbarThumbVertical="@color/colorAccent">
 
@@ -36,6 +40,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:background="@color/colorBackground"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -45,6 +50,7 @@
 
         <Button
             android:id="@+id/saveBTN"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -52,6 +58,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="save your tour"
+            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/citiesListView"
@@ -59,12 +66,14 @@
 
         <Button
             android:id="@+id/chooseAccoBTN2"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
             android:text="Choose your lodgings"
+            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/citiesListView"

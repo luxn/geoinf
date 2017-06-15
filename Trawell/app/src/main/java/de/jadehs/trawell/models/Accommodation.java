@@ -8,25 +8,33 @@ import com.orm.SugarRecord;
 
 public class Accommodation extends SugarRecord {
 
-    private Long cityId;
     private String bewertung;
     private String name;
     private String adresse;
     private String phoneNumber;
     private String url;
+    private City city;
 
     public Accommodation(){
 
     }
 
 
-    public Accommodation(Long id, String name, String bewertung, String adresse, String phoneNumber, String url){
-        this.cityId = id;
+    public Accommodation(String name, String bewertung, String adresse, String phoneNumber, String url, City city){
         this.name = name;
         this.bewertung = bewertung;
         this.adresse = adresse;
         this.phoneNumber = phoneNumber;
         this.url = url;
+        this.city = city;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getPhoneNumber() {
@@ -43,12 +51,6 @@ public class Accommodation extends SugarRecord {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-    public Long getCityId(){
-        return cityId;
-    }
-    public void setCityId(Long id){
-        this.cityId = id;
     }
     public String getName(){
         return name;
