@@ -101,7 +101,7 @@ public class DijsktraAlgorithm {
 	}
 
 	public List<Location> getPath(Location target) {
-		LinkedList<Location> path = new LinkedList<>();
+		ArrayList<Location> path = new ArrayList<>();
 		Location step = target;
 		if (predecessors.get(step) == null) {
 			return new ArrayList<>();

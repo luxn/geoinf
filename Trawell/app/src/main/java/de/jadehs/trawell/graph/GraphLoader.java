@@ -1,8 +1,10 @@
 package de.jadehs.trawell.graph;
 
 import android.content.Context;
-import android.util.Log;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.view.home.MainActivity;
 
 
 /**
@@ -32,7 +33,7 @@ public class GraphLoader {
 		try {
 			loadLocations(ctx);
 			loadRoutes(ctx);
-			//loadTrips(ctx);
+			loadTrips(ctx);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,15 +43,12 @@ public class GraphLoader {
 			graph.addLocation(l);
 		}
 		for (Route r : GraphLoader.routes) {
-
-			for (Trip t : GraphLoader.trips) {
-				if (t.getRoute().getName().equals(r.getName())) {
-					r.addTrip(t);
-				}
-			}
-
 			graph.addRoute(r);
 		}
+		for (Trip t: GraphLoader.trips) {
+			graph.addTrip(t);
+		}
+		
 
 	}
 
@@ -95,13 +93,18 @@ public class GraphLoader {
 		while (scanner.hasNext()) {
 			String[] row = scanner.next().trim().split(",");
 
-
+			Route r = findRouteByName(row[1]);		
+			
+			
 			Trip t = new Trip(
 					row[0],
-					findRouteByName(row[1]),
+					r,
 					new DayTime(row[4]),
 					new DayTime(row[5])
 			);
+			
+
+			r.addTrip(t);
 
 			GraphLoader.trips.add(t);
 
@@ -128,11 +131,13 @@ public class GraphLoader {
 		return null;
 	}
 
-	private static Scanner openResourceCSV(int name, Context ctx) {
-		InputStream inputStream = ctx.getResources().openRawResource(name);
+	private static Scanner openResourceCSV(int res, Context ctx) {
+
+		InputStream inputStream = ctx.getResources().openRawResource(res);
 		Scanner scanner = new Scanner(inputStream);
 		scanner.useDelimiter("\n");
 		return scanner;
+
 	}
 
 }

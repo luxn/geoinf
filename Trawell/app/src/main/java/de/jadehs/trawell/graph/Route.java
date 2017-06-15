@@ -18,6 +18,9 @@ public class Route implements Comparable<Route> {
     private Duration duration;
     private int calculatedWeight = 1;  
     
+    
+   
+    
     public Route(String name, Location from, Location to) {
     	this.name = name;
         this.trips = new ArrayList<>();
@@ -30,9 +33,8 @@ public class Route implements Comparable<Route> {
     			to.getLatitude(), 
     			to.getLongitude()
     		);
-    			
-    	this.duration = new Duration(distance / 220.0 ); // a typical Train will be at 220kmh
-    	recalulateWeight();    	
+    	
+    	this.calculatedWeight = (int) this.distance; //Startgewicht
     }
        
     
@@ -46,7 +48,7 @@ public class Route implements Comparable<Route> {
     	    Math.sin(dLon/2) * Math.sin(dLon/2)
     	    ; 
     	  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-    	  return r * c; // Distance in km    	  
+    	  return Math.abs(r * c); // Distance in km    	  
     }
 
     private double deg2rad(double deg) {
@@ -65,11 +67,7 @@ public class Route implements Comparable<Route> {
     public void removeTrip(Trip t) {
         this.trips.remove(t);
     }
-   
-
-    public void recalulateWeight() {
-        this.calculatedWeight = (int) ((duration.getDurationInMinutes() / distance) * 10_000);
-    }
+      
 
     public Location getSource() {
         return source;
@@ -114,11 +112,27 @@ public class Route implements Comparable<Route> {
 
     public int getWeight() {
         return calculatedWeight;
-    }
-   
-
+    }  
+    
+    public int getWeight(DayTime time) {
+    	Duration toAdd = new Duration(24);
+    	for (Trip t : trips) {
+    		Duration sub = t.startTime.substract(time);
+    		if (sub.getDurationInHoursFloating() < toAdd.getDurationInHoursFloating()) {    
+    			toAdd = sub;
+    		}
+    	}
+        return calculatedWeight + (toAdd.getDurationInMinutes() * 3);
+    }  
+    
     @Override
-    public int compareTo(Route o) {
-        return this.name.compareTo(o.name);
+    public String toString() {    	
+    	return this.name;
     }
+
+
+	@Override
+	public int compareTo(Route o) {
+		return this.name.compareTo(o.getName());
+	}
 }

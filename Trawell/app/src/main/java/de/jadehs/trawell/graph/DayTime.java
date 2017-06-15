@@ -49,4 +49,35 @@ public class DayTime {
         this.minutes = minutes;
         this.amPm = amPm;
     }
+
+	public int getHours() {
+		return hours;
+	}
+
+	void setHours(int hours) {
+		this.hours = hours;
+	}
+
+	public int getMinutes() {
+		return minutes;
+	}
+
+	void setMinutes(int minutes) {
+		this.minutes = minutes;
+	}
+
+	public AmPm getAmPm() {
+		return amPm;
+	}
+
+	void setAmPm(AmPm amPm) {
+		this.amPm = amPm;
+	}
+
+	public Duration substract(DayTime time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+    
 }

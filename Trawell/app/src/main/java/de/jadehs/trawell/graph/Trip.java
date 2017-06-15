@@ -8,49 +8,89 @@ import java.util.List;
 
 public class Trip {
 
+	String tripName;
 
-    String tripName;
-    Route route;
-    
-    DayTime startTime;
-    DayTime endTime;
+	Route route;
 
-    public Trip(String tripName, Route route, DayTime startTime, DayTime endTime) {
-    	this.tripName = tripName;
-        this.route = route;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
+	DayTime startTime;
+	DayTime endTime;
 
-    public String getTripName() {
-        return tripName;
-    }
+	Duration duration;
+	TrainType type;
 
-    public void setTripName(String tripName) {
-        this.tripName = tripName;
-    }
+	public Trip(String tripName, Route route, DayTime startTime, DayTime endTime) {
+		this.tripName = tripName;
+		this.route = route;
+		this.startTime = startTime;
+		this.endTime = endTime;
 
-    public Route getRoute() {
-        return route;
-    }
+		this.duration = new Duration(startTime, endTime);
 
-    public void setRoute(Route route) {
-        this.route = route;
-    }
+		setType();
+	}
 
-    public DayTime getStartTime() {
-        return startTime;
-    }
+	private void setType() {
+		switch (this.tripName.split(" ")[0]) {
+		case "TGV":
+			this.type = TrainType.TGV;
+			break;
+		case "ICE":
+			this.type = TrainType.ICE;
+			break;
+		case "THA":
+			this.type = TrainType.THA;
+			break;
+		case "AVE":
+			this.type = TrainType.AVE;
+			break;
+		case "TER":
+			this.type = TrainType.TER;
+			break;
+		case "EC":
+			this.type = TrainType.EC;
+			break;
+		}
 
-    public void setStartTime(DayTime startTime) {
-        this.startTime = startTime;
-    }
+	}
 
-    public DayTime getEndTime() {
-        return endTime;
-    }
+	public String getTripName() {
+		return tripName;
+	}
 
-    public void setEndTime(DayTime endTime) {
-        this.endTime = endTime;
-    }
+	void setTripName(String tripName) {
+		this.tripName = tripName;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	void setRoute(Route route) {
+		this.route = route;
+	}
+
+	public DayTime getStartTime() {
+		return startTime;
+	}
+
+	void setStartTime(DayTime startTime) {
+		this.startTime = startTime;
+	}
+
+	public DayTime getEndTime() {
+		return endTime;
+	}
+
+	void setEndTime(DayTime endTime) {
+		this.endTime = endTime;
+	}
+
+	public Duration getDuration() {
+		return duration;
+	}
+
+	void setDuration(Duration duration) {
+		this.duration = duration;
+	}
+
 }

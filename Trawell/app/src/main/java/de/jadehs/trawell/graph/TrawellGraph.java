@@ -1,12 +1,13 @@
 package de.jadehs.trawell.graph;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by luxn on 09.05.2017.
@@ -15,36 +16,65 @@ import java.util.Map;
 public class TrawellGraph {
 
 
-    private ArrayList<Location> locations;
+    private List<Location> locations;
     private List<Route> routes;
+    private List<Trip> trips;
 
     private Map<String, Location> locationMap;
     private Map<String, Route> routeMap;
+    private Map<String, Trip> tripMap;
 
 
     private static TrawellGraph graph;
 
 
     private TrawellGraph(Context ctx) {
+    	
         locations = new ArrayList<>();
         routes = new ArrayList<>();
+        trips = new ArrayList<>();
+        
         locationMap = new HashMap<>();
         routeMap = new HashMap<>();
+        tripMap = new HashMap<>();
+        
         GraphLoader.loadGraph(this, ctx);
     }
 
     //lazy loading, single instance
     public static TrawellGraph get(Context ctx) {
         if (TrawellGraph.graph == null) {
-            return new TrawellGraph(ctx);
+        	TrawellGraph.graph = new TrawellGraph(ctx);
         }
         return TrawellGraph.graph;
     }
+    
+    
+    public List<Location> dijkstraTime(Location from, DayTime time, Location to) {
+    	return new ArrayList<>();
+    }
 
-    public List<Location> dijkstra(Location from, Location to) {
+    public List<Location> dijkstraRaw(Location from, Location to) {
         DijsktraAlgorithm algorithm = new DijsktraAlgorithm(this);
         algorithm.execute(from);
         return algorithm.getPath(to);
+    }
+    
+    public List<Location> dijkstraRaw(Location... via) {  	
+    
+    	
+    	List<Location> path = new ArrayList<>();
+    	
+    	for (int i = 0; i < via.length -1 ; i++) {
+    		DijsktraAlgorithm algorithm = new DijsktraAlgorithm(TrawellGraph.graph);
+        	algorithm.execute(via[i]);
+        	path.addAll(algorithm.getPath(via[i+1]));  
+        	if (i < via.length -2) {
+        		path.remove(path.size()-1);
+        	}
+    	}
+    	    	    	
+		return path;    	
     }
 
     void addLocation(Location l) {
@@ -57,45 +87,33 @@ public class TrawellGraph {
         routeMap.put(r.toString(), r);
     }
     
-    public ArrayList<Location> getLocations() {
+    void addTrip(Trip t) {
+    	trips.add(t);
+    	tripMap.put(t.toString(), t);
+    }
+    
+    public List<Location> getLocations() {
     	return locations;
     }
     public List<Route> getRoutes() {
     	return routes;
     }
+    public List<Trip> getTrips() {
+    	return trips;
+    }
 
-    public Map<String, Location> getLocationAsMap() { return locationMap; }
-    public Map<String, Route> getRouteAsMap() { return routeMap; }
+    public Map<String, Location> getLocationsAsMap() { return locationMap; }
+    public Map<String, Route> getRoutesAsMap() { return routeMap; }
+    public Map<String, Trip> getTripsAsMap() { return tripMap; }
 
-    @Nullable
+   
     public Location getLocationByName(String name) {
         return locationMap.get(name);
     }
-
-    @Nullable
+  
     public Route getRouteByName(String name) {
         return routeMap.get(name);
     }
-
-
-        
-        
-
-//        Location hamburg = new Location("Hamburg", "DE", new Coordinate(50.23, 5.23));
-//        Location frankfurt = new Location("Frankfurt", "DE", new Coordinate(50.23, 5.23));
-//
-//        graph.addLocation(hamburg);
-//        graph.addLocation(frankfurt);
-//
-//        Route hamToFra = new Route("ICE-123",hamburg, frankfurt);
-//        hamToFra.addTrip(new Trip("ICE 72", new DayTime(13, 24), new DayTime(17, 00)));
-//
-//
-//        Route fraToHam = new Route("ICE-456", frankfurt, hamburg);
-//        fraToHam.addTrip(new Trip("ICE 67", new DayTime(11, 20), new DayTime(15, 05)));
-//
-//
-//        graph.addRoute(hamToFra);
-//        graph.addRoute(fraToHam);
+    
 
 }
