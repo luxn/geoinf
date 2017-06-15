@@ -31,17 +31,17 @@ public class InformationFragment extends Fragment {
                 "über den Interrail Pass erzählen. Wir erklären Ihnen, wie Sie diesen ideal nutzen," +
                 "um ein atemberaubendes Abenteuer zu erleben!");
 
-        interrailIcon = (ImageView) view.findViewById(R.id.interrailImageView);
+        interrailIcon = (ImageView) view.findViewById(R.id.informationInterrail);
 
         interrailIcon.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
-                Intent intent = new Intent();
+                Intent intent = new Intent("www.interrail.eu");
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_APP_BROWSER);
-                intent.setData(Uri.parse("http://www.interrail.eu/de"));
-                startActivity(intent);
+//                intent.setData(Uri.parse("http://www.interrail.eu/de"));
+//                startActivity(intent);
             }
 
         });

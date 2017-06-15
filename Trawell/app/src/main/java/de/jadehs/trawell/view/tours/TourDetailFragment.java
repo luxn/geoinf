@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
@@ -24,10 +26,14 @@ import static de.jadehs.trawell.view.home.MainActivity.tourId;
 public class TourDetailFragment extends Fragment {
 
     private Button chooseAccoBTN;
+    private ListView tourdetailLV;
+    private TrawellArrayAdapter<City> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_tour, container, false);
 
         Tour tour = Tour.findById(Tour.class, tourId);
 
@@ -49,8 +55,11 @@ public class TourDetailFragment extends Fragment {
             }
         }
 
+        tourdetailLV = (ListView) view.findViewById(R.id.tourDetailLV);
+        adapter = new TrawellArrayAdapter<>(getContext(),R.layout.tour_overview_item, (ArrayList) city, City.class);
+        tourdetailLV.setAdapter(adapter);
 
-        View view = inflater.inflate(R.layout.fragment_tour, container, false);
+
 
         chooseAccoBTN = (Button) view.findViewById(R.id.chooseAccoBTN);
         chooseAccoBTN.setOnClickListener(new View.OnClickListener() {

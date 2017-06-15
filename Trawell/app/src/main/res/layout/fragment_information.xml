@@ -11,17 +11,18 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/interrailImageView"
+            android:id="@+id/informationInterrail"
             android:layout_width="105dp"
             android:layout_height="84dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/informationsTextView"
-            app:srcCompat="@mipmap/interrail_logo"
-            android:layout_marginEnd="8dp" />
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@mipmap/interrail_logo" />
 
         <TextView
             android:id="@+id/informationsTextView"

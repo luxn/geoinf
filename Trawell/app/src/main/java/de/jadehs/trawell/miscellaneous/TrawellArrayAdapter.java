@@ -14,6 +14,7 @@ import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
+import de.jadehs.trawell.view.tours.TourDetailFragment;
 
 /**
  * Created by Christopher on 07.06.2017.
@@ -31,6 +32,7 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+
 
         if(view == null){
             LayoutInflater vi;
@@ -52,11 +54,10 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
             }
         } else if(type.equals(City.class)){
             City city = (City) getItem(position);
-
             if (city != null) {
-                TextView text = (TextView) view.findViewById(R.id.tourItem);
-                if (text != null) {
-                    text.setText(city.getName());
+                TextView cityName = (TextView) view.findViewById(R.id.tourItem);
+                if (cityName != null) {
+                    cityName.setText(city.getName());
                 }
             }
         } else if(type.equals(Accommodation.class)){
