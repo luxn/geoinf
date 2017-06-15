@@ -19,11 +19,11 @@ import de.jadehs.trawell.models.Tour;
  * Created by Christopher on 07.06.2017.
  */
 
-public class TourArrayAdapter<T> extends ArrayAdapter<T> {
+public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
 
     private Class<T> type;
 
-    public TourArrayAdapter(Context context, int textViewResourceId, ArrayList<T> myTours, Class<T> classT){
+    public TrawellArrayAdapter(Context context, int textViewResourceId, ArrayList<T> myTours, Class<T> classT){
         super(context, textViewResourceId, myTours);
         type = classT;
     }
@@ -58,15 +58,22 @@ public class TourArrayAdapter<T> extends ArrayAdapter<T> {
             }
         } else if(type.equals(Accommodation.class)){
             Accommodation acco = (Accommodation) getItem(position);
-
+            Log.d("acco", ""+acco.getName());
             if (acco != null) {
-                TextView text = (TextView) view.findViewById(R.id.tourItem);
-                if (text != null) {
-                    text.setText(acco.getName());
-//                    text.setText("Das Hotel "+acco.getName()+
-//                            " hat die Adresse "+ acco.getAdresse()+
-//                            " und ist mit "+ acco.getBewertung()+
-//                            " bewertet");
+                Log.d("acco","type");
+                TextView name = (TextView) view.findViewById(R.id.accoNameTV);
+                TextView adress = (TextView) view.findViewById(R.id.accoAdressTV);
+                TextView rating = (TextView) view.findViewById(R.id.accoRatingTV);
+                TextView phoneNumber = (TextView) view.findViewById(R.id.accoPhoneTV);
+                TextView url = (TextView) view.findViewById(R.id.accoUrlTV);
+
+                if (name != null) {
+                    name.setText(acco.getName());
+                    adress.setText(acco.getAdresse());
+                    rating.setText(acco.getBewertung());
+                    phoneNumber.setText(acco.getPhoneNumber());
+                    url.setText(acco.getUrl());
+                    this.notifyDataSetChanged();
                 }
             }
         }

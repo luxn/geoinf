@@ -21,11 +21,13 @@ import com.orm.SugarRecord;
 import com.orm.util.SugarConfig;
 import com.orm.util.SugarCursor;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.xml.validation.Schema;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.models.Accommodation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static Long cityId;
     public static Set<Fragment> mFragments;
     public static FragmentManager fragmentManager;
+    public static ArrayList<Accommodation> accommodations;
 
     public static Context context;
     public TextView weatherText;

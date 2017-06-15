@@ -19,11 +19,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.models.City;
 
 import static de.jadehs.trawell.view.create.NewTourActivity.cities;
@@ -49,7 +48,7 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
 
         citiesListView = (ListView) view.findViewById(R.id.citiesListView);
 
-        adapter = new TourArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1, cities, City.class);
+        adapter = new TrawellArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1, cities, City.class);
         citiesListView.setAdapter(adapter);
 
         nextBTN = (Button) view.findViewById(R.id.selectCitiesNextBTN);

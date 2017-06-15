@@ -12,19 +12,38 @@ public class Accommodation extends SugarRecord {
     private String bewertung;
     private String name;
     private String adresse;
+    private String phoneNumber;
+    private String url;
 
     public Accommodation(){
 
     }
 
 
-    public Accommodation(Long id, String name, String bewertung, String adresse){
+    public Accommodation(Long id, String name, String bewertung, String adresse, String phoneNumber, String url){
         this.cityId = id;
         this.name = name;
         this.bewertung = bewertung;
         this.adresse = adresse;
+        this.phoneNumber = phoneNumber;
+        this.url = url;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
     public Long getCityId(){
         return cityId;
     }

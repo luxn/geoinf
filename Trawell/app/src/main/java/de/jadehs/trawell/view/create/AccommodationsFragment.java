@@ -1,6 +1,5 @@
 package de.jadehs.trawell.view.create;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -22,14 +21,14 @@ import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.miscellaneous.ItemAdapter;
-import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.view.home.MainActivity;
 
 public class AccommodationsFragment extends Fragment  {
 
     private Long tourId;
     private ListView listView;
-    private TourArrayAdapter listViewAdapter;
+    private TrawellArrayAdapter listViewAdapter;
     private List<City> cities;
 
     Button ready;
@@ -76,7 +75,7 @@ public class AccommodationsFragment extends Fragment  {
                 }
             }
         });
-        listViewAdapter = new TourArrayAdapter(getContext(), R.layout.tour_item,(ArrayList) cities, City.class);
+        listViewAdapter = new TrawellArrayAdapter(getContext(), R.layout.tour_item,(ArrayList) cities, City.class);
         listView.setAdapter(listViewAdapter);
 
         return view;

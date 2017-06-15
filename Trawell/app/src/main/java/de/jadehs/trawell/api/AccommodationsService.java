@@ -2,6 +2,7 @@ package de.jadehs.trawell.api;
 
 import android.support.annotation.NonNull;
 import android.util.JsonReader;
+import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -31,7 +32,6 @@ import de.jadehs.trawell.view.home.MainActivity;
 
 public class AccommodationsService {
 
-
     public static void getAccomodationsFor(final Location location, final GoogleApiClient apiClient, final OnTaskCompletedListener<List<Accommodation>> callback) {
         new Thread(new Runnable() {
             @Override
@@ -43,17 +43,16 @@ public class AccommodationsService {
 
                     //URL zusammenbauen
                     StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-                    sb.append("location="+location.getLatitude()+","+location.getLongitude());
+                    sb.append("location=" + location.getLatitude() + "," + location.getLongitude());
                     sb.append("&radius=5000");
                     sb.append("&type=lodging");
-                    sb.append("&keyword=cruise");
-                    sb.append("&key="+MainActivity.context.getString(R.string.API_KEY));
+                    sb.append("&key=" + MainActivity.context.getString(R.string.API_KEY));
 
                     URL url = new URL(sb.toString());
 
                     InputStream inStream = url.openStream();
 
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inStream,"UTF-8"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
 
                     StringBuilder jsonResult = new StringBuilder();
 
@@ -65,7 +64,7 @@ public class AccommodationsService {
                     JSONObject jsonObj = new JSONObject(jsonResult.toString());
                     JSONArray jsonArray = jsonObj.getJSONArray("results");
 
-                    for(int i = 0; i < jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         String place_id = jsonArray.getJSONObject(i).getString("place_id");
                         placeIds.add(place_id);
                     }
@@ -86,7 +85,6 @@ public class AccommodationsService {
                     }  */
 
 
-
                     for (final String id : placeIds) {
                         Thread t = new Thread(new Runnable() {
                             @Override
@@ -97,13 +95,17 @@ public class AccommodationsService {
                                             @Override
                                             public void onResult(@NonNull PlaceBuffer places) {
 
-                                                if(places.getStatus().isSuccess() && places.getCount() > 0){
+                                                if (places.getStatus().isSuccess() && places.getCount() > 0) {
 
                                                     final Place myPlace = places.get(0);
                                                     Accommodation acco = new Accommodation();
                                                     acco.setAdresse(myPlace.getAddress().toString());
                                                     acco.setBewertung(String.valueOf(myPlace.getRating()));
                                                     acco.setName(myPlace.getName().toString());
+                                                    acco.setPhoneNumber(myPlace.getPhoneNumber().toString());
+                                                    Log.d("name", "" + myPlace.getName());
+                                                    if (myPlace.getWebsiteUri() != null)
+                                                        acco.setUrl(myPlace.getWebsiteUri().toString());
                                                     synchronized (accommodations) {
                                                         accommodations.add(acco);
                                                     }
@@ -114,6 +116,7 @@ public class AccommodationsService {
                                 );
                             }
                         });
+//                        Log.d("t",""+t.getId());
                         workers.add(t);
                         t.start();
                     }
@@ -122,6 +125,7 @@ public class AccommodationsService {
                     for (Thread t : workers) {
                         t.join();
                     }
+//                    Log.d("afterJoin","after");
                     callback.onSuccess(accommodations);
 
                 } catch (Exception e) {

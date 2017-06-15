@@ -29,13 +29,13 @@ public class JSONReader {
 
         reader.beginArray();
         while (reader.hasNext()) {
-            messages.add(readMessage(reader));
+//            messages.add(readMessage(reader));
         }
         reader.endArray();
         return messages;
     }
 
-    public static Accommodation readMessage(JsonReader reader) throws IOException {
+    public static void readMessage(JsonReader reader) throws IOException {
         long id = -1;
         String name = null;
         String bewertung = null;
@@ -54,7 +54,7 @@ public class JSONReader {
             }
      }
         reader.endObject();
-        return new Accommodation(id , name,bewertung,adresse);
+//        return new Accommodation(id , name,bewertung,adresse);
     }
 
 

@@ -1,23 +1,17 @@
 package de.jadehs.trawell.view.create;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +24,7 @@ import de.jadehs.trawell.graph.Location;
 import de.jadehs.trawell.graph.TrawellGraph;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
-import de.jadehs.trawell.models.Tour;
-import de.jadehs.trawell.miscellaneous.ItemAdapter;
-import de.jadehs.trawell.miscellaneous.TourArrayAdapter;
+import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.view.home.MainActivity;
 
 public class ChooseAccommodationFragment extends Fragment implements OnTaskCompletedListener<List<Accommodation>>, GoogleApiClient.OnConnectionFailedListener {
@@ -40,23 +32,16 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
     private Long cityId;
     private GoogleApiClient mGoogleApiClient;
     private TrawellGraph graph;
-
-    private ListView listView;
-    private TourArrayAdapter listViewAdapter;
-    private List<City> cities;
-
-    Button ready;
-    MapView mapView;
-    ArrayAdapter<String> adapter;
-    private static final int GOOGLE_API_CLIENT_ID = 0;
-    private static ArrayList<Pair<Long, String>> mItemArray;
-    private static ItemAdapter listAdapter;
-    public static int aktuelleLocationID;
+    private ListView accoListView;
+    private ArrayList<Accommodation> accommodations;
+    private TrawellArrayAdapter<Accommodation> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_accommodation, container, false);
+
+        accoListView = (ListView) view.findViewById(R.id.accoListView);
 
         graph = TrawellGraph.get(getContext());
 
@@ -67,6 +52,7 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
         }
 
         City city = City.findById(City.class, cityId);
+        Log.d("city",""+city.getName());
         getActivity().setTitle("Choose your Lodgings for " + city.getName());
 
         Location location = graph.getLocationByName(city.getName());
@@ -78,7 +64,15 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
                 .enableAutoManage(getActivity(), this)
                 .build();
 
+        accommodations = new ArrayList<>();
+
         AccommodationsService.getAccomodationsFor(location, mGoogleApiClient, this);
+
+
+//        Log.d("size",""+accommodations.size());
+        Log.d("size",""+accommodations.size());
+        adapter = new TrawellArrayAdapter<>(getContext(),R.layout.accommodation_item, accommodations, Accommodation.class);
+        accoListView.setAdapter(adapter);
 
         return view;
     }
@@ -98,13 +92,23 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
 
     @Override
     public void onSuccess(List<Accommodation> list) {
-        Log.d("LODGING","size "+list.size());
 
         for(int i = 0; i < list.size(); i++){
-            Log.d("LODGING","name "+list.get(i).getName());
-            Log.d("LODGING","adresse "+list.get(i).getAdresse());
-            Log.d("LODGING","rating "+list.get(i).getBewertung());
+            Accommodation acco = new Accommodation();
+            acco.setName(list.get(i).getName());
+            acco.setAdresse(list.get(i).getAdresse());
+            acco.setBewertung(list.get(i).getBewertung());
+            acco.setPhoneNumber(list.get(i).getPhoneNumber());
+            acco.setUrl(list.get(i).getUrl());
+            this.accommodations.add(acco);
+            Log.d("done","done");
+//            Log.d("LODGING","name "+list.get(i).getName());
+//            Log.d("LODGING","adresse "+list.get(i).getAdresse());
+//            Log.d("LODGING","rating "+list.get(i).getBewertung());
         }
+        Log.d("size",""+accommodations.size());
+        adapter.notifyDataSetChanged();
+        getFragmentManager().beginTransaction().detach(this).attach(this).commit();
     }
 
     @Override
