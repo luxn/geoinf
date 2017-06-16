@@ -37,11 +37,11 @@ public class InformationFragment extends Fragment {
 
             @Override
             public void onClick(View v){
-                Intent intent = new Intent("www.interrail.eu");
+                Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_APP_BROWSER);
-//                intent.setData(Uri.parse("http://www.interrail.eu/de"));
-//                startActivity(intent);
+                intent.setData(Uri.parse("http://www.interrail.eu/de"));
+                startActivity(intent);
+
             }
 
         });

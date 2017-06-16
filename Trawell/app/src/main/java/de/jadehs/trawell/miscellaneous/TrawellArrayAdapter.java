@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.Accommodation;
@@ -54,8 +55,15 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
             }
         } else if(type.equals(City.class)){
             City city = (City) getItem(position);
+
+            List<Accommodation> accommodation = Accommodation.find(Accommodation.class, "CITY = ?", String.valueOf(city.getId()));
+
             if (city != null) {
                 TextView cityName = (TextView) view.findViewById(R.id.tourItem);
+                TextView accoName = (TextView) view.findViewById(R.id.accoTextView);
+                if(!accommodation.isEmpty())
+                    accoName.setText(accommodation.get(0).getName());
+
                 if (cityName != null) {
                     cityName.setText(city.getName());
                 }

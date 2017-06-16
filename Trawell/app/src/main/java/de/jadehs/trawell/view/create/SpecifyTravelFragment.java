@@ -22,8 +22,10 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import de.jadehs.trawell.R;
@@ -71,7 +73,7 @@ public class SpecifyTravelFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                fieldsAreFilledOut();
             }
 
             @Override
@@ -91,7 +93,7 @@ public class SpecifyTravelFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                fieldsAreFilledOut();
             }
 
             @Override
@@ -180,7 +182,16 @@ public class SpecifyTravelFragment extends Fragment {
                 finalCityTV.getText().toString().equals("") || startCityTV.getText().toString().equals("")){
             nextBTN.setEnabled(false);
         } else {
-            nextBTN.setEnabled(true);
+            List<String> c = Arrays.asList(cities);
+            if(c.contains(startCityTV.getText().toString()) &&
+                     c.contains(finalCityTV.getText().toString())) {
+                nextBTN.setEnabled(true);
+                Log.d("cityinlist","true");
+            } else {
+
+                nextBTN.setEnabled(false);
+                Toast.makeText(getContext(), "One of your chosen cities is not available",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -217,8 +228,27 @@ public class SpecifyTravelFragment extends Fragment {
 
     private void updateLabel(EditText editText) {
         editText.setText(sdf.format(myCalendar.getTime()));
+        if(!startET.getText().toString().equals("") && !endET.getText().toString().equals("")) {
+            Date startDate = null;
+            Date endDate = null;
+            try {
+                startDate = sdf.parse(startET.getText().toString());
+                endDate = sdf.parse(endET.getText().toString());
+            } catch (ParseException e) {
+            }
+            int diffInDays = (int) ((startDate.getTime() - endDate.getTime())
+                    / (1000 * 60 * 60 * 24)) + 1;
+            if (diffInDays < 1)
+                editText.setText(sdf.format(myCalendar.getTime()));
+            else {
+                endET.setText("");
+                durationET.setText("");
+                Toast.makeText(getContext(), "Startdate cannot be later than enddate!", Toast.LENGTH_SHORT).show();
+            }
+        }
         if (!startET.getText().toString().equals("") && !endET.getText().toString().equals(""))
             autoInsert(durationET);
+
         fieldsAreFilledOut();
 
     }

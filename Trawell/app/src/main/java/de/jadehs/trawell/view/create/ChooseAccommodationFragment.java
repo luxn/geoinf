@@ -201,6 +201,7 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
     public void add(String id){
         placeIds.add(id);
     }
+
     public void getPlacesIds(){
        placeIdThread = new Thread(new Runnable() {
             @Override

@@ -56,6 +56,8 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 try {
+                    //TODO
+//                    graph.dijkstraRaw(cities.get(0),)
                     NewTourActivity.goTo(OrganizeTravelFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
