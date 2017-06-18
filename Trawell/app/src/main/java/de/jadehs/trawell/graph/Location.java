@@ -15,7 +15,7 @@ public class Location implements Comparable<Location> {
     private String googleId;
 
     
-    //Package Scoped for Dijkstra
+    //Package scoped f�r Dijkstra
 	int distance;
 	boolean seen;
 	Location previousLocation;

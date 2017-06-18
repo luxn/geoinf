@@ -117,22 +117,35 @@ public class Route implements Comparable<Route> {
     }  
     
     public int getWeight(DayTime time) {
+    	if (name.equals("Stra�burg-Lyon")) {
+    		System.out.println("Time: " + time);
+    	}
+    	
     	List<Duration> durations = new ArrayList<>();    	
     	for (Trip t : trips) {
-    		durations.add(t.startTime.substract(time));    		
+    		if (name.equals("Stra�burg-Lyon")) {
+    			Duration d = time.timeBetween(t.startTime);
+    			System.out.println(time + "->" + t.startTime);
+    	    	System.out.println(d);    		}
+    		durations.add(time.timeBetween(t.startTime));    		
     	}
     	
     	Duration shortest = new Duration(24);
     	
     	int i = 0;
-    	for (Duration d : durations) {    		
-    		if (d.positive() && d.getDurationInHoursFloating() < shortest.getDurationInHoursFloating()) {
+    	for (Duration d : durations) {   
+    		if (name.equals("Stra�burg-Lyon")) {
+    			System.out.println(d.getDurationInMinutes() + " < " + shortest.getDurationInMinutes());
+    		}
+    		if (d.getDurationInMinutes() < shortest.getDurationInMinutes()) {
     			shortest = d;
     			idx = i;
     		}
     		i++;
     	}
     	  	
+    	if (name.equals("Frankfurt-Stra�burg"))
+			System.out.println("Shortest: " + shortest + " Trip: " + trips.get(idx));
     	return shortest.getDurationInMinutes();
     }  
     
@@ -152,6 +165,8 @@ public class Route implements Comparable<Route> {
 		if (trips.isEmpty()) {
 			return null;
 		}
+		if (name.equals("Frankfurt-Stra�burg"))
+			System.out.println(" Trip: " + trips.get(idx));
 		return trips.get(idx);
 	}
 }

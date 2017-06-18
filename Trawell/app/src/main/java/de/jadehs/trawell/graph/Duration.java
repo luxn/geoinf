@@ -14,12 +14,54 @@ public class Duration {
 
     Duration(int hours, int minutes) {
     	this.hours = hours;
-    	this.minutes = minutes;
+    	if (minutes > 60) {
+    		this.minutes = minutes % 60;
+    		this.hours += minutes / 60;
+    	} else {
+    		this.minutes = minutes;
+    	}
     }
 
     Duration(DayTime startTime, DayTime endTime) {
-		this.hours = endTime.getHours() - startTime.getHours();
-		this.minutes = endTime.getMinutes() - startTime.getMinutes();
+    	int h = 0, m = 0;
+    	
+    	if (startTime.getMinutes() > endTime.getMinutes()) {
+    		if (startTime.getHours() > endTime.getHours())  {
+    			h = 24 - startTime.getHours() + endTime.getHours();
+    		} else {
+    			h = endTime.getHours() - startTime.getHours();
+    		}
+    		h--;
+    	} else {
+    		if (startTime.getHours() > endTime.getHours())  {
+    			h = 24 - startTime.getHours() + endTime.getHours();
+    		} else {
+    			h = endTime.getHours() - startTime.getHours();
+    		}
+    	}
+    	
+    	
+    	if (startTime.getMinutes() > endTime.getMinutes()) {
+    		m = 60 - startTime.getMinutes() + endTime.getMinutes();    		
+    	} else {    		
+    		m = endTime.getMinutes() - startTime.getMinutes();
+    	}
+    	
+    	if (h >= 24) {
+    		h -= 24;
+    	}
+    	
+    	if (h < 0) {
+    		h = 24-h;
+    	}
+    	
+    	this.hours = h;
+    	this.minutes = m;   	
+    	
+    	if (hours < 0 ) {
+    		System.err.println();
+    	}
+    	
 	}
 
 	public int getDurationInMinutes() {
@@ -27,7 +69,7 @@ public class Duration {
     }
 	
 	public double getDurationInHoursFloating() {
-		return (double) hours + (double) minutes / 60;
+		return (double) hours + (double) minutes / 60.0;
 	}
 
 	public boolean positive() {

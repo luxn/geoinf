@@ -43,9 +43,10 @@ public class DayTime {
 	}
 
 
-	public Duration substract(DayTime time) {		
-		return new Duration(time, this);
+	public Duration timeBetween(DayTime time) {		
+		return new Duration(this, time);
 	}
+	
 	
 	@Override
 	public String toString() {
