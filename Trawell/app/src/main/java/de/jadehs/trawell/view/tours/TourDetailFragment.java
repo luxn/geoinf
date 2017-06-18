@@ -14,10 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.graph.Location;
+import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.miscellaneous.TourDetailAdapter;
 import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
+import de.jadehs.trawell.share.TrawellMapGenerator;
 import de.jadehs.trawell.view.create.AccommodationsFragment;
 import de.jadehs.trawell.view.home.MainActivity;
 
@@ -28,6 +32,10 @@ public class TourDetailFragment extends Fragment {
     private Button chooseAccoBTN;
     private ListView tourdetailLV;
     private TrawellArrayAdapter<City> adapter;
+    private TourDetailAdapter<City> tourDetailAdapter;
+    private Tour tour;
+    private ArrayList<Location> locations;
+    private TrawellGraph graph;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +43,9 @@ public class TourDetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tour, container, false);
 
-        Tour tour = Tour.findById(Tour.class, tourId);
+        graph = TrawellGraph.get(getContext());
+
+        tour = Tour.findById(Tour.class, tourId);
 
         getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
 
@@ -54,11 +64,17 @@ public class TourDetailFragment extends Fragment {
                 Log.d("acco", ""+acco.get(0).getName());
             }
         }
+        locations = new ArrayList<>();
+        for(City c : city){
+            locations.add(graph.getLocationByName(c.getName()));
+        }
 
         tourdetailLV = (ListView) view.findViewById(R.id.tourDetailLV);
-        adapter = new TrawellArrayAdapter<>(getContext(),R.layout.tour_overview_item, (ArrayList) city, City.class);
-        tourdetailLV.setAdapter(adapter);
+//        adapter = new TrawellArrayAdapter<>(getContext(),R.layout.tour_overview_item, (ArrayList) city, City.class);
+//        tourdetailLV.setAdapter(adapter);
 
+        tourDetailAdapter = new TourDetailAdapter<>(getContext(), R.layout.tour_overview_item, (ArrayList) city, City.class);
+        tourdetailLV.setAdapter(tourDetailAdapter);
 
 
         chooseAccoBTN = (Button) view.findViewById(R.id.chooseAccoBTN);
@@ -72,6 +88,17 @@ public class TourDetailFragment extends Fragment {
                 } catch (java.lang.InstantiationException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        Button share = (Button) view.findViewById(R.id.shareBTN);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrawellMapGenerator genMap = new TrawellMapGenerator(getContext(), graph);
+                genMap.drawRoute(tour.getStart(), locations);
+                Intent intent = genMap.getShareIntent();
+                startActivity(intent);
             }
         });
 
