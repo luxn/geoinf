@@ -22,12 +22,14 @@ import com.orm.util.SugarConfig;
 import com.orm.util.SugarCursor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.xml.validation.Schema;
 
 import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.Accommodation;
+import de.jadehs.trawell.models.Tour;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static Set<Fragment> mFragments;
     public static FragmentManager fragmentManager;
     public static ArrayList<Accommodation> accommodations;
+    private List<Tour> myTours;
 
     public static Context context;
     public TextView weatherText;
@@ -54,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        MainActivity.goTo(HomeFragment.class);
+                        //MainActivity.goTo(HomeFragment.class);
+                        MainActivity.goTo(CurrentTourFragment.class);
                         return true;
                     case R.id.navigation_newTour:
                         MainActivity.goTo(CreateTourFragment.class);
@@ -80,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        myTours = new ArrayList<>();
+        myTours = Tour.listAll(Tour.class);
+
 //        SugarContext.terminate();
 //        SchemaGenerator schemaGenerator = new SchemaGenerator(getApplicationContext());
 //        schemaGenerator.deleteTables(new SugarDb(getApplicationContext()).getDB());
@@ -101,6 +108,13 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivity.fragmentManager = getSupportFragmentManager();
         Fragment myFragment = new HomeFragment();
+        /*
+        if (myTours.isEmpty()) {
+            myFragment = new HomeFragment();
+        } else {
+            myFragment = new CurrentTourFragment();
+        }
+        */
         MainActivity.fragmentManager.beginTransaction().add(
                 R.id.fragmentContainer, myFragment).commit();
 
