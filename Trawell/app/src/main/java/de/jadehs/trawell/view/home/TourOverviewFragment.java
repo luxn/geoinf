@@ -77,6 +77,7 @@ public class TourOverviewFragment extends Fragment {
                 }
             }
         });
+
         adapter = new TrawellArrayAdapter(getContext(), R.layout.tour_item, (ArrayList) myTours, Tour.class);
         myToursLV.setAdapter(adapter);
         // Inflate the layout for this fragment

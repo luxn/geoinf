@@ -28,8 +28,12 @@ public class CreateTourFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_tour, container, false);
 
         textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText("You want to travel to Europe's most amazing places by train? Then click the button below and plan your Interrail tour."
-                + "\n" + "...");
+        textView.setText("This easy steps will help you to create the perfect tour for you: \n" +
+                "First you will choose what kind of interrail ticket you have, you can continue without having one.\nSecond you specify your trip.\n"+
+                "The Next step is to select the cities you want to visit on the map." +
+                " You can change the order of the cities and select how long you want to stay in each city on the next screen.\n" +
+                "Now save the tour you have created or choose a place to stay in one of the cities, you will be able to edit " +
+                "your lodgings in the MyTours section of the app at any point.");
 
         newTourButton = (Button) view.findViewById(R.id.newTourButton);
         newTourButton.setOnClickListener(new View.OnClickListener(){

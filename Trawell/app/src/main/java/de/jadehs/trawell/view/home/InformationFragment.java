@@ -26,10 +26,13 @@ public class InformationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_information, container, false);
 
         informations = (TextView) view.findViewById(R.id.informationsTextView);
-        informations.setText("Mit einem Interrail Pass können Sie mit dem Zug jede Ecke Europas" +
-                "erkunden und viele andere Reisende kennenlernen. Lassen Sie sich von uns alles" +
-                "über den Interrail Pass erzählen. Wir erklären Ihnen, wie Sie diesen ideal nutzen," +
-                "um ein atemberaubendes Abenteuer zu erleben!");
+        informations.setText("You want to travel to Europe's most amazing cities by train? " +
+                "With the interrail pass you have chosen the right ticket for this occasion. " +
+                "The Interrail Pass is a train ticket that allows you to travel on almost all " +
+                "trains in Europe. With it, you get access to 37 railway and ferry companies in " +
+                "30 countries. \n\nFor even more informations click on the interrail logo to visit " +
+                "the interrail website.\n" +
+                "Have fun planing your tours and experiencing the whole of europe!");
 
         interrailIcon = (ImageView) view.findViewById(R.id.informationInterrail);
 
