@@ -56,12 +56,12 @@ public class TourDetailFragment extends Fragment {
         for(City c : city){
             List<Accommodation> acco = Accommodation.find(Accommodation.class, "CITY = ?", String.valueOf(c.getId()));
             if(acco.isEmpty()) {
-                Log.d("city", "" + c.getName());
-                Log.d("acco", "NoAcco");
+//                Log.d("city", "" + c.getName());
+//                Log.d("acco", "NoAcco");
             } else {
                 accommodations.add(acco.get(0));
-                Log.d("city", ""+c.getName());
-                Log.d("acco", ""+acco.get(0).getName());
+//                Log.d("city", ""+c.getName());
+//                Log.d("acco", ""+acco.get(0).getName());
             }
         }
         locations = new ArrayList<>();

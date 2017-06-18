@@ -2,8 +2,6 @@ package de.jadehs.trawell.miscellaneous;
 
 import android.content.Context;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import de.jadehs.trawell.R;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
-import de.jadehs.trawell.view.tours.TourDetailFragment;
 
 /**
  * Created by Christopher on 07.06.2017.
@@ -85,7 +82,7 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
                     rating.setText(acco.getBewertung());
                     phoneNumber.setText(acco.getPhoneNumber());
                     url.setText(Html.fromHtml("<a href="+acco.getUrl()+">"+acco.getName()+"</a>"));
-                    url.setMovementMethod(LinkMovementMethod.getInstance());
+//                    url.setMovementMethod(LinkMovementMethod.getInstance());
                 }
             }
         }

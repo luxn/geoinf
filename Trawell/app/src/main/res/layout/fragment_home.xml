@@ -53,20 +53,5 @@ tools:context="de.jadehs.trawell.view.home.HomeFragment">
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="8dp" />
 
-        <Button
-            android:id="@+id/btnShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            tools:layout_editor_absoluteX="133dp"
-            tools:layout_editor_absoluteY="424dp" />
-
-        <ImageView
-            android:id="@+id/ivDebug"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_close_light"
-            tools:layout_editor_absoluteX="268dp"
-            tools:layout_editor_absoluteY="396dp" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

@@ -48,32 +48,32 @@ public class HomeFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button btn = (Button) view.findViewById(R.id.btnShare);
-        final ImageView iv = (ImageView) view.findViewById(R.id.ivDebug);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrawellGraph graph = TrawellGraph.get(getContext());
-
-                TrawellMapGenerator mapGenerator = new TrawellMapGenerator(getContext(), graph);
-
-                Location hamburg = graph.getLocationByName("Hamburg");
-                Location paris = graph.getLocationByName("Paris");
-                Location montpellier = graph.getLocationByName("Montpellier");
-
-                List<Location> list = new ArrayList<>();
-                list.add(hamburg);
-                list.add(paris);
-                list.add(montpellier);
-
-                mapGenerator.drawRoute(new Date(), list);
-
-                iv.setImageBitmap(mapGenerator.getMap());
-
-                Intent i = mapGenerator.getShareIntent();
-                startActivity(i);
-            }
-        });
+//        Button btn = (Button) view.findViewById(R.id.btnShare);
+//        final ImageView iv = (ImageView) view.findViewById(R.id.ivDebug);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TrawellGraph graph = TrawellGraph.get(getContext());
+//
+//                TrawellMapGenerator mapGenerator = new TrawellMapGenerator(getContext(), graph);
+//
+//                Location hamburg = graph.getLocationByName("Hamburg");
+//                Location paris = graph.getLocationByName("Paris");
+//                Location montpellier = graph.getLocationByName("Montpellier");
+//
+//                List<Location> list = new ArrayList<>();
+//                list.add(hamburg);
+//                list.add(paris);
+//                list.add(montpellier);
+//
+//                mapGenerator.drawRoute(new Date(), list);
+//
+//                iv.setImageBitmap(mapGenerator.getMap());
+//
+//                Intent i = mapGenerator.getShareIntent();
+//                startActivity(i);
+//            }
+//        });
 
 
         getActivity().setTitle("Trawell");
