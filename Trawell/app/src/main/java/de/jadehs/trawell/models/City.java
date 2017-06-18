@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 
 public class City extends SugarRecord {
+
     private String name;
     private int duration;
     private Tour tour;
