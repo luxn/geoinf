@@ -1,10 +1,13 @@
 package de.jadehs.trawell.view.home;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +27,14 @@ import de.jadehs.trawell.api.Weather;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.graph.Location;
+import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.share.TrawellMapGenerator;
 
 public class HomeFragment extends Fragment {
 
@@ -38,6 +47,35 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        Button btn = (Button) view.findViewById(R.id.btnShare);
+        final ImageView iv = (ImageView) view.findViewById(R.id.ivDebug);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrawellGraph graph = TrawellGraph.get(getContext());
+
+                TrawellMapGenerator mapGenerator = new TrawellMapGenerator(getContext(), graph);
+
+                Location hamburg = graph.getLocationByName("Hamburg");
+                Location paris = graph.getLocationByName("Paris");
+                Location montpellier = graph.getLocationByName("Montpellier");
+
+                List<Location> list = new ArrayList<>();
+                list.add(hamburg);
+                list.add(paris);
+                list.add(montpellier);
+
+                mapGenerator.drawRoute(new Date(), list);
+
+                iv.setImageBitmap(mapGenerator.getMap());
+
+                Intent i = mapGenerator.getShareIntent();
+                startActivity(i);
+            }
+        });
+
+
         getActivity().setTitle("Trawell");
 
         // Diashow

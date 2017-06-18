@@ -7,8 +7,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,8 +38,9 @@ public class TrawellMapGenerator {
     private Paint paint;
 
     public TrawellMapGenerator(Context context, TrawellGraph graph) {
-        this.map = BitmapFactory.decodeStream(context.getResources().openRawResource(R.raw.europe_background));
+        Bitmap b = BitmapFactory.decodeStream(context.getResources().openRawResource(R.raw.europe_background));
         this.context = context;
+        this.map = b.copy(Bitmap.Config.ARGB_8888, true);
         this.canvas = new Canvas(this.map);
         this.graph = graph;
         this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -50,7 +53,7 @@ public class TrawellMapGenerator {
 
 
     public void drawRoute(Date startDate, List<Location> locations) {
-        drawText("TrawellShare", new Coordinate(54, -2));
+        drawText("TrawellShare: " + startDate, new Coordinate(54, -2));
 
         int idx = 0;
         for (Location l : locations) {
@@ -68,8 +71,8 @@ public class TrawellMapGenerator {
 
     private void drawText(String text, Coordinate c) {
         Coordinate pixels = toPixel(c);
-        float x = (float) pixels.getLongitude() + 0.5f;
-        float y = (float) pixels.getLatitude() + 0.5f;
+        float x = (float) pixels.getLongitude() + 10f;
+        float y = (float) pixels.getLatitude() + 10f;
         this.canvas.drawText(text, x,y, this.paint);
     }
 
@@ -104,7 +107,7 @@ public class TrawellMapGenerator {
          55.13200895542749436
          */
         double x, y;
-        x = c.getLongitude() +3;
+        x = c.getLongitude() + 3;
         y = c.getLatitude() - 55;
 
         x = x / 0.022;
@@ -113,26 +116,44 @@ public class TrawellMapGenerator {
         return new Coordinate(x,y);
     }
 
+    public Bitmap getMap() {
+        this.canvas.save();
+        return this.map;
+    }
+
 
     @Nullable
     public Intent getShareIntent() {
 
+        String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), this.map, "share", null);
+        Uri bitmapUri = Uri.parse(bitmapPath);
+        final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+        intent.setType("image/png");
+        return intent;
+
+        /*
         try {
+
             File file = new File(context.getCacheDir(), "share.png");
             FileOutputStream fOut = new FileOutputStream(file);
+
             map.compress(Bitmap.CompressFormat.PNG, 100, fOut);
             fOut.flush();
             fOut.close();
             file.setReadable(true, false);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+            Uri uri = FileProvider.getUriForFile(context, "trawell.provider", file);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.setType("image/png");
             return intent;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+        */
     }
 
 }
