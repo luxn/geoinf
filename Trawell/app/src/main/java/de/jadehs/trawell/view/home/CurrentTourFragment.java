@@ -113,7 +113,9 @@ public class CurrentTourFragment extends Fragment {
                 for (Trip tr : tripList) {
                     s.append(tr.toString()+"  |  ");
                 }
-                tripTV.setText(s.toString());
+                s.delete(s.length()-3, s.length());
+                //tripTV.setText(s.toString());
+                tripTV.setText(t.toString());
             }
 
 
