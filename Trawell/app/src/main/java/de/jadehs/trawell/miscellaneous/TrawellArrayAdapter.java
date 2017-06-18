@@ -78,11 +78,11 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
                 TextView phoneNumber = (TextView) view.findViewById(R.id.accoPhoneTV);
                 TextView url = (TextView) view.findViewById(R.id.accoUrlTV);
                 if (name != null) {
-                    name.setText(acco.getName());
-                    adress.setText(acco.getAdresse());
-                    rating.setText(acco.getBewertung());
-                    phoneNumber.setText(acco.getPhoneNumber());
-                    url.setText(acco.getUrl());
+                    name.setText("  "+acco.getName());
+                    adress.setText("Address: "+acco.getAdresse());
+                    rating.setText("Rating: "+acco.getBewertung());
+                    phoneNumber.setText("Phone: "+acco.getPhoneNumber());
+                    url.setText("Homepage: "+acco.getUrl());
                 }
             }
         }

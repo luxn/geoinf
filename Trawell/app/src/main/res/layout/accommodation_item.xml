@@ -27,7 +27,7 @@
                 android:paddingTop="5dp"
                 android:text="TextView"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="1.0"

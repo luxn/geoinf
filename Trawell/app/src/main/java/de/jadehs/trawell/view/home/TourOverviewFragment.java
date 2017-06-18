@@ -33,7 +33,7 @@ public class TourOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        getActivity().setTitle("My tours");
+        getActivity().setTitle("My Tours");
         myTours = new ArrayList<>();
         myTours = Tour.listAll(Tour.class);
 
