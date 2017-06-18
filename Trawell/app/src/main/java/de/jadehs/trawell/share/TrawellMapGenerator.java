@@ -122,38 +122,31 @@ public class TrawellMapGenerator {
     }
 
 
-    @Nullable
-    public Intent getShareIntent() {
+    private Uri saveBitmapToCache() {
 
-        String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), this.map, "share", null);
-        Uri bitmapUri = Uri.parse(bitmapPath);
-        final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
-        intent.setType("image/png");
-        return intent;
-
-        /*
+        FileOutputStream outputStream;
         try {
-
-            File file = new File(context.getCacheDir(), "share.png");
-            FileOutputStream fOut = new FileOutputStream(file);
-
-            map.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-            fOut.flush();
-            fOut.close();
-            file.setReadable(true, false);
-            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Uri uri = FileProvider.getUriForFile(context, "trawell.provider", file);
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.setType("image/png");
-            return intent;
+            outputStream = context.openFileOutput("share.png", Context.MODE_PRIVATE);
+            this.map.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-        */
+
+
+        File f = new File(context.getFilesDir() + "/share.png");
+        return Uri.parse(f.getAbsolutePath());
+    }
+
+    @Nullable
+    public Intent getShareIntent() {
+
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, saveBitmapToCache());
+        shareIntent.setType("image/*");
+        return Intent.createChooser(shareIntent, "trawellShare");
     }
 
 }
