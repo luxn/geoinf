@@ -19,6 +19,8 @@ public class Route implements Comparable<Route> {
     private int calculatedWeight = 1;  
     
     
+    int idx = 0;
+    
    
     
     public Route(String name, Location from, Location to) {
@@ -33,8 +35,8 @@ public class Route implements Comparable<Route> {
     			to.getLatitude(), 
     			to.getLongitude()
     		);
+    	this.duration = new Duration(distance / 220.0);    	
     	
-    	this.calculatedWeight = (int) this.distance; //Startgewicht
     }
        
     
@@ -111,18 +113,27 @@ public class Route implements Comparable<Route> {
     }
 
     public int getWeight() {
-        return calculatedWeight;
+    	return this.duration.getDurationInMinutes();
     }  
     
     public int getWeight(DayTime time) {
-    	Duration toAdd = new Duration(24);
+    	List<Duration> durations = new ArrayList<>();    	
     	for (Trip t : trips) {
-    		Duration sub = t.startTime.substract(time);
-    		if (sub.getDurationInHoursFloating() < toAdd.getDurationInHoursFloating()) {    
-    			toAdd = sub;
-    		}
+    		durations.add(t.startTime.substract(time));    		
     	}
-        return calculatedWeight + (toAdd.getDurationInMinutes() * 3);
+    	
+    	Duration shortest = new Duration(24);
+    	
+    	int i = 0;
+    	for (Duration d : durations) {    		
+    		if (d.positive() && d.getDurationInHoursFloating() < shortest.getDurationInHoursFloating()) {
+    			shortest = d;
+    			idx = i;
+    		}
+    		i++;
+    	}
+    	  	
+    	return shortest.getDurationInMinutes();
     }  
     
     @Override
@@ -134,5 +145,13 @@ public class Route implements Comparable<Route> {
 	@Override
 	public int compareTo(Route o) {
 		return this.name.compareTo(o.getName());
+	}
+
+
+	public Trip getTripForWeight() {	
+		if (trips.isEmpty()) {
+			return null;
+		}
+		return trips.get(idx);
 	}
 }

@@ -6,13 +6,24 @@ import java.util.ArrayList;
  * Created by luxn on 09.05.2017.
  */
 
-public class Location {
+public class Location implements Comparable<Location> {
     protected ArrayList<Route> routes;
 
     private String name;
     private String country;
     private Coordinate position;
     private String googleId;
+
+    
+    //Package Scoped for Dijkstra
+	int distance;
+	boolean seen;
+	Location previousLocation;
+	Trip previousTrip;
+	DayTime time;
+	//---
+
+	
 
     public Location(String name, String country, Coordinate position, String googleId) {
         this.name = name;
@@ -50,4 +61,9 @@ public class Location {
     public String toString() {
         return this.name;
     }
+
+	@Override
+	public int compareTo(Location o) {		
+		return this.name.compareTo(o.name);
+	}
 }

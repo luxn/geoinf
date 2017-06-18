@@ -24,9 +24,10 @@ public class Trip {
 		this.startTime = startTime;
 		this.endTime = endTime;
 
+		setType();
+		
 		this.duration = new Duration(startTime, endTime);
 
-		setType();
 	}
 
 	private void setType() {
@@ -91,6 +92,11 @@ public class Trip {
 
 	void setDuration(Duration duration) {
 		this.duration = duration;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s: %s: %s->%s", this.route, this.tripName, this.startTime, this.endTime);
 	}
 
 }

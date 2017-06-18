@@ -3,11 +3,9 @@ package de.jadehs.trawell.graph;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * Created by luxn on 09.05.2017.
@@ -49,32 +47,36 @@ public class TrawellGraph {
         return TrawellGraph.graph;
     }
     
-    
-    public List<Location> dijkstraTime(Location from, DayTime time, Location to) {
-    	return new ArrayList<>();
-    }
+   
 
-    public List<Location> dijkstraRaw(Location from, Location to) {
-        DijsktraAlgorithm algorithm = new DijsktraAlgorithm(this);
-        algorithm.execute(from);
-        return algorithm.getPath(to);
+    public List<Location> dijkstra(Location from, Location to) {
+        List<Trip> calcTrips = Dijkstra.dijkstra(graph, from, to);
+        
+        List<Location> res = new ArrayList<>();
+        res.add(from);
+        for (Trip t : calcTrips) {
+        	res.add(t.getRoute().getDestination());
+        }
+        
+        return res;
     }
     
-    public List<Location> dijkstraRaw(Location... via) {  	
-    
+    public List<Location> dijkstra(Location... via) {  	    
     	
     	List<Location> path = new ArrayList<>();
     	
-    	for (int i = 0; i < via.length -1 ; i++) {
-    		DijsktraAlgorithm algorithm = new DijsktraAlgorithm(TrawellGraph.graph);
-        	algorithm.execute(via[i]);
-        	path.addAll(algorithm.getPath(via[i+1]));  
+    	for (int i = 0; i < via.length -1 ; i++) {    		
+        	path.addAll(dijkstra(via[i], via[i+1]));  
         	if (i < via.length -2) {
         		path.remove(path.size()-1);
         	}
     	}
     	    	    	
 		return path;    	
+    }
+    
+    public List<Trip> dijkstra(Location from, Location to, DayTime time) {
+    	return Dijkstra.dijkstra(graph, from, time, to);
     }
 
     void addLocation(Location l) {

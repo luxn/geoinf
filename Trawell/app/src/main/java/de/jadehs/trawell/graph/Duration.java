@@ -8,8 +8,8 @@ public class Duration {
     private int hours, minutes;
 
     Duration(double hours) {
-    	this.hours = (int) hours;
-    	this.minutes = (int) ((hours - Math.rint(hours)) * 60);
+    	this.hours = (int) hours;    
+    	this.minutes = (int) ((hours - Math.floor(hours)) * 60);    	
     }
 
     Duration(int hours, int minutes) {
@@ -28,5 +28,14 @@ public class Duration {
 	
 	public double getDurationInHoursFloating() {
 		return (double) hours + (double) minutes / 60;
+	}
+
+	public boolean positive() {
+		return minutes > 0 && hours > 0;
+	}
+	
+	@Override
+	public String toString() {
+		return getDurationInMinutes() + "min";
 	}
 }

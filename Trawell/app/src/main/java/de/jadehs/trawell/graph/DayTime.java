@@ -7,27 +7,13 @@ package de.jadehs.trawell.graph;
 
 public class DayTime {
 
-
-
-    public enum AmPm {
-        AM,
-        PM
-    }
-
     private int hours;
     private int minutes;
 
-    private AmPm amPm;
 
     public DayTime(String s) {
         String[] splitted = s.split(":");
         int[] time = new int[] {Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1])};
-
-        if (time[0] > 11) {
-            this.amPm = AmPm.PM;
-        } else {
-            this.amPm = AmPm.AM;
-        }
 
         this.hours = time[0];
         this.minutes = time[1];
@@ -36,19 +22,9 @@ public class DayTime {
     public DayTime(int hours, int minutes) {
         this.hours = hours;
         this.minutes = minutes;
-
-        if (hours > 11) {
-            this.amPm = AmPm.PM;
-        } else {
-            this.amPm = AmPm.AM;
-        }
+     
     }
 
-    public DayTime(int hours, int minutes, AmPm amPm) {
-        this.hours = hours;
-        this.minutes = minutes;
-        this.amPm = amPm;
-    }
 
 	public int getHours() {
 		return hours;
@@ -66,17 +42,14 @@ public class DayTime {
 		this.minutes = minutes;
 	}
 
-	public AmPm getAmPm() {
-		return amPm;
-	}
 
-	void setAmPm(AmPm amPm) {
-		this.amPm = amPm;
+	public Duration substract(DayTime time) {		
+		return new Duration(time, this);
 	}
-
-	public Duration substract(DayTime time) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	@Override
+	public String toString() {
+		return String.format("%d:%02d", this.hours, this.minutes);
 	}
     
     
