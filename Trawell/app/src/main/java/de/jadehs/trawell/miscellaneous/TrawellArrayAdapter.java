@@ -1,6 +1,8 @@
 package de.jadehs.trawell.miscellaneous;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,11 +80,12 @@ public class TrawellArrayAdapter<T> extends ArrayAdapter<T> {
                 TextView phoneNumber = (TextView) view.findViewById(R.id.accoPhoneTV);
                 TextView url = (TextView) view.findViewById(R.id.accoUrlTV);
                 if (name != null) {
-                    name.setText("  "+acco.getName());
-                    adress.setText("Address: "+acco.getAdresse());
-                    rating.setText("Rating: "+acco.getBewertung());
-                    phoneNumber.setText("Phone: "+acco.getPhoneNumber());
-                    url.setText("Homepage: "+acco.getUrl());
+                    name.setText(acco.getName());
+                    adress.setText(acco.getAdresse());
+                    rating.setText(acco.getBewertung());
+                    phoneNumber.setText(acco.getPhoneNumber());
+                    url.setText(Html.fromHtml("<a href="+acco.getUrl()+">"+acco.getName()+"</a>"));
+                    url.setMovementMethod(LinkMovementMethod.getInstance());
                 }
             }
         }
