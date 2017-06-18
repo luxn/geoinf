@@ -95,10 +95,10 @@ public class CurrentTourFragment extends Fragment {
                 //diff = getDateDiff(tourStartDate, now, TimeUnit.DAYS);
             }
 
-            Log.d("nextCity", ""+nextCity.getName());
+            //Log.d("nextCity", ""+nextCity.getName());
             Location startLocation = graph.getLocationByName(currentTour.getStartCity());
-            Location finalLocation = graph.getLocationByName(nextCity.getName());
-            finalLocation = graph.getLocationByName(currentTour.getFinalCity());
+            //Location finalLocation = graph.getLocationByName(nextCity.getName());
+            Location finalLocation = graph.getLocationByName(currentTour.getFinalCity());
             List<Trip> tripList = graph.dijkstra(startLocation, finalLocation, dayTime);
 
             if (!tripList.isEmpty()) {
