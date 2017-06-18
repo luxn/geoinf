@@ -66,7 +66,7 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
         }
 
         city = City.findById(City.class, cityId);
-        getActivity().setTitle("Choose your Lodgings for " + city.getName());
+        getActivity().setTitle("Choose your lodgings for " + city.getName());
 
         location = graph.getLocationByName(city.getName());
 

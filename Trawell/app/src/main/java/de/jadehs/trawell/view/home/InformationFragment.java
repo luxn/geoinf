@@ -21,7 +21,7 @@ public class InformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Interrail");
+        getActivity().setTitle("Interrail Informations");
 
         View view = inflater.inflate(R.layout.fragment_information, container, false);
 

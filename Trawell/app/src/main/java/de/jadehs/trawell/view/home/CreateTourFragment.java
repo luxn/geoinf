@@ -26,6 +26,7 @@ public class CreateTourFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_new_tour, container, false);
+        getActivity().setTitle("New Tour");
 
         textView = (TextView) view.findViewById(R.id.textView);
         textView.setText("This easy steps will help you to create the perfect tour for you: \n" +
