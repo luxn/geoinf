@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.models.Accommodation;
+import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.view.tours.TourDetailFragment;
@@ -47,6 +49,12 @@ public class TourOverviewFragment extends Fragment {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         Tour tour = myTours.get(position);
+                        List<City> cities = Tour.find(City.class, "TOUR = ?", String.valueOf(tour.getId()));
+                        List<Accommodation> accommodations = null;
+                        for(int i = 0; i < cities.size(); i++){
+                            Accommodation.find(Accommodation.class, "CITY = ?", String.valueOf(cities.get(i).getId())).get(0).delete();
+                            cities.get(i).delete();
+                        }
                         myTours.remove(position);
                         tour.delete();
                         adapter.notifyDataSetChanged();

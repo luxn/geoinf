@@ -22,6 +22,7 @@ public class NewTourActivity extends AppCompatActivity {
 
     public static Long tourId;
     public static Long cityId;
+    public static int ticketId;
     public static Tour tour;
     public static TrawellGraph graph;
     public static FragmentManager fragmentManager;
@@ -47,8 +48,8 @@ public class NewTourActivity extends AppCompatActivity {
         context = this;
 
         NewTourActivity.fragmentManager = getSupportFragmentManager();
-        Fragment specifyTravelfragment = new SpecifyTravelFragment();
+        Fragment chooseTicketFragment = new ChooseTicketFragment();
         NewTourActivity.fragmentManager.beginTransaction().add(
-                R.id.newTourContainer, specifyTravelfragment).commit();
+                R.id.newTourContainer, chooseTicketFragment).commit();
     }
 }

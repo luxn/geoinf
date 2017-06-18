@@ -31,6 +31,7 @@ import java.util.Locale;
 import de.jadehs.trawell.R;
 
 import static de.jadehs.trawell.view.create.NewTourActivity.graph;
+import static de.jadehs.trawell.view.create.NewTourActivity.ticketId;
 import static de.jadehs.trawell.view.create.NewTourActivity.tour;
 
 public class SpecifyTravelFragment extends Fragment {
@@ -50,15 +51,27 @@ public class SpecifyTravelFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
         getActivity().setTitle("Specify your travel");
 
-        Log.d("citiesSize", ""+cities.length);
         View view = inflater.inflate(R.layout.fragment_specify_travel, container, false);
+
+        endET = (EditText) view.findViewById((R.id.endEditText));
+
+        durationET = (EditText) view.findViewById(R.id.durationET);
+        durationET.setEnabled(false);
+
+        if(ticketId >= 0){
+            endET.setEnabled(false);
+            if(ticketId == 0){
+                durationET.setText("7");
+            } else if (ticketId == 1){
+                durationET.setText("10");
+            } else if(ticketId == 2){
+                durationET.setText("15");
+            }
+        }
 
         for (int i = 0; i < graph.getLocations().size(); i++) {
             cities[i] = graph.getLocations().get(i).toString();
         }
-
-        durationET = (EditText) view.findViewById(R.id.durationET);
-        durationET.setEnabled(false);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.select_dialog_singlechoice, cities);
 
@@ -73,7 +86,7 @@ public class SpecifyTravelFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fieldsAreFilledOut();
+
             }
 
             @Override
@@ -125,7 +138,6 @@ public class SpecifyTravelFragment extends Fragment {
             }
         });
 
-        endET = (EditText) view.findViewById((R.id.endEditText));
         endET.setOnClickListener(new View.OnClickListener() {
             DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -227,29 +239,38 @@ public class SpecifyTravelFragment extends Fragment {
 
 
     private void updateLabel(EditText editText) {
-        editText.setText(sdf.format(myCalendar.getTime()));
-        if(!startET.getText().toString().equals("") && !endET.getText().toString().equals("")) {
-            Date startDate = null;
-            Date endDate = null;
-            try {
-                startDate = sdf.parse(startET.getText().toString());
-                endDate = sdf.parse(endET.getText().toString());
-            } catch (ParseException e) {
+        if(ticketId < 0) {
+
+            editText.setText(sdf.format(myCalendar.getTime()));
+            if (!startET.getText().toString().equals("") && !endET.getText().toString().equals("")) {
+                Date startDate = null;
+                Date endDate = null;
+                try {
+                    startDate = sdf.parse(startET.getText().toString());
+                    endDate = sdf.parse(endET.getText().toString());
+                } catch (ParseException e) {
+                }
+                int diffInDays = (int) ((startDate.getTime() - endDate.getTime())
+                        / (1000 * 60 * 60 * 24)) + 1;
+                if (diffInDays < 1)
+                    editText.setText(sdf.format(myCalendar.getTime()));
+                else {
+                    endET.setText("");
+                    durationET.setText("");
+                    Toast.makeText(getContext(), "Startdate cannot be later than enddate!", Toast.LENGTH_SHORT).show();
+                }
             }
-            int diffInDays = (int) ((startDate.getTime() - endDate.getTime())
-                    / (1000 * 60 * 60 * 24)) + 1;
-            if (diffInDays < 1)
-                editText.setText(sdf.format(myCalendar.getTime()));
-            else {
-                endET.setText("");
-                durationET.setText("");
-                Toast.makeText(getContext(), "Startdate cannot be later than enddate!", Toast.LENGTH_SHORT).show();
-            }
+            if (!startET.getText().toString().equals("") && !endET.getText().toString().equals(""))
+                autoInsert(durationET);
+        } else {
+            editText.setText(sdf.format(myCalendar.getTime()));
+            Date end = myCalendar.getTime();
+            Calendar c = Calendar.getInstance();
+            c.setTime(end);
+            c.add(Calendar.DATE, Integer.parseInt(durationET.getText().toString())-1);
+            end = c.getTime();
+            endET.setText(sdf.format(new Date(end.getTime())));
         }
-        if (!startET.getText().toString().equals("") && !endET.getText().toString().equals(""))
-            autoInsert(durationET);
-
         fieldsAreFilledOut();
-
     }
 }
