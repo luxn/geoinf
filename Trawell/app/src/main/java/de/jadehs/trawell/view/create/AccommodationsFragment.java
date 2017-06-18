@@ -1,5 +1,6 @@
 package de.jadehs.trawell.view.create;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -32,14 +33,7 @@ public class AccommodationsFragment extends Fragment  {
     private ListView listView;
     private TrawellArrayAdapter listViewAdapter;
     private List<City> cities;
-
-    Button ready;
-    MapView mapView;
-    ArrayAdapter<String> adapter;
-    private static final int GOOGLE_API_CLIENT_ID = 0;
-    private static ArrayList<Pair<Long, String>> mItemArray;
-    private static ItemAdapter listAdapter;
-    public static int aktuelleLocationID;
+    private Button readyBTN;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +48,14 @@ public class AccommodationsFragment extends Fragment  {
             tourId = NewTourActivity.tourId;
         }
 
+        readyBTN = (Button) view.findViewById(R.id.readyBTN);
+        readyBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         cities = Tour.find(City.class, "TOUR = ?", String.valueOf(tourId));
 
