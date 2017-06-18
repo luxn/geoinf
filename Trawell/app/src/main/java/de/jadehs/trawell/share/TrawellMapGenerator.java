@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -44,7 +45,7 @@ public class TrawellMapGenerator {
         this.canvas = new Canvas(this.map);
         this.graph = graph;
         this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        this.paint.setColor(0xFF6600);
+        this.paint.setColor(Color.MAGENTA);
         this.paint.setTextSize(14);
         this.paint.setStrokeWidth(4);
         this.paint.setStyle(Paint.Style.FILL);
@@ -107,13 +108,13 @@ public class TrawellMapGenerator {
          55.13200895542749436
          */
         double x, y;
-        x = c.getLongitude() + 3;
-        y = c.getLatitude() - 55;
+        x = c.getLongitude() + 3.07591;
+        y = c.getLatitude() - 55.13220;
 
-        x = x / 0.022;
-        y = y / -0.015;
+        x = x / 0.02289;
+        y = y / -0.01597;
 
-        return new Coordinate(x,y);
+        return new Coordinate(y,x);
     }
 
     public Bitmap getMap() {
@@ -126,7 +127,7 @@ public class TrawellMapGenerator {
         this.canvas.save();
         FileOutputStream outputStream;
         try {
-            outputStream = context.openFileOutput("share.png", Context.MODE_PRIVATE);
+            outputStream = context.openFileOutput("share.png", Context.MODE_WORLD_READABLE);
             this.map.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             outputStream.close();
         } catch (Exception e) {
@@ -135,7 +136,8 @@ public class TrawellMapGenerator {
 
 
         File f = new File(context.getFilesDir() + "/share.png");
-        return Uri.parse(f.getAbsolutePath());
+        Uri uri = Uri.parse("file://" + f.getAbsolutePath());
+        return uri;
     }
 
     @Nullable
