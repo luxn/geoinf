@@ -123,7 +123,7 @@ public class TrawellMapGenerator {
 
 
     private Uri saveBitmapToCache() {
-
+        this.canvas.save();
         FileOutputStream outputStream;
         try {
             outputStream = context.openFileOutput("share.png", Context.MODE_PRIVATE);
