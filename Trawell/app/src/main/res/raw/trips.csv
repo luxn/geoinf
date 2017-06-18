@@ -270,3 +270,9 @@ TGV 9582,Lyon-Straßburg,Lyon,Straßburg,10:00,13:44
 TGV 9896,Lyon-Straßburg,Lyon,Straßburg,12:04,15:56
 TGV 6882,Lyon-Straßburg,Lyon,Straßburg,16:08,19:55
 TGV 9898,Lyon-Straßburg,Lyon,Straßburg,18:04,21:55
+IC 2220,Köln-Hamburg,Köln,Hamburg,08:10,12:29
+IC 2028,Köln-Hamburg,Köln,Hamburg,10:10,14:29
+IC 2226,Köln-Hamburg,Köln,Hamburg,12:10,16:29
+IC 2225,Hamburg-Köln,Hamburg,Köln,09:46,13:47
+IC 2027,Hamburg-Köln,Hamburg,Köln,11:46,15:47
+IC 2195,Hamburg-Köln,Hamburg,Köln,16:11,20:27
