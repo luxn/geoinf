@@ -40,7 +40,6 @@ public class TourDetailAdapter<T> extends ArrayAdapter<T> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-
         if(view == null){
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
@@ -77,8 +76,6 @@ public class TourDetailAdapter<T> extends ArrayAdapter<T> {
                             tripsTV.setText(tripsString);
                         fromTo.setText(city.getName() + " - " + ((City) getItem(position + 1)).getName());
                     } else {
-                        name.setText(city.getName());
-                        accoName.setText(acco.get(0).getName());
                         fromTo.setText("");
                         tripsTV.setText("");
 
