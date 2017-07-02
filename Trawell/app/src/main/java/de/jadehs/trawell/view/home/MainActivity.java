@@ -33,15 +33,12 @@ import de.jadehs.trawell.models.Tour;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static Long tourId;
-    public static Long cityId;
-    public static Set<Fragment> mFragments;
-    public static FragmentManager fragmentManager;
-    public static ArrayList<Accommodation> accommodations;
+    private static Long tourId;
+    private static Long cityId;
+    private static FragmentManager fragmentManager;
+    private static ArrayList<Accommodation> accommodations;
     private List<Tour> myTours;
-
-    public static Context context;
-    public TextView weatherText;
+    private static Context context;
 
     public static <T extends Fragment> void goTo(Class<T> tClass) throws IllegalAccessException, InstantiationException {
         T fragment = tClass.newInstance();
@@ -57,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        //MainActivity.goTo(HomeFragment.class);
                         MainActivity.goTo(CurrentTourFragment.class);
                         return true;
                     case R.id.navigation_newTour:
@@ -93,14 +89,6 @@ public class MainActivity extends AppCompatActivity {
 //        SugarContext.init(getApplicationContext());
 //        schemaGenerator.createDatabase(new SugarDb(getApplicationContext()).getDB());
 
-//        SugarDb sugarDb = new SugarDb(getApplicationContext());
-//        Log.d("SUGARDB", sugarDb.getDatabaseName());
-//        Log.d("SUGARDB", sugarDb.toString());
-//        Log.d("SUGARDB", sugarDb.getDB().getPath());
-
-
-
-//        SugarApp.getSugarContext().deleteDatabase("myTours.db");
         MainActivity.context = getApplicationContext();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -108,16 +96,42 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivity.fragmentManager = getSupportFragmentManager();
         Fragment myFragment = new HomeFragment();
-        /*
-        if (myTours.isEmpty()) {
-            myFragment = new HomeFragment();
-        } else {
-            myFragment = new CurrentTourFragment();
-        }
-        */
+
         MainActivity.fragmentManager.beginTransaction().add(
                 R.id.fragmentContainer, myFragment).commit();
 
+    }
+
+    public static Long getTourId() {
+        return tourId;
+    }
+
+    public static void setTourId(Long tourId) {
+        MainActivity.tourId = tourId;
+    }
+
+    public static Long getCityId() {
+        return cityId;
+    }
+
+    public static void setCityId(Long cityId) {
+        MainActivity.cityId = cityId;
+    }
+
+    public static ArrayList<Accommodation> getAccommodations() {
+        return accommodations;
+    }
+
+    public static void setAccommodations(ArrayList<Accommodation> accommodations) {
+        MainActivity.accommodations = accommodations;
+    }
+
+    public static Context getContext() {
+        return context;
+    }
+
+    public static void setContext(Context context) {
+        MainActivity.context = context;
     }
 }
 

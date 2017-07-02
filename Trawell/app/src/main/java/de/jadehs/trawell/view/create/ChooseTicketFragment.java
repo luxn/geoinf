@@ -1,24 +1,15 @@
 package de.jadehs.trawell.view.create;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.SupportActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.view.create.NewTourActivity;
 
 public class ChooseTicketFragment extends Fragment {
 
@@ -45,7 +36,7 @@ public class ChooseTicketFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    NewTourActivity.ticketId = -1;
+                    NewTourActivity.setTicketId(-1);
                     NewTourActivity.goTo(SpecifyTravelFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -62,7 +53,7 @@ public class ChooseTicketFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     int radioButtonId = radioGroup.getCheckedRadioButtonId();
-                    NewTourActivity.ticketId = radioGroup.indexOfChild(radioGroup.findViewById(radioButtonId));
+                    NewTourActivity.setTicketId(radioGroup.indexOfChild(radioGroup.findViewById(radioButtonId)));
                     NewTourActivity.goTo(SpecifyTravelFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();

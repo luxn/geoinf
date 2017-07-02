@@ -60,9 +60,9 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
         graph = TrawellGraph.get(getContext());
 
         if(getActivity().getClass().equals(MainActivity.class)){
-            cityId = MainActivity.cityId;
+            cityId = MainActivity.getCityId();
         } else if (getActivity().getClass().equals(NewTourActivity.class)){
-            cityId = NewTourActivity.cityId;
+            cityId = NewTourActivity.getCityId();
         }
 
         city = City.findById(City.class, cityId);
@@ -141,22 +141,7 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
 
     @Override
     public void onSuccess(List<Accommodation> list) {
-//        for(int i = 0; i < list.size(); i++){
-//            Accommodation acco = new Accommodation();
-//            acco.setName(list.get(i).getName());
-//            acco.setAdresse(list.get(i).getAdresse());
-//            acco.setBewertung(list.get(i).getBewertung());
-//            acco.setPhoneNumber(list.get(i).getPhoneNumber());
-//            acco.setUrl(list.get(i).getUrl());
-//            this.accommodations.add(acco);
-//            Log.d("done","done");
-////            Log.d("LODGING","name "+list.get(i).getName());
-////            Log.d("LODGING","adresse "+list.get(i).getAdresse());
-////            Log.d("LODGING","rating "+list.get(i).getBewertung());
-//        }
-//        Log.d("size",""+accommodations.size());
-//        adapter.notifyDataSetChanged();
-//        getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
     }
 
     @Override
@@ -216,7 +201,7 @@ public class ChooseAccommodationFragment extends Fragment implements OnTaskCompl
                     sb.append("location=" + location.getLatitude() + "," + location.getLongitude());
                     sb.append("&radius=5000");
                     sb.append("&type=lodging");
-                    sb.append("&key=" + MainActivity.context.getString(R.string.API_KEY));
+                    sb.append("&key=" + MainActivity.getContext().getString(R.string.API_KEY));
 
                     URL url = new URL(sb.toString());
 

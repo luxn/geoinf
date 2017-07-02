@@ -48,7 +48,7 @@ public class AccommodationsService {
                     sb.append("location=" + location.getLatitude() + "," + location.getLongitude());
                     sb.append("&radius=5000");
                     sb.append("&type=lodging");
-                    sb.append("&key=" + MainActivity.context.getString(R.string.API_KEY));
+                    sb.append("&key=" + MainActivity.getContext().getString(R.string.API_KEY));
 
                     URL url = new URL(sb.toString());
 

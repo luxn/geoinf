@@ -1,39 +1,33 @@
 package de.jadehs.trawell.view.create;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.woxthebox.draglistview.DragListView;
 
 import java.util.ArrayList;
 
 import de.jadehs.trawell.R;
-import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.miscellaneous.ItemAdapter;
+import de.jadehs.trawell.models.City;
+import de.jadehs.trawell.models.Tour;
 import de.jadehs.trawell.view.home.MainActivity;
-
-import static de.jadehs.trawell.view.create.NewTourActivity.cities;
-import static de.jadehs.trawell.view.create.NewTourActivity.context;
-import static de.jadehs.trawell.view.create.NewTourActivity.tour;
-import static de.jadehs.trawell.view.create.NewTourActivity.view;
 
 public class OrganizeTravelFragment extends Fragment {
 
     private static ArrayList<Pair<Long, String>> mItemArray;
     private DragListView citiesListView;
     private static ItemAdapter listAdapter;
-    private static LinearLayout ll;
+    private ArrayList<City> cities;
+    private Tour tour;
 
     private Button save, chooseAccoBTN;
 
@@ -42,12 +36,12 @@ public class OrganizeTravelFragment extends Fragment {
                              Bundle savedInstanceState) {
         getActivity().setTitle("Organize your tour");
 
-        view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
+        View view = inflater.inflate(R.layout.fragment_organize_travel, container, false);
 
-        context = getContext();
-        Log.d("context", " "+context);
-
-        ll = (LinearLayout) view.findViewById(R.id.item_layout);
+        NewTourActivity.setView(view);
+        NewTourActivity.setContext(getContext());
+        cities = NewTourActivity.getCities();
+        tour = NewTourActivity.getTour();
 
         citiesListView = (DragListView) view.findViewById(R.id.citiesListView);
 
@@ -98,7 +92,7 @@ public class OrganizeTravelFragment extends Fragment {
                     cities.get(i).save();
                 }
                 try {
-                    NewTourActivity.tourId = tour.getId();
+                    NewTourActivity.setTourId(tour.getId());
                     NewTourActivity.goTo(AccommodationsFragment.class);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();

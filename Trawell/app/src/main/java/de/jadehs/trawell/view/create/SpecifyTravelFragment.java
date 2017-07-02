@@ -15,11 +15,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -29,18 +26,19 @@ import java.util.List;
 import java.util.Locale;
 
 import de.jadehs.trawell.R;
-
-import static de.jadehs.trawell.view.create.NewTourActivity.graph;
-import static de.jadehs.trawell.view.create.NewTourActivity.ticketId;
-import static de.jadehs.trawell.view.create.NewTourActivity.tour;
+import de.jadehs.trawell.graph.TrawellGraph;
+import de.jadehs.trawell.models.Tour;
 
 public class SpecifyTravelFragment extends Fragment {
 
-    Button nextBTN;
-    EditText startET, endET, durationET;
-    AutoCompleteTextView startCityTV, finalCityTV;
-    Calendar myCalendar = Calendar.getInstance();
-    String[] cities = new String[graph.getLocations().size()];
+    private int ticketId;
+    private TrawellGraph graph;
+    private Tour tour;
+    private Button nextBTN;
+    private EditText startET, endET, durationET;
+    private AutoCompleteTextView startCityTV, finalCityTV;
+    private Calendar myCalendar = Calendar.getInstance();
+    private String[] cities = new String[NewTourActivity.getGraph().getLocations().size()];
 
     private final String dateFormat = "dd/MM/yyyy";
     private final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
@@ -50,6 +48,10 @@ public class SpecifyTravelFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         getActivity().setTitle("Specify your travel");
+
+        ticketId = NewTourActivity.getTicketId();
+        graph = NewTourActivity.getGraph();
+        tour = NewTourActivity.getTour();
 
         View view = inflater.inflate(R.layout.fragment_specify_travel, container, false);
 

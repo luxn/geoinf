@@ -19,21 +19,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.graph.TrawellGraph;
 import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.models.City;
-
-import static de.jadehs.trawell.view.create.NewTourActivity.cities;
-import static de.jadehs.trawell.view.create.NewTourActivity.graph;
-import static de.jadehs.trawell.view.create.NewTourActivity.tour;
+import de.jadehs.trawell.models.Tour;
 
 public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private MapView mapView;
     private GoogleMap googleMap;
     private Button nextBTN, previousBTN;
+    private ArrayList<City> cities;
+    private Tour tour;
+    private TrawellGraph graph;
 
     private ListView citiesListView;
     private ArrayAdapter<City> adapter;
@@ -45,6 +47,10 @@ public class SelectCitiesFragment extends Fragment implements OnMapReadyCallback
         getActivity().setTitle("Select the cities you want to visit");
 
         View view = inflater.inflate(R.layout.fragment_select_cities, container, false);
+
+        cities = NewTourActivity.getCities();
+        tour = NewTourActivity.getTour();
+        graph = NewTourActivity.getGraph();
 
         citiesListView = (ListView) view.findViewById(R.id.citiesListView);
 

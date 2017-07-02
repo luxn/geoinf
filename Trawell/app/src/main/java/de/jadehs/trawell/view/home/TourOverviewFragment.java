@@ -15,13 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.jadehs.trawell.R;
+import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.models.Accommodation;
 import de.jadehs.trawell.models.City;
 import de.jadehs.trawell.models.Tour;
-import de.jadehs.trawell.miscellaneous.TrawellArrayAdapter;
 import de.jadehs.trawell.view.tours.TourDetailFragment;
-
-import static de.jadehs.trawell.view.home.MainActivity.tourId;
 
 public class TourOverviewFragment extends Fragment {
 
@@ -67,7 +65,7 @@ public class TourOverviewFragment extends Fragment {
         myToursLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tourId = myTours.get(position).getId();
+                MainActivity.setTourId(myTours.get(position).getId());
                 try {
                     MainActivity.goTo(TourDetailFragment.class);
                 } catch (IllegalAccessException e) {

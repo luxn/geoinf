@@ -3,7 +3,6 @@ package de.jadehs.trawell.view.tours;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,6 @@ import de.jadehs.trawell.share.TrawellMapGenerator;
 import de.jadehs.trawell.view.create.AccommodationsFragment;
 import de.jadehs.trawell.view.home.MainActivity;
 
-import static de.jadehs.trawell.view.home.MainActivity.tourId;
-
 public class TourDetailFragment extends Fragment {
 
     private Button chooseAccoBTN;
@@ -45,7 +42,7 @@ public class TourDetailFragment extends Fragment {
 
         graph = TrawellGraph.get(getContext());
 
-        tour = Tour.findById(Tour.class, tourId);
+        tour = Tour.findById(Tour.class, MainActivity.getTourId());
 
         getActivity().setTitle(""+tour.getStartCity() + " - " + tour.getFinalCity());
 

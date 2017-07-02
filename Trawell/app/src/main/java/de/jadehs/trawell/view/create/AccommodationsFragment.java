@@ -43,9 +43,9 @@ public class AccommodationsFragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_accommodations, container, false);
 
         if(getActivity().getClass().equals(MainActivity.class)){
-            tourId = MainActivity.tourId;
+            tourId = MainActivity.getTourId();
         } else if (getActivity().getClass().equals(NewTourActivity.class)){
-            tourId = NewTourActivity.tourId;
+            tourId = NewTourActivity.getTourId();
         }
 
         readyBTN = (Button) view.findViewById(R.id.readyBTN);
@@ -68,10 +68,10 @@ public class AccommodationsFragment extends Fragment  {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         if (getActivity().getClass().equals(MainActivity.class)) {
-                            MainActivity.cityId = cities.get(position).getId();
+                            MainActivity.setCityId(cities.get(position).getId());
                             MainActivity.goTo(ChooseAccommodationFragment.class);
                         } else if (getActivity().getClass().equals(NewTourActivity.class)) {
-                            NewTourActivity.cityId = cities.get(position).getId();
+                            NewTourActivity.setCityId(cities.get(position).getId());
                             NewTourActivity.goTo(ChooseAccommodationFragment.class);
                         }
                     } catch (IllegalAccessException e) {

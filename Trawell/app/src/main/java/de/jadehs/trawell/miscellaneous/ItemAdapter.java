@@ -47,15 +47,15 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     private ViewHolder holder;
     private TrawellGraph graph;
     private View contextView;
-    private ArrayList<City> cities = NewTourActivity.cities;
+    private ArrayList<City> cities = NewTourActivity.getCities();
 
     public ItemAdapter(ArrayList<Pair<Long, String>> list, int layoutId, int grabHandleId, boolean dragOnLongPress) {
         mLayoutId = layoutId;
         mGrabHandleId = grabHandleId;
         mDragOnLongPress = dragOnLongPress;
-        context = NewTourActivity.context;
+        context = NewTourActivity.getContext();
         graph = TrawellGraph.get(context);
-        contextView = NewTourActivity.view;
+        contextView = NewTourActivity.getView();
         setHasStableIds(true);
         setItemList(list);
     }
